@@ -1,0 +1,100 @@
+{
+  "splits": {
+    "train": {
+      "total": 7829,
+      "positive": 2608,
+      "negative": 5221,
+      "ratio_neg_pos": 2.0,
+      "sources": {
+        "AGEA": 2582,
+        "WV3": 181,
+        "GE": 5066
+      },
+      "category_counts": {
+        "Heaps not delimited": 355,
+        "Bulky items": 242,
+        "Rubble/excavated earth and rocks": 228,
+        "Scrap": 140,
+        "Fire Wood": 135,
+        "Full container": 113,
+        "Plastic": 102,
+        "Full pallets": 43,
+        "Delimited heaps (by barriers/walls/etc)": 38,
+        "Tires": 32,
+        "Big bags": 31,
+        "Vehicles": 27,
+        "Cisterns": 26,
+        "Paper": 21,
+        "Domestic appliances": 19,
+        "Drums bins": 16,
+        "Sludge-Zootechnical waste-Manure": 15,
+        "Stone/marble processing waste": 12,
+        "Corrugated sheets (presumed asbestos-cement)": 10,
+        "Asphalt milling": 9,
+        "Foundry waste": 8,
+        "Glass": 6
+      }
+    },
+    "test": {
+      "total": 2605,
+      "positive": 870,
+      "negative": 1735,
+      "ratio_neg_pos": 1.99,
+      "sources": {
+        "GE": 1684,
+        "AGEA": 868,
+        "WV3": 53
+      },
+      "category_counts": {
+        "Heaps not delimited": 93,
+        "Rubble/excavated earth and rocks": 66,
+        "Full container": 54,
+        "Bulky items": 44,
+        "Fire Wood": 38,
+        "Delimited heaps (by barriers/walls/etc)": 31,
+        "Scrap": 27,
+        "Vehicles": 26,
+        "Plastic": 24,
+        "Big bags": 19,
+        "Tires": 13,
+        "Cisterns": 9,
+        "Full pallets": 7,
+        "Domestic appliances": 5,
+        "Paper": 5,
+        "Sludge-Zootechnical waste-Manure": 4,
+        "Asphalt milling": 3,
+        "Drums bins": 2,
+        "Glass": 2,
+        "Stone/marble processing waste": 1,
+        "Foundry waste": 1,
+        "Corrugated sheets (presumed asbestos-cement)": 1
+      }
+    }
+  },
+  "total_images": 10434,
+  "channel_stats": {
+    "mean": [
+      0.3200580455353755,
+      0.3357901092477929,
+      0.28006347892275146
+    ],
+    "std": [
+      0.18783087925023279,
+      0.1665674629893531,
+      0.1664121576870001
+    ],
+    "percentiles_1": [
+      0.01568627543747425,
+      0.03529411926865578,
+      0.003921568859368563
+    ],
+    "percentiles_99": [
+      0.8705882430076599,
+      0.8588235378265381,
+      0.8352941274642944
+    ],
+    "sampled_images": 7829,
+    "total_pixels": 7999245449,
+    "errors": []
+  }
+}

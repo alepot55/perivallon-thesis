@@ -1,0 +1,10 @@
+# API credentials — never commit
+scripts/api_key.txt
+
+# Literature-search outputs (regenerable, can be large)
+literature_search/*.json
+literature_search/*.csv
+
+# Python
+__pycache__/
+*.pyc

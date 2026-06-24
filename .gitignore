@@ -1,0 +1,52 @@
+# ── Python / Node environments ────────────────────────────────
+**/.venv/
+.venv/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+node_modules/
+
+# ── Large imagery & raw data ──────────────────────────────────
+waste/data/raw/
+waste/data/eurosat/
+asbestos/data/planet/
+**/*.tif
+**/*.tiff
+**/*.jp2
+**/*.zip
+**/*.npy
+**/*.npz
+
+# ── Model checkpoints / weights ───────────────────────────────
+**/checkpoints/
+*.pth
+*.ckpt
+*.safetensors
+*.pt
+wandb/
+lightning_logs/
+
+# ── Copyrighted paper PDFs (metadata kept in papers/notes + index) ─
+papers/library/
+papers/literature_search/**/*.pdf
+
+# ── Secrets ───────────────────────────────────────────────────
+**/api_key.txt
+*.env
+.env
+.env.*
+
+# ── OS / editor cruft ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# ── QGIS / GIS sidecars ───────────────────────────────────────
+*.gpkg-shm
+*.gpkg-wal
+
+# waste synthetic MS arrays (large)
+waste/data/synthetic_ms/

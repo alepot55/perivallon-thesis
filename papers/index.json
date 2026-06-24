@@ -1,0 +1,1321 @@
+[
+  {
+    "id": "bonifazi-2026-ac-python",
+    "title": "A Python-Based Workflow for Asbestos Roof Mapping and Temporal Monitoring Using Satellite Imagery",
+    "authors": [
+      "Bonifazi",
+      "Aurigemma",
+      "Salas-Cáceres",
+      "Lorenzo-Navarro",
+      "Serranti",
+      "Paglietti",
+      "Bellagamba",
+      "Malinconico"
+    ],
+    "year": 2026,
+    "venue": "Geomatics",
+    "doi": "10.3390/geomatics6030041",
+    "arxiv": null,
+    "link": "https://doi.org/10.3390/geomatics6030041",
+    "tags": [
+      "asbestos",
+      "wv-3",
+      "vnir",
+      "swir",
+      "python",
+      "open-source",
+      "multi-temporal",
+      "italian"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/bonifazi-2026-ac-python.pdf",
+    "in_slides": [
+      "asbestos-anchor",
+      "high-res-survey"
+    ],
+    "relates_to": [
+      "cilia-2015-ac-weathering",
+      "aguilar-2021-wv3-ablation"
+    ],
+    "note": "notes/bonifazi-2026-ac-python.md"
+  },
+  {
+    "id": "gibellini-2025-pipeline",
+    "title": "A deep learning pipeline for solid waste detection in remote sensing images",
+    "authors": [
+      "Gibellini",
+      "Torres",
+      "Fraternali"
+    ],
+    "year": 2025,
+    "venue": "Waste Management Bulletin",
+    "doi": "10.1016/j.wmb.2025.02.003",
+    "arxiv": "2502.06607",
+    "link": "arXiv:2502.06607",
+    "tags": [
+      "waste",
+      "baseline",
+      "swin-t",
+      "rsp",
+      "aerialwaste"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/gibellini-2025-pipeline.pdf",
+    "in_slides": [
+      "baseline",
+      "approach"
+    ],
+    "relates_to": [],
+    "note": "notes/gibellini-2025-pipeline.md"
+  },
+  {
+    "id": "shepherd-2025-asbestos-enmap",
+    "title": "Detection of asbestos-based cement rooftops in conflict-affected settings using EnMAP hyperspectral data",
+    "authors": [
+      "Shepherd",
+      "Sagi",
+      "Zagron",
+      "Aharoni-Mack",
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "Scientific Reports",
+    "doi": "10.1038/s41598-025-09738-w",
+    "arxiv": null,
+    "link": "https://doi.org/10.1038/s41598-025-09738-w",
+    "tags": [
+      "asbestos",
+      "enmap",
+      "hyperspectral",
+      "satellite",
+      "sam",
+      "low-res-survey"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/shepherd-2025-asbestos-enmap.pdf",
+    "in_slides": [
+      "low-res-survey",
+      "asbestos-anchor"
+    ],
+    "relates_to": [
+      "cilia-2015-ac-weathering",
+      "bonifazi-2026-ac-python"
+    ],
+    "note": "notes/shepherd-2025-asbestos-enmap.md"
+  },
+  {
+    "id": "fraternali-2024-survey",
+    "title": "Solid waste detection, monitoring and mapping in remote sensing images: A survey",
+    "authors": [
+      "Fraternali",
+      "Castelli",
+      "Torres"
+    ],
+    "year": 2024,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2402.09066",
+    "link": "arXiv:2402.09066",
+    "tags": [
+      "waste",
+      "survey",
+      "gap-analysis"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/fraternali-2024-survey.pdf",
+    "in_slides": [
+      "gap-analysis",
+      "intro"
+    ],
+    "relates_to": [],
+    "note": "notes/fraternali-2024-survey.md"
+  },
+  {
+    "id": "xiong-2024-dofa",
+    "title": "Neural Plasticity-Inspired Foundation Model for Observing the Earth Crossing Modalities (DOFA)",
+    "authors": [
+      "Xiong",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2403.15356",
+    "link": "arXiv:2403.15356",
+    "tags": [
+      "foundation-model",
+      "dofa",
+      "cross-modal",
+      "any-bands"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/xiong-2024-dofa.pdf",
+    "in_slides": [
+      "foundation-models",
+      "approach"
+    ],
+    "relates_to": [],
+    "note": "notes/xiong-2024-dofa.md"
+  },
+  {
+    "id": "torres-2023-aerialwaste",
+    "title": "AerialWaste: A dataset for illegal landfill discovery in aerial images",
+    "authors": [
+      "Torres",
+      "Fraternali"
+    ],
+    "year": 2023,
+    "venue": "Scientific Data",
+    "doi": "10.1038/s41597-023-01976-9",
+    "arxiv": null,
+    "link": "https://doi.org/10.1038/s41597-023-01976-9",
+    "tags": [
+      "waste",
+      "dataset",
+      "aerialwaste"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/torres-2023-aerialwaste.pdf",
+    "in_slides": [
+      "dataset"
+    ],
+    "relates_to": [],
+    "note": "notes/torres-2023-aerialwaste.md"
+  },
+  {
+    "id": "aguilar-2021-wv3-ablation",
+    "title": "Evaluation of Object-Based Greenhouse Mapping Using WorldView-3 VNIR and SWIR Data",
+    "authors": [
+      "Aguilar",
+      "Jiménez-Lao",
+      "Aguilar"
+    ],
+    "year": 2021,
+    "venue": "Remote Sensing",
+    "doi": "10.3390/rs13112133",
+    "arxiv": null,
+    "link": "https://doi.org/10.3390/rs13112133",
+    "tags": [
+      "wv-3",
+      "vnir",
+      "swir",
+      "ablation",
+      "obia",
+      "ndpi",
+      "methodology-canonical"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/aguilar-2021-wv3-ablation.pdf",
+    "in_slides": [
+      "approach",
+      "high-res-survey"
+    ],
+    "relates_to": [
+      "ndpi-2020-wv3",
+      "aguilar-2025-macroplastics-wv3"
+    ],
+    "note": "notes/aguilar-2021-wv3-ablation.md"
+  },
+  {
+    "id": "kokaly-2017-splib07a",
+    "title": "USGS Spectral Library Version 7 (splib07a)",
+    "authors": [
+      "Kokaly",
+      "et al."
+    ],
+    "year": 2017,
+    "venue": "USGS Data Series",
+    "doi": "10.3133/ds1035",
+    "arxiv": null,
+    "link": "https://doi.org/10.3133/ds1035",
+    "tags": [
+      "signature-library",
+      "usgs",
+      "splib07a"
+    ],
+    "relevance": "critical",
+    "status": "downloaded",
+    "pdf": "library/kokaly-2017-splib07a.pdf",
+    "in_slides": [
+      "spectral-signatures"
+    ],
+    "relates_to": [],
+    "note": "notes/kokaly-2017-splib07a.md"
+  },
+  {
+    "id": "plastic-uav-swir-2026",
+    "title": "Attention-gated U-Net for robust cross-domain plastic waste segmentation using a UAV-based hyperspectral SWIR sensor",
+    "authors": [
+      "et al."
+    ],
+    "year": 2026,
+    "venue": "Remote Sensing",
+    "doi": "10.3390/rs18010182",
+    "arxiv": null,
+    "link": "https://www.mdpi.com/2072-4292/18/1/182",
+    "tags": [
+      "plastic",
+      "drone",
+      "swir",
+      "hyperspectral",
+      "u-net",
+      "generalization"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/plastic-uav-swir-2026.md"
+  },
+  {
+    "id": "saba-2026-asbestos-wv3-vnir",
+    "title": "Asbestos-cement roof classification from WorldView-3 VNIR (8 bands)",
+    "authors": [
+      "Saba",
+      "et al."
+    ],
+    "year": 2026,
+    "venue": "Journal of Hazardous Materials",
+    "doi": "10.1016/j.jhazmat.2026.xxxxx",
+    "arxiv": null,
+    "link": "https://www.sciencedirect.com/science/article/pii/S0304389426008423",
+    "tags": [
+      "asbestos",
+      "wv-3",
+      "vnir",
+      "classification"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/saba-2026-asbestos-wv3-vnir.md"
+  },
+  {
+    "id": "aguilar-2025-macroplastics-wv3",
+    "title": "Mapping terrestrial macroplastics and polymer-coated materials in an urban watershed using WorldView-3 and laboratory reflectance spectroscopy",
+    "authors": [
+      "Aguilar",
+      "Sousa",
+      "Uhrin",
+      "Gudino-Elizondo",
+      "Biggs"
+    ],
+    "year": 2025,
+    "venue": "Environmental Monitoring and Assessment",
+    "doi": "10.1007/s10661-025-14125-z",
+    "arxiv": null,
+    "link": "https://doi.org/10.1007/s10661-025-14125-z",
+    "tags": [
+      "wv-3",
+      "swir",
+      "plastic",
+      "high-resolution",
+      "high-res-survey"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/aguilar-2025-macroplastics-wv3.pdf",
+    "in_slides": [
+      "high-res-survey"
+    ],
+    "relates_to": [
+      "ndpi-2020-wv3",
+      "tasseron-2021-plastic-classifier"
+    ],
+    "note": "notes/aguilar-2025-macroplastics-wv3.md"
+  },
+  {
+    "id": "anysat-2024",
+    "title": "AnySat: An Earth Observation Model for Any Resolutions, Scales, and Modalities",
+    "authors": [
+      "Astruc",
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2412.14123",
+    "link": "arXiv:2412.14123",
+    "tags": [
+      "foundation-model",
+      "any-resolution",
+      "any-modality"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/anysat-2024.pdf",
+    "in_slides": [
+      "foundation-models"
+    ],
+    "relates_to": [],
+    "note": "notes/anysat-2024.md"
+  },
+  {
+    "id": "emit-2025-plastic",
+    "title": "Global-Scale Detection of Plastic From Space With the EMIT Imaging Spectrometer",
+    "authors": [
+      "(unknown)"
+    ],
+    "year": 2025,
+    "venue": "Geophys. Res. Lett.",
+    "doi": "10.1029/2024GL112416",
+    "arxiv": null,
+    "link": "https://doi.org/10.1029/2024GL112416",
+    "tags": [
+      "plastic",
+      "hyperspectral",
+      "emit",
+      "global-scale"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/emit-2025-plastic.pdf",
+    "in_slides": [
+      "high-res-survey"
+    ],
+    "relates_to": [],
+    "note": "notes/emit-2025-plastic.md"
+  },
+  {
+    "id": "abbasi-2024-asbestos-changedetection",
+    "title": "Multi-temporal change detection of asbestos roofing: a hybrid object-based deep-learning framework",
+    "authors": [
+      "Abbasi",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "Remote Sensing Applications: Society and Environment",
+    "doi": "10.1016/j.rsase.2024.101167",
+    "arxiv": null,
+    "link": "https://www.sciencedirect.com/science/article/pii/S2352938524000314",
+    "tags": [
+      "asbestos",
+      "aerial",
+      "obia",
+      "deep-learning",
+      "change-detection",
+      "no-swir"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/abbasi-2024-asbestos-changedetection.md"
+  },
+  {
+    "id": "cascadedumpnet-2024",
+    "title": "CascadeDumpNet: open dumpsite detection via deep learning + AutoML on high-resolution satellite imagery",
+    "authors": [
+      "Aljabri",
+      "Ma"
+    ],
+    "year": 2024,
+    "venue": "Remote Sensing of Environment",
+    "doi": "10.1016/j.rse.2024.114349",
+    "arxiv": null,
+    "link": "https://www.sciencedirect.com/science/article/abs/pii/S0034425724003754",
+    "tags": [
+      "waste",
+      "dumpsite",
+      "pleiades",
+      "object-detection",
+      "automl",
+      "vhr"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/cascadedumpnet-2024.md"
+  },
+  {
+    "id": "corley-2024-resizing",
+    "title": "Revisiting pre-trained remote sensing model benchmarks: resizing and normalization matters",
+    "authors": [
+      "Corley",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2305.13456",
+    "link": "arXiv:2305.13456",
+    "tags": [
+      "foundation-model",
+      "benchmark",
+      "normalization"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/corley-2024-resizing.pdf",
+    "in_slides": [],
+    "relates_to": [],
+    "note": "notes/corley-2024-resizing.md"
+  },
+  {
+    "id": "cwld-2024",
+    "title": "A construction waste landfill dataset of two districts in Beijing from high-resolution satellite images",
+    "authors": [
+      "Wang",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "Scientific Data",
+    "doi": "10.1038/s41597-024-03240-0",
+    "arxiv": null,
+    "link": "https://www.nature.com/articles/s41597-024-03240-0",
+    "tags": [
+      "waste",
+      "construction",
+      "dataset",
+      "gaofen",
+      "segmentation",
+      "vhr"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/cwld-2024.pdf",
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/cwld-2024.md"
+  },
+  {
+    "id": "disaitek-airbus-pleiades-neo-2024",
+    "title": "Illegal Waste Tracker — Disaitek + Airbus Pléiades Neo (operational deployment)",
+    "authors": [
+      "Disaitek",
+      "Airbus",
+      "CNES"
+    ],
+    "year": 2024,
+    "venue": "Grey literature / vendor",
+    "doi": null,
+    "arxiv": null,
+    "link": "https://space-solutions.airbus.com/resources/case-studies/forestry-environment/illegal-dumping-detection-monitoring/",
+    "tags": [
+      "waste",
+      "operational",
+      "pleiades-neo",
+      "commercial",
+      "grey-literature"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/disaitek-airbus-pleiades-neo-2024.md"
+  },
+  {
+    "id": "fm-rs-survey-2024",
+    "title": "Foundation Models for Remote Sensing and Earth Observation: A Survey",
+    "authors": [
+      "(unknown)"
+    ],
+    "year": 2024,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2410.16602",
+    "link": "arXiv:2410.16602",
+    "tags": [
+      "foundation-model",
+      "survey",
+      "earth-observation"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/fm-rs-survey-2024.pdf",
+    "in_slides": [
+      "foundation-models"
+    ],
+    "relates_to": [],
+    "note": "notes/fm-rs-survey-2024.md"
+  },
+  {
+    "id": "ramachandran-2024-tanks-wellpads",
+    "title": "Deep learning to map well pads and storage tanks on high-resolution satellite imagery",
+    "authors": [
+      "Ramachandran",
+      "Irvin",
+      "Omara",
+      "Ng",
+      "Jackson"
+    ],
+    "year": 2024,
+    "venue": "Nature Communications",
+    "doi": "10.1038/s41467-024-50334-9",
+    "arxiv": null,
+    "link": "https://www.nature.com/articles/s41467-024-50334-9",
+    "tags": [
+      "tanks",
+      "object-detection",
+      "vhr",
+      "large-scale"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/ramachandran-2024-tanks-wellpads.pdf",
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/ramachandran-2024-tanks-wellpads.md"
+  },
+  {
+    "id": "spectralgpt-2024",
+    "title": "SpectralGPT: Spectral Remote Sensing Foundation Model",
+    "authors": [
+      "Hong",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "TPAMI",
+    "doi": null,
+    "arxiv": "2311.07113",
+    "link": "arXiv:2311.07113",
+    "tags": [
+      "foundation-model",
+      "spectral",
+      "transformer"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/spectralgpt-2024.pdf",
+    "in_slides": [
+      "foundation-models"
+    ],
+    "relates_to": [],
+    "note": "notes/spectralgpt-2024.md"
+  },
+  {
+    "id": "szwarcman-2024-prithvi-eo2",
+    "title": "Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation",
+    "authors": [
+      "Szwarcman",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2412.02732",
+    "link": "arXiv:2412.02732",
+    "tags": [
+      "foundation-model",
+      "nasa-ibm",
+      "multi-temporal"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/szwarcman-2024-prithvi-eo2.pdf",
+    "in_slides": [
+      "foundation-models"
+    ],
+    "relates_to": [],
+    "note": "notes/szwarcman-2024-prithvi-eo2.md"
+  },
+  {
+    "id": "wang-2024-softcon",
+    "title": "SoftCon: Simulation Opportunity-driven Foundation Training with Contrastive learning for multi-label RS",
+    "authors": [
+      "Wang",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2405.20462",
+    "link": "arXiv:2405.20462",
+    "tags": [
+      "foundation-model",
+      "contrastive",
+      "multilabel"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/wang-2024-softcon.pdf",
+    "in_slides": [
+      "foundation-models"
+    ],
+    "relates_to": [],
+    "note": "notes/wang-2024-softcon.md"
+  },
+  {
+    "id": "waste-rs-survey-2024",
+    "title": "Solid waste detection, monitoring and mapping in remote sensing images: a survey",
+    "authors": [
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "Waste Management",
+    "doi": "10.1016/j.wasman.2024.xxxxx",
+    "arxiv": null,
+    "link": "https://www.sciencedirect.com/science/article/pii/S0956053X24004380",
+    "tags": [
+      "waste",
+      "survey",
+      "gap-analysis",
+      "object-vs-material"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/waste-rs-survey-2024.md"
+  },
+  {
+    "id": "yolov7ot-tanks-2024",
+    "title": "Storage tank target detection for large-scale remote sensing images based on YOLOv7-OT",
+    "authors": [
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "Remote Sensing",
+    "doi": "10.3390/rs16234510",
+    "arxiv": null,
+    "link": "https://www.mdpi.com/2072-4292/16/23/4510",
+    "tags": [
+      "tanks",
+      "object-detection",
+      "yolo",
+      "vhr"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/yolov7ot-tanks-2024.md"
+  },
+  {
+    "id": "global-dumpsites-2023",
+    "title": "Revealing influencing factors on global waste distribution via deep-learning based dumpsite detection from satellite imagery",
+    "authors": [
+      "(unknown)"
+    ],
+    "year": 2023,
+    "venue": "Nature Comms",
+    "doi": "10.1038/s41467-023-37136-1",
+    "arxiv": null,
+    "link": "https://doi.org/10.1038/s41467-023-37136-1",
+    "tags": [
+      "waste",
+      "global",
+      "deep-learning",
+      "dumpsites"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/global-dumpsites-2023.pdf",
+    "in_slides": [
+      "low-res-survey"
+    ],
+    "relates_to": [],
+    "note": "notes/global-dumpsites-2023.md"
+  },
+  {
+    "id": "wang-2023-ssl4eo-s12",
+    "title": "SSL4EO-S12: Self-Supervised Learning for Earth Observation - Sentinel-1/2",
+    "authors": [
+      "Wang",
+      "et al."
+    ],
+    "year": 2023,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2211.07044",
+    "link": "arXiv:2211.07044",
+    "tags": [
+      "foundation-model",
+      "ssl",
+      "sentinel-1-2"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/wang-2023-ssl4eo-s12.pdf",
+    "in_slides": [
+      "foundation-models"
+    ],
+    "relates_to": [],
+    "note": "notes/wang-2023-ssl4eo-s12.md"
+  },
+  {
+    "id": "cd-debris-drone-2022",
+    "title": "Automatic volume calculation and mapping of construction and demolition debris using drones, deep learning, and GIS",
+    "authors": [
+      "et al."
+    ],
+    "year": 2022,
+    "venue": "Drones",
+    "doi": "10.3390/drones6100279",
+    "arxiv": null,
+    "link": "https://www.mdpi.com/2504-446X/6/10/279",
+    "tags": [
+      "debris",
+      "drone",
+      "fcn",
+      "segmentation",
+      "volume"
+    ],
+    "relevance": "high",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/cd-debris-drone-2022.md"
+  },
+  {
+    "id": "cong-2022-satmae",
+    "title": "SatMAE: Pre-training Transformers for Temporal and Multi-Spectral Satellite Imagery",
+    "authors": [
+      "Cong",
+      "et al."
+    ],
+    "year": 2022,
+    "venue": "NeurIPS",
+    "doi": null,
+    "arxiv": "2207.08051",
+    "link": "arXiv:2207.08051",
+    "tags": [
+      "foundation-model",
+      "multispectral",
+      "pretraining"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/cong-2022-satmae.pdf",
+    "in_slides": [
+      "foundation-models"
+    ],
+    "relates_to": [],
+    "note": "notes/cong-2022-satmae.md"
+  },
+  {
+    "id": "marida-2022-marine-debris",
+    "title": "MARIDA: A benchmark for Marine Debris detection from Sentinel-2 remote sensing data",
+    "authors": [
+      "Kikaki",
+      "et al."
+    ],
+    "year": 2022,
+    "venue": "PLOS ONE",
+    "doi": "10.1371/journal.pone.0262247",
+    "arxiv": null,
+    "link": "https://doi.org/10.1371/journal.pone.0262247",
+    "tags": [
+      "marine-debris",
+      "sentinel-2",
+      "benchmark",
+      "low-res-survey"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/marida-2022-marine-debris.pdf",
+    "in_slides": [
+      "low-res-survey"
+    ],
+    "relates_to": [],
+    "note": "notes/marida-2022-marine-debris.md"
+  },
+  {
+    "id": "zhou-2021-plastic-classifier",
+    "title": "A knowledge-based, validated classifier for the identification of aliphatic and aromatic plastics by WorldView-3 satellite data",
+    "authors": [
+      "Zhou",
+      "Kuester",
+      "Bochow",
+      "Bohn",
+      "Brell",
+      "Kaufmann"
+    ],
+    "year": 2021,
+    "venue": "Remote Sensing of Environment",
+    "doi": "10.1016/j.rse.2021.112598",
+    "arxiv": null,
+    "link": "https://doi.org/10.1016/j.rse.2021.112598",
+    "tags": [
+      "plastic",
+      "hyperspectral",
+      "classifier",
+      "aliphatic-aromatic",
+      "wv-3",
+      "gfz"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/zhou-2021-plastic-classifier.pdf",
+    "in_slides": [
+      "high-res-survey"
+    ],
+    "relates_to": [],
+    "note": "notes/zhou-2021-plastic-classifier.md"
+  },
+  {
+    "id": "guo-li-2020-ndpi-wv3",
+    "title": "Mapping plastic materials in an urban area: Development of the normalized difference plastic index using WorldView-3 superspectral data",
+    "authors": [
+      "Guo",
+      "Li"
+    ],
+    "year": 2020,
+    "venue": "ISPRS J. Photogr. & Remote Sensing",
+    "doi": "10.1016/j.isprsjprs.2020.09.009",
+    "arxiv": null,
+    "link": "https://doi.org/10.1016/j.isprsjprs.2020.09.009",
+    "tags": [
+      "wv-3",
+      "swir",
+      "plastic",
+      "spectral-index",
+      "urban",
+      "ndpi"
+    ],
+    "relevance": "high",
+    "status": "vpn-required",
+    "pdf": null,
+    "in_slides": [
+      "high-res-survey"
+    ],
+    "relates_to": [
+      "aguilar-2025-macroplastics-wv3",
+      "zhou-2021-plastic-classifier"
+    ],
+    "note": "notes/guo-li-2020-ndpi-wv3.md"
+  },
+  {
+    "id": "plastics-uv-swir-2020",
+    "title": "Hyperspectral UV to SWIR characteristics of marine-harvested, washed-ashore and virgin plastics (spectral library)",
+    "authors": [
+      "Knaeps",
+      "et al."
+    ],
+    "year": 2020,
+    "venue": "ESSD",
+    "doi": "10.5194/essd-12-77-2020",
+    "arxiv": null,
+    "link": "https://doi.org/10.5194/essd-12-77-2020",
+    "tags": [
+      "plastic",
+      "hyperspectral",
+      "uv-swir",
+      "signature-library"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/plastics-uv-swir-2020.pdf",
+    "in_slides": [
+      "spectral-signatures"
+    ],
+    "relates_to": [],
+    "note": "notes/plastics-uv-swir-2020.md"
+  },
+  {
+    "id": "cilia-2015-ac-weathering",
+    "title": "Mapping of Asbestos Cement Roofs and Their Weathering Status Using Hyperspectral Aerial Images",
+    "authors": [
+      "Cilia",
+      "Panigada",
+      "Rossini",
+      "Candiani",
+      "Pepe",
+      "Colombo"
+    ],
+    "year": 2015,
+    "venue": "ISPRS Int. J. Geo-Information",
+    "doi": "10.3390/ijgi4020928",
+    "arxiv": null,
+    "link": "https://doi.org/10.3390/ijgi4020928",
+    "tags": [
+      "asbestos",
+      "hyperspectral",
+      "mivis",
+      "sam",
+      "weathering",
+      "italian"
+    ],
+    "relevance": "high",
+    "status": "downloaded",
+    "pdf": "library/cilia-2015-ac-weathering.pdf",
+    "in_slides": [
+      "asbestos-anchor"
+    ],
+    "relates_to": [
+      "shepherd-2025-asbestos-enmap",
+      "bonifazi-2026-ac-python"
+    ],
+    "note": "notes/cilia-2015-ac-weathering.md"
+  },
+  {
+    "id": "aerialwaste-ensemble-2025",
+    "title": "Automated landfill detection: comparative study of lightweight and custom architectures with AerialWaste",
+    "authors": [
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2508.18315",
+    "link": "https://arxiv.org/abs/2508.18315",
+    "tags": [
+      "waste",
+      "aerialwaste",
+      "ensemble",
+      "transformer",
+      "benchmark"
+    ],
+    "relevance": "medium",
+    "status": "downloaded",
+    "pdf": "library/aerialwaste-ensemble-2025.pdf",
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/aerialwaste-ensemble-2025.md"
+  },
+  {
+    "id": "cdw-2025-critical-wavelengths",
+    "title": "Critical wavelengths for construction and demolition waste materials",
+    "authors": [
+      "(unknown)"
+    ],
+    "year": 2025,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2501.02239",
+    "link": "arXiv:2501.02239",
+    "tags": [
+      "construction-demolition",
+      "wavelengths",
+      "materials"
+    ],
+    "relevance": "medium",
+    "status": "downloaded",
+    "pdf": "library/cdw-2025-critical-wavelengths.pdf",
+    "in_slides": [],
+    "relates_to": [],
+    "note": "notes/cdw-2025-critical-wavelengths.md"
+  },
+  {
+    "id": "fclipseg-debris-2025",
+    "title": "Post-hurricane debris segmentation using fine-tuned foundational vision models",
+    "authors": [
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2504.12542",
+    "link": "https://arxiv.org/abs/2504.12542",
+    "tags": [
+      "debris",
+      "foundation-model",
+      "clipseg",
+      "segmentation",
+      "aerial"
+    ],
+    "relevance": "medium",
+    "status": "downloaded",
+    "pdf": "library/fclipseg-debris-2025.pdf",
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/fclipseg-debris-2025.md"
+  },
+  {
+    "id": "heavyduty-truck-satellite-2025",
+    "title": "A deep-learning approach to detect and classify heavy-duty trucks in satellite images",
+    "authors": [
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "PMC (open access)",
+    "doi": null,
+    "arxiv": null,
+    "link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12302943/",
+    "tags": [
+      "vehicles",
+      "containers",
+      "object-detection",
+      "vhr"
+    ],
+    "relevance": "medium",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/heavyduty-truck-satellite-2025.md"
+  },
+  {
+    "id": "hybrid-yolov5-elv-2025",
+    "title": "Hybrid-YOLOv5 for object detection of non-ferrous metals in end-of-life vehicles",
+    "authors": [
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "Scientific Reports",
+    "doi": "10.1038/s41598-025-02683-8",
+    "arxiv": null,
+    "link": "https://www.nature.com/articles/s41598-025-02683-8",
+    "tags": [
+      "scrap",
+      "metal",
+      "elv",
+      "close-range",
+      "yolo",
+      "gap"
+    ],
+    "relevance": "medium",
+    "status": "downloaded",
+    "pdf": "library/hybrid-yolov5-elv-2025.pdf",
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/hybrid-yolov5-elv-2025.md"
+  },
+  {
+    "id": "plastic-uav-iot-2025",
+    "title": "Identification of plastic waste with UAV using deep learning and IoT",
+    "authors": [
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "Journal of Hazardous Materials Advances",
+    "doi": "10.1016/j.hazadv.2025.100348",
+    "arxiv": null,
+    "link": "https://www.sciencedirect.com/science/article/pii/S2772416625000348",
+    "tags": [
+      "plastic",
+      "drone",
+      "iot",
+      "edge"
+    ],
+    "relevance": "medium",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/plastic-uav-iot-2025.md"
+  },
+  {
+    "id": "thoreau-2025-deflect",
+    "title": "DEFLECT: Parameter-Efficient Adaptation of Geospatial Foundation Models through Embedding Deflection",
+    "authors": [
+      "Thoreau",
+      "Marsocci",
+      "Derksen"
+    ],
+    "year": 2025,
+    "venue": "ICCV 2025",
+    "doi": null,
+    "arxiv": "2503.09493",
+    "link": "arXiv:2503.09493",
+    "tags": [
+      "vit",
+      "parameter-efficient",
+      "multispectral-adapter",
+      "geospatial-fm",
+      "peft"
+    ],
+    "relevance": "medium",
+    "status": "downloaded",
+    "pdf": "library/thoreau-2025-deflect.pdf",
+    "in_slides": [],
+    "relates_to": [
+      "xiong-2024-dofa",
+      "szwarcman-2024-prithvi-eo2"
+    ],
+    "note": "notes/thoreau-2025-deflect.md"
+  },
+  {
+    "id": "uav-waste-review-2025",
+    "title": "AI-powered drone technology with computer vision and deep learning in waste management: a systematic review",
+    "authors": [
+      "et al."
+    ],
+    "year": 2025,
+    "venue": "Drones",
+    "doi": "10.3390/drones9080550",
+    "arxiv": null,
+    "link": "https://www.mdpi.com/2504-446X/9/8/550",
+    "tags": [
+      "waste",
+      "drone",
+      "survey",
+      "yolo"
+    ],
+    "relevance": "medium",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/uav-waste-review-2025.md"
+  },
+  {
+    "id": "spectralwaste-2024-dataset",
+    "title": "SpectralWaste: A Multimodal Spectral Dataset for Waste Sorting",
+    "authors": [
+      "(unknown)"
+    ],
+    "year": 2024,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2403.18033",
+    "link": "arXiv:2403.18033",
+    "tags": [
+      "waste",
+      "dataset",
+      "hyperspectral",
+      "sorting"
+    ],
+    "relevance": "medium",
+    "status": "downloaded",
+    "pdf": "library/spectralwaste-2024-dataset.pdf",
+    "in_slides": [],
+    "relates_to": [],
+    "note": "notes/spectralwaste-2024-dataset.md"
+  },
+  {
+    "id": "uav-solidwaste-2024",
+    "title": "A practical deep learning architecture for large-area solid wastes monitoring based on UAV imagery",
+    "authors": [
+      "Liu",
+      "et al."
+    ],
+    "year": 2024,
+    "venue": "Applied Sciences",
+    "doi": "10.3390/app14052084",
+    "arxiv": null,
+    "link": "https://www.mdpi.com/2076-3417/14/5/2084",
+    "tags": [
+      "waste",
+      "drone",
+      "segmentation",
+      "dual-branch"
+    ],
+    "relevance": "medium",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/uav-solidwaste-2024.md"
+  },
+  {
+    "id": "asbestos-slate-drone-2023",
+    "title": "Construction of asbestos slate deep-learning training-data model based on drone images",
+    "authors": [
+      "et al."
+    ],
+    "year": 2023,
+    "venue": "PMC (open access)",
+    "doi": null,
+    "arxiv": null,
+    "link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10575463/",
+    "tags": [
+      "asbestos",
+      "drone",
+      "rgb",
+      "training-data"
+    ],
+    "relevance": "medium",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/asbestos-slate-drone-2023.md"
+  },
+  {
+    "id": "tisza-2023-waste-change",
+    "title": "Waste detection and change analysis based on multispectral satellite imagery",
+    "authors": [
+      "(Hungarian Tisza team)"
+    ],
+    "year": 2023,
+    "venue": "arXiv",
+    "doi": null,
+    "arxiv": "2303.14521",
+    "link": "arXiv:2303.14521",
+    "tags": [
+      "waste",
+      "change-detection",
+      "multispectral",
+      "sentinel-2",
+      "planetscope"
+    ],
+    "relevance": "medium",
+    "status": "downloaded",
+    "pdf": "library/tisza-2023-waste-change.pdf",
+    "in_slides": [],
+    "relates_to": [],
+    "note": "notes/tisza-2023-waste-change.md"
+  },
+  {
+    "id": "vehicle-detection-da-2020",
+    "title": "Vehicle detection in high-resolution satellite images using a region-based detector and unsupervised domain adaptation",
+    "authors": [
+      "Koga",
+      "Miyazaki",
+      "Shibasaki"
+    ],
+    "year": 2020,
+    "venue": "Remote Sensing",
+    "doi": "10.3390/rs12030575",
+    "arxiv": null,
+    "link": "https://www.mdpi.com/2072-4292/12/3/575",
+    "tags": [
+      "vehicles",
+      "object-detection",
+      "domain-adaptation",
+      "vhr"
+    ],
+    "relevance": "medium",
+    "status": "pending",
+    "pdf": null,
+    "in_slides": [
+      "vhr-13classes"
+    ],
+    "relates_to": [],
+    "note": "notes/vehicle-detection-da-2020.md"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "topic": "asbestos",
+    "doi": "10.1016/j.jenvman.2026.128908",
+    "title": "Affordable risk mapping and detection of asbestos-cement roofs via remote sensing",
+    "year": "2026",
+    "slug": "Affordable_risk_mapping",
+    "filename": "asbestos_2026_Affordable_risk_mapping.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.1016/j.jenvman.2026.128908"
+  },
+  {
+    "topic": "asbestos",
+    "doi": "10.1016/j.jhazmat.2026.141864",
+    "title": "Satellite-based detection of asbestos-cement roofs using WorldView-3 VNIR data",
+    "year": "2026",
+    "slug": "WV3_VNIR_asbestos_detection",
+    "filename": "asbestos_2026_WV3_VNIR_asbestos_detection.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.1016/j.jhazmat.2026.141864"
+  },
+  {
+    "topic": "asbestos",
+    "doi": "10.1016/j.rsase.2025.101464",
+    "title": "Analysis of asbestos-cement roof classification in urban areas: Supervised and unsupervised",
+    "year": "2025",
+    "slug": "Urban_AC_roof_classification",
+    "filename": "asbestos_2025_Urban_AC_roof_classification.pdf",
+    "status": "✗ no OA — try Polimi VPN: https://doi.org/10.1016/j.rsase.2025.101464"
+  },
+  {
+    "topic": "asbestos",
+    "doi": "10.3390/rs14143418",
+    "title": "Mapping Asbestos-Cement Corrugated Roofing Tiles with Imagery Cube via Machine Learning",
+    "year": "2022",
+    "slug": "AC_corrugated_tiles_ML",
+    "filename": "asbestos_2022_AC_corrugated_tiles_ML.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.3390/rs14143418"
+  },
+  {
+    "topic": "asbestos",
+    "doi": "10.3390/rs12030408",
+    "title": "Asbestos-cement roofing identification using remote sensing and convolutional neural networks",
+    "year": "2020",
+    "slug": "AC_roofing_CNN",
+    "filename": "asbestos_2020_AC_roofing_CNN.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.3390/rs12030408"
+  },
+  {
+    "topic": "asbestos",
+    "doi": "10.3390/ijgi4020928",
+    "title": "Mapping of asbestos cement roofs and their weathering status using hyperspectral",
+    "year": "2015",
+    "slug": "AC_roofs_hyperspectral_weathering",
+    "filename": "asbestos_2015_AC_roofs_hyperspectral_weathering.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.3390/ijgi4020928"
+  },
+  {
+    "topic": "asbestos",
+    "doi": "10.1016/j.rsase.2024.101167",
+    "title": "Multi-temporal change detection of asbestos roofing: A hybrid object-based deep",
+    "year": "2024",
+    "slug": "AC_change_detection",
+    "filename": "asbestos_2024_AC_change_detection.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.1016/j.rsase.2024.101167"
+  },
+  {
+    "topic": "waste",
+    "doi": "10.1016/j.wasman.2022.02.031",
+    "title": "Development and application of an analytical framework for mapping probable illegal landfills",
+    "year": "2022",
+    "slug": "Illegal_landfills_framework",
+    "filename": "waste_2022_Illegal_landfills_framework.pdf",
+    "status": "✗ no OA — try Polimi VPN: https://doi.org/10.1016/j.wasman.2022.02.031"
+  },
+  {
+    "topic": "waste",
+    "doi": "10.1080/22797254.2023.2176006",
+    "title": "Litter on the streets - solid waste detection using VHR images",
+    "year": "2023",
+    "slug": "Litter_VHR",
+    "filename": "waste_2023_Litter_VHR.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.1080/22797254.2023.2176006"
+  },
+  {
+    "topic": "waste",
+    "doi": "10.3390/s23083917",
+    "title": "Satellite Data Potentialities in Solid Waste Landfill Monitoring: Review and Case Study",
+    "year": "2023",
+    "slug": "Landfill_satellite_review",
+    "filename": "waste_2023_Landfill_satellite_review.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.3390/s23083917"
+  },
+  {
+    "topic": "waste",
+    "doi": "10.3390/rs16193595",
+    "title": "Multi-Scale Context Fusion Network for Urban Solid Waste Detection in Remote Sensing",
+    "year": "2024",
+    "slug": "MS_context_fusion_waste",
+    "filename": "waste_2024_MS_context_fusion_waste.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.3390/rs16193595"
+  },
+  {
+    "topic": "waste",
+    "doi": "10.3390/app14052084",
+    "title": "A Practical Deep Learning Architecture for Large-Area Solid Wastes Monitoring",
+    "year": "2024",
+    "slug": "Practical_DL_large_area_waste",
+    "filename": "waste_2024_Practical_DL_large_area_waste.pdf",
+    "status": "✗ all OA URLs failed — manual: https://doi.org/10.3390/app14052084"
+  }
+]

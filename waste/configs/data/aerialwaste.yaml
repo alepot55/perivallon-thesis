@@ -1,0 +1,11 @@
+# AerialWaste v3 data configuration
+name: aerialwaste
+root: data/raw
+image_size: 500          # 100m context @ 20 cm/px GSD
+target_gsd: 20           # Filter for AGEA 20 cm/px images
+batch_size: 24           # Max for RTX 4070 12GB with AMP + img_size=500 (paper: 120 multi-GPU)
+num_workers: 4
+val_fraction: 0.0            # Train on full split; 10% proxy val for early stopping
+# AerialWaste v3 training split statistics (computed over 7829 images, ~8B pixels)
+mean: [0.3201, 0.3358, 0.2801]
+std: [0.1878, 0.1666, 0.1664]

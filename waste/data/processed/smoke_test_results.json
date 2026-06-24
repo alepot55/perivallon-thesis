@@ -1,0 +1,62 @@
+[
+  {
+    "model": "SSL4EOClassifier",
+    "label": "SSL4EO_all13",
+    "bands": 13,
+    "band_indices": null,
+    "val_f1": 1.0,
+    "val_acc": 1.0,
+    "elapsed_s": 11.1,
+    "pass": true
+  },
+  {
+    "model": "SSL4EOClassifier",
+    "label": "SSL4EO_RGB",
+    "bands": 3,
+    "band_indices": [
+      3,
+      2,
+      1
+    ],
+    "val_f1": 0.0,
+    "val_acc": 0.705,
+    "elapsed_s": 6.5,
+    "pass": false,
+    "note": "Expected: B11-based labels not learnable from RGB-only input",
+    "expected_fail": true
+  },
+  {
+    "model": "DOFAClassifier",
+    "label": "DOFA_all13",
+    "bands": 13,
+    "wavelengths": [
+      443,
+      490,
+      560,
+      665,
+      705,
+      740,
+      783,
+      842,
+      865,
+      940,
+      1375,
+      1610,
+      2190
+    ],
+    "val_f1": 1.0,
+    "val_acc": 1.0,
+    "elapsed_s": 24.1,
+    "pass": true
+  },
+  {
+    "model": "SwinRSP",
+    "label": "SwinRSP_RGB_real",
+    "bands": 3,
+    "data": "AerialWaste_RGB",
+    "val_f1": 0.6872,
+    "val_acc": 0.8092,
+    "elapsed_s": 501.8,
+    "pass": true
+  }
+]

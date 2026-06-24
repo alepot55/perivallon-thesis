@@ -1,0 +1,6 @@
+backbone: dofa_base
+n_classes: 2
+wavelengths: null  # null = all 13 S2 wavelengths
+freeze_backbone: true
+drop_head: 0.1
+pretrained: true

@@ -1,0 +1,6 @@
+# Swin-T with RSP pretraining (Gibellini et al. 2025 best config)
+name: swin_rsp
+pretrained_imagenet: false
+rsp_checkpoint_path: checkpoints/rsp_swin_t_e300.pth
+num_classes: 1
+image_size: 500  # must match data.image_size

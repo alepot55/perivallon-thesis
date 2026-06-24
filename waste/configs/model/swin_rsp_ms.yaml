@@ -1,0 +1,8 @@
+# Swin-T with RSP pretraining — multispectral adapter for WorldView-3
+name: swin_rsp_ms
+pretrained_imagenet: false
+rsp_checkpoint_path: checkpoints/rsp_swin_t_e300.pth
+num_classes: 1
+image_size: 224  # WV-3 at native GSD
+in_channels: 8
+ms_strategy: weight_inflation  # weight_inflation | random_init_extra | late_fusion

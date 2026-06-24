@@ -1,0 +1,6 @@
+backbone: vit_small
+n_classes: 2
+band_indices: null  # null = all 13 S2 bands
+freeze_backbone: true
+drop_head: 0.1
+pretrained: true

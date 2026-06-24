@@ -1,0 +1,3 @@
+[submodule "vendor/aerialwaste-model"]
+	path = vendor/aerialwaste-model
+	url = https://github.com/nahitorres/aerialwaste-model.git

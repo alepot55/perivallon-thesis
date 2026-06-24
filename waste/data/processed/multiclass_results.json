@@ -1,0 +1,62 @@
+{
+  "num_classes": 16,
+  "class_names": [
+    "Rubble/excavated earth and rocks",
+    "Bulky items",
+    "Fire Wood",
+    "Scrap",
+    "Plastic",
+    "Vehicles",
+    "Tires",
+    "Domestic appliances",
+    "Paper",
+    "Heaps not delimited",
+    "Full container",
+    "Big bags",
+    "Full pallets",
+    "Delimited heaps (by barriers/walls/etc)",
+    "Cisterns",
+    "Rare"
+  ],
+  "rare_group": {
+    "Rare": [
+      "Sludge-Zootechnical waste-Manure",
+      "Foundry waste",
+      "Stone/marble processing waste",
+      "Asphalt milling",
+      "Corrugated sheets (presumed asbestos-cement)",
+      "Glass",
+      "Drums bins"
+    ]
+  },
+  "train_size": 465,
+  "val_size": 82,
+  "test_size": 168,
+  "p1_time_min": 1.4,
+  "p2_time_min": 2.1,
+  "total_time_min": 3.5,
+  "test/f1_macro": 0.0823,
+  "test/f1_weighted": 0.1373,
+  "test/acc": 0.1399,
+  "test/precision": 0.0921,
+  "test/recall": 0.1399,
+  "per_class_f1": {
+    "Rubble/excavated earth and rocks": 0.0909,
+    "Bulky items": 0.1961,
+    "Fire Wood": 0.3226,
+    "Scrap": 0.08,
+    "Plastic": 0.0,
+    "Vehicles": 0.0,
+    "Tires": 0.0833,
+    "Domestic appliances": 0.0,
+    "Paper": 0.0,
+    "Heaps not delimited": 0.0,
+    "Full container": 0.2609,
+    "Big bags": 0.0,
+    "Full pallets": 0.0,
+    "Delimited heaps (by barriers/walls/etc)": 0.0,
+    "Cisterns": 0.0,
+    "Rare": 0.2
+  },
+  "best_checkpoint": "/home/alepot55/Desktop/uni/Tesi/waste/checkpoints/multiclass_22/p2-epoch=13-val/f1=0.1822.ckpt"
+}

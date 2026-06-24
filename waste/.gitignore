@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Data (large files, download separately)
+data/raw/images*/
+data/raw/*.zip
+data/eurosat/
+data/synthetic_ms/
+*.pth
+*.pt
+*.ckpt
+
+# Keep metadata and stats
+!data/raw/training.json
+!data/raw/testing.json
+!data/processed/dataset_stats.json
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs and outputs
+logs/
+outputs/
+checkpoints/
+wandb/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Hydra
+outputs/
+multirun/

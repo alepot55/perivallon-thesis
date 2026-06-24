@@ -1,0 +1,226 @@
+<PAMDataset>
+  <Metadata>
+    <MDI key="TITLE">Coperture in cememnto-amianto - WFS</MDI>
+  </Metadata>
+  <Metadata domain="xml:capabilities" format="xml">
+    <?xml version="1.0" encoding="UTF-8"?>
+    <wfs:WFS_Capabilities xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:ows="http://www.opengis.net/ows" xmlns:gpt_coperture_amianto="https:pras1iitarcgis.adlispa.local:6443/arcgis/services/gpt/coperture_amianto/MapServer/WFSServer" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd http://www.opengis.net/ogc http://schemas.opengis.net/filter/1.1.0/filter.xsd http://www.opengis.net/gml http://schemas.opengis.net/gml/3.1.1/base/gml.xsd http://www.opengis.net/ows http://schemas.opengis.net/ows/1.0.0/owsAll.xsd https:pras1iitarcgis.adlispa.local:6443/arcgis/services/gpt/coperture_amianto/MapServer/WFSServer https://www.cartografia.servizirl.it/expo/services/gpt/coperture_amianto/MapServer/WFSServer?service=wfs%26version=1.1.0%26request=DescribeFeatureType" version="1.1.0">
+      <ows:ServiceIdentification>
+        <ows:Title>Coperture in cememnto-amianto - WFS</ows:Title>
+        <ows:Abstract />
+        <ows:Keywords>
+          <ows:Keyword>ESRI(longlat)</ows:Keyword>
+        </ows:Keywords>
+        <ows:ServiceType>WFS</ows:ServiceType>
+        <ows:ServiceTypeVersion>1.1.0</ows:ServiceTypeVersion>
+        <ows:Fees />
+        <ows:AccessConstraints />
+      </ows:ServiceIdentification>
+      <ows:ServiceProvider>
+        <ows:ProviderName />
+        <ows:ServiceContact>
+          <ows:IndividualName />
+          <ows:PositionName />
+          <ows:ContactInfo>
+            <ows:Phone>
+              <ows:Voice />
+              <ows:Facsimile />
+            </ows:Phone>
+            <ows:Address>
+              <ows:DeliveryPoint />
+              <ows:City />
+              <ows:AdministrativeArea />
+              <ows:PostalCode />
+              <ows:Country />
+              <ows:ElectronicMailAddress />
+            </ows:Address>
+            <ows:OnlineResource xlink:href="https:pras1iitarcgis.adlispa.local:6443/arcgis/services/gpt/coperture_amianto/MapServer/WFSServer" />
+            <ows:HoursOfService />
+            <ows:ContactInstructions />
+          </ows:ContactInfo>
+          <ows:Role />
+        </ows:ServiceContact>
+      </ows:ServiceProvider>
+      <ows:OperationsMetadata>
+        <ows:Operation name="GetCapabilities">
+          <ows:DCP>
+            <ows:HTTP>
+              <ows:Get xlink:href="https://www.cartografia.servizirl.it/expo/services/gpt/coperture_amianto/MapServer/WFSServer?" />
+              <ows:Post xlink:href="https://www.cartografia.servizirl.it/expo/services/gpt/coperture_amianto/MapServer/WFSServer" />
+            </ows:HTTP>
+          </ows:DCP>
+          <ows:Parameter name="AcceptVersions">
+            <ows:Value>1.1.0</ows:Value>
+          </ows:Parameter>
+          <ows:Parameter name="AcceptFormats">
+            <ows:Value>GML3</ows:Value>
+            <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+          </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="DescribeFeatureType">
+          <ows:DCP>
+            <ows:HTTP>
+              <ows:Get xlink:href="https://www.cartografia.servizirl.it/expo/services/gpt/coperture_amianto/MapServer/WFSServer?" />
+              <ows:Post xlink:href="https://www.cartografia.servizirl.it/expo/services/gpt/coperture_amianto/MapServer/WFSServer" />
+            </ows:HTTP>
+          </ows:DCP>
+          <ows:Parameter name="outputFormat">
+            <ows:Value>GML3</ows:Value>
+            <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+          </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="GetFeature">
+          <ows:DCP>
+            <ows:HTTP>
+              <ows:Get xlink:href="https://www.cartografia.servizirl.it/expo/services/gpt/coperture_amianto/MapServer/WFSServer?" />
+              <ows:Post xlink:href="https://www.cartografia.servizirl.it/expo/services/gpt/coperture_amianto/MapServer/WFSServer" />
+            </ows:HTTP>
+          </ows:DCP>
+          <ows:Parameter name="resultType">
+            <ows:Value>results</ows:Value>
+            <ows:Value>hits</ows:Value>
+          </ows:Parameter>
+          <ows:Parameter name="outputFormat">
+            <ows:Value>GML3</ows:Value>
+            <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+          </ows:Parameter>
+        </ows:Operation>
+      </ows:OperationsMetadata>
+      <wfs:FeatureTypeList>
+        <wfs:Operations>
+          <wfs:Operation>Query</wfs:Operation>
+        </wfs:Operations>
+        <wfs:FeatureType>
+          <wfs:Name>gpt_coperture_amianto:Mappatura_2020</wfs:Name>
+          <wfs:Title>Mappatura_2020</wfs:Title>
+          <wfs:DefaultSRS>urn:ogc:def:crs:EPSG::32632</wfs:DefaultSRS>
+          <wfs:OutputFormats>
+            <wfs:Format>GML3</wfs:Format>
+            <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+          </wfs:OutputFormats>
+          <ows:WGS84BoundingBox>
+            <ows:LowerCorner>8.85163881 44.92286028</ows:LowerCorner>
+            <ows:UpperCorner>10.92806860 46.18525989</ows:UpperCorner>
+          </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+        <wfs:FeatureType>
+          <wfs:Name>gpt_coperture_amianto:Aree_mappature_2020</wfs:Name>
+          <wfs:Title>Aree_mappature_2020</wfs:Title>
+          <wfs:DefaultSRS>urn:ogc:def:crs:EPSG::32632</wfs:DefaultSRS>
+          <wfs:OutputFormats>
+            <wfs:Format>GML3</wfs:Format>
+            <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+          </wfs:OutputFormats>
+          <ows:WGS84BoundingBox>
+            <ows:LowerCorner>8.84425277 44.92028503</ows:LowerCorner>
+            <ows:UpperCorner>10.94057381 46.18789936</ows:UpperCorner>
+          </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+        <wfs:FeatureType>
+          <wfs:Name>gpt_coperture_amianto:Mappature_precedenti</wfs:Name>
+          <wfs:Title>Mappature_precedenti</wfs:Title>
+          <wfs:DefaultSRS>urn:ogc:def:crs:EPSG::32632</wfs:DefaultSRS>
+          <wfs:OutputFormats>
+            <wfs:Format>GML3</wfs:Format>
+            <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+          </wfs:OutputFormats>
+          <ows:WGS84BoundingBox>
+            <ows:LowerCorner>8.74726153 45.12503408</ows:LowerCorner>
+            <ows:UpperCorner>10.37436791 46.09317896</ows:UpperCorner>
+          </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+        <wfs:FeatureType>
+          <wfs:Name>gpt_coperture_amianto:Aree_mappature</wfs:Name>
+          <wfs:Title>Aree_mappature</wfs:Title>
+          <wfs:DefaultSRS>urn:ogc:def:crs:EPSG::32632</wfs:DefaultSRS>
+          <wfs:OutputFormats>
+            <wfs:Format>GML3</wfs:Format>
+            <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+          </wfs:OutputFormats>
+          <ows:WGS84BoundingBox>
+            <ows:LowerCorner>8.75094649 45.11328208</ows:LowerCorner>
+            <ows:UpperCorner>10.37711947 46.08258310</ows:UpperCorner>
+          </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+        <wfs:FeatureType>
+          <wfs:Name>gpt_coperture_amianto:Tutti_i_Comuni</wfs:Name>
+          <wfs:Title>Tutti_i_Comuni</wfs:Title>
+          <wfs:DefaultSRS>urn:ogc:def:crs:EPSG::32632</wfs:DefaultSRS>
+          <wfs:OutputFormats>
+            <wfs:Format>GML3</wfs:Format>
+            <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+          </wfs:OutputFormats>
+          <ows:WGS84BoundingBox>
+            <ows:LowerCorner>8.48608696 44.65459054</ows:LowerCorner>
+            <ows:UpperCorner>11.50260532 46.64210237</ows:UpperCorner>
+          </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+        <wfs:FeatureType>
+          <wfs:Name>gpt_coperture_amianto:Province</wfs:Name>
+          <wfs:Title>Province</wfs:Title>
+          <wfs:DefaultSRS>urn:ogc:def:crs:EPSG::32632</wfs:DefaultSRS>
+          <wfs:OutputFormats>
+            <wfs:Format>GML3</wfs:Format>
+            <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+          </wfs:OutputFormats>
+          <ows:WGS84BoundingBox>
+            <ows:LowerCorner>8.48608696 44.65459054</ows:LowerCorner>
+            <ows:UpperCorner>11.50260532 46.64210237</ows:UpperCorner>
+          </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+        <wfs:FeatureType>
+          <wfs:Name>gpt_coperture_amianto:ATS</wfs:Name>
+          <wfs:Title>ATS</wfs:Title>
+          <wfs:DefaultSRS>urn:ogc:def:crs:EPSG::32632</wfs:DefaultSRS>
+          <wfs:OutputFormats>
+            <wfs:Format>GML3</wfs:Format>
+            <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+          </wfs:OutputFormats>
+          <ows:WGS84BoundingBox>
+            <ows:LowerCorner>8.48608696 44.65459054</ows:LowerCorner>
+            <ows:UpperCorner>11.50260532 46.64210237</ows:UpperCorner>
+          </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+      </wfs:FeatureTypeList>
+      <ogc:Filter_Capabilities>
+        <ogc:Spatial_Capabilities>
+          <ogc:GeometryOperands>
+            <ogc:GeometryOperand>gml:Envelope</ogc:GeometryOperand>
+            <ogc:GeometryOperand>gml:Point</ogc:GeometryOperand>
+            <ogc:GeometryOperand>gml:Polygon</ogc:GeometryOperand>
+            <ogc:GeometryOperand>gml:LineString</ogc:GeometryOperand>
+          </ogc:GeometryOperands>
+          <ogc:SpatialOperators>
+            <ogc:SpatialOperator name="BBOX" />
+            <ogc:SpatialOperator name="Equals" />
+            <ogc:SpatialOperator name="Disjoint" />
+            <ogc:SpatialOperator name="Intersects" />
+            <ogc:SpatialOperator name="Crosses" />
+            <ogc:SpatialOperator name="Touches" />
+            <ogc:SpatialOperator name="Within" />
+            <ogc:SpatialOperator name="Contains" />
+            <ogc:SpatialOperator name="Overlaps" />
+          </ogc:SpatialOperators>
+        </ogc:Spatial_Capabilities>
+        <ogc:Scalar_Capabilities>
+          <ogc:LogicalOperators />
+          <ogc:ComparisonOperators>
+            <ogc:ComparisonOperator>EqualTo</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>NotEqualTo</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>LessThan</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>GreaterThan</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>LessThanEqualTo</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>GreaterThanEqualTo</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>Like</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>Between</ogc:ComparisonOperator>
+            <ogc:ComparisonOperator>NullCheck</ogc:ComparisonOperator>
+          </ogc:ComparisonOperators>
+        </ogc:Scalar_Capabilities>
+        <ogc:Id_Capabilities>
+          <ogc:EID />
+          <ogc:FID />
+        </ogc:Id_Capabilities>
+      </ogc:Filter_Capabilities>
+    </wfs:WFS_Capabilities>
+  </Metadata>
+</PAMDataset>

@@ -1,0 +1,6 @@
+# Swin-T with ImageNet pretraining (INP baseline)
+name: swin_imagenet
+pretrained_imagenet: true
+rsp_checkpoint_path: null
+num_classes: 1
+image_size: 500

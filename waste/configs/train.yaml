@@ -1,0 +1,46 @@
+# Main training configuration — Hydra
+# Usage: python scripts/train.py [overrides]
+defaults:
+  - model: swin_rsp
+  - data: aerialwaste
+  - _self_
+
+seed: 42
+
+trainer:
+  max_epochs: 50
+  accelerator: auto  # gpu if available, else cpu
+  devices: 1
+  precision: "16-mixed"  # AMP for faster training + lower VRAM
+  log_every_n_steps: 10
+  accumulate_grad_batches: 5  # effective batch = 24 × 5 = 120 (matches paper)
+  deterministic: false  # false for speed; enable for exact reproducibility
+
+training:
+  # Two-step procedure from Gibellini et al. (2025)
+  phase: both          # "tl" = Transfer Learning, "ft" = Fine-Tuning, "both" = two-step
+  lr_tl: 2.236e-3     # 1e-3 × sqrt(5) — sqrt scaling for grad accum
+  lr_ft: 2.236e-4     # 1e-4 × sqrt(5)
+  tl_epochs: 10        # Epochs for TL phase
+  ft_epochs: 20        # Epochs for FT phase
+  weight_decay: 0.05   # AdamW default for transformers
+  threshold: 0.5
+
+early_stopping:
+  monitor: val/f1
+  patience: 7
+  min_delta: 0.0005
+  mode: max
+
+logging:
+  use_wandb: false
+  wandb_project: perivallon-waste
+  wandb_entity: null
+  csv_dir: logs/
+
+checkpoint:
+  dirpath: checkpoints/
+  filename: "{epoch:02d}-{val/f1:.4f}"
+  monitor: val/f1
+  mode: max
+  save_top_k: 3

@@ -1,0 +1,36 @@
+# Coarse 5-class grouping of AerialWaste 22 categories.
+# Aggregates rare classes to reduce severe imbalance.
+# Maps fine-grained category names to coarse group names.
+
+groups:
+  organic:
+    - "Fire Wood"
+    - "Sludge-Zootechnical waste-Manure"
+
+  construction:
+    - "Rubble/excavated earth and rocks"
+    - "Corrugated sheets (presumed asbestos-cement)"
+    - "Stone/marble processing waste"
+    - "Asphalt milling"
+    - "Foundry waste"
+
+  metal_plastic:
+    - "Scrap"
+    - "Big bags"
+    - "Cisterns"
+    - "Drums bins"
+    - "Tires"
+    - "Plastic"
+
+  bulky:
+    - "Bulky items"
+    - "Vehicles"
+    - "Domestic appliances"
+    - "Paper"
+    - "Glass"
+    - "Full pallets"
+
+  storage:
+    - "Heaps not delimited"
+    - "Full container"
+    - "Delimited heaps (by barriers/walls/etc)"

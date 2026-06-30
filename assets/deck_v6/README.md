@@ -1,26 +1,26 @@
-# Deck v6 — WorldView-3 + Pléiades Neo direction
+# Deck — WorldView-3 + Pléiades Neo (black & white, minimal)
 
-Expanded SOTA + thesis-direction deck (41 slides, 16:9, didactic colour register).
-Pivots off the SuperDove-era deck onto the confirmed experimental data
-**WorldView-3 (8 VNIR @1.24 m + 8 SWIR @3.7 m) + Pléiades Neo (6 VNIR @1.2 m)**:
-SWIR back in scope, cross-sensor axis, material→EWC→ARPA risk framing.
+`deck_bw.pptx` (27 slides) + `deck_bw.pdf`. Built by **editing the original
+`~/Downloads/ultime_slide.pptx` in place** (`edit_deck.py`): the good initial
+slides and their embedded paper images are preserved; only the content needed
+for the **WV-3 + Pléiades Neo** pivot is changed, and new slides are added in the
+SAME minimal B/W standard style (Calibri 23 bold title / 14 body / 8 grey footer).
 
-## Outputs
-- `deck_v6.pptx` — the deck (self-contained, figures embedded). Import to Google Slides to refine.
-- `deck_v6.pdf` — rendered preview.
-- `figs/` — all figures (300 DPI). Data figures from USGS splib07a; numbers verified from `papers/notes/`.
+## What changed vs the original 19-slide deck
+- New: risk = hazard×exposure×magnitude · asbestos precedents · band→material map ·
+  3-axis ablation · generalization table · material→risk tier · asbestos pilot · novelty+checklist.
+- Edited: pixel-as-spectrum, sensor trade-off, chosen-data table (WV-3 vs Pléiades Neo),
+  Aguilar, more-bands, DOFA, gaps, proposed direction. SuperDove slide → honest-caveat (texture vs chemistry).
+- Figures: 4 clean **black & white** figures (`figs_bw/`) from `figs_bw.py`
+  (SWIR-8 bottleneck from real splib07a, 3-axis cube, band→material grid, pilot workflow).
+  Numbers verified from `papers/notes/`.
 
 ## Regenerate
 ```bash
 cd Tesi && source waste/.venv/bin/activate
-python3 assets/deck_v6/make_figs.py     # spec cards, cube, gen-2d, dofa + reuse rigorous figs
-python3 assets/deck_v6/fix_figs.py      # swir bottleneck, band→material, risk chain, pilot
-python3 assets/deck_v6/fix_figs2.py     # where-info-lives + sensor radar (WV-3 + PNeo)
-python3 assets/deck_v6/build_deck.py    # -> deck_v6.pptx
-libreoffice --headless --convert-to pdf --outdir assets/deck_v6 assets/deck_v6/deck_v6.pptx
+python3 assets/deck_v6/figs_bw.py      # 4 B/W figures
+python3 assets/deck_v6/edit_deck.py    # edits ~/Downloads/ultime_slide.pptx -> deck_bw.pptx (+ ~/Downloads/ultime_slide_v2.pptx)
+libreoffice --headless --convert-to pdf --outdir assets/deck_v6 assets/deck_v6/deck_bw.pptx
 ```
-
-## Provenance
-- Content: `docs/01_calls/2026-06-30_deck_revision.md` (slide-by-slide plan).
-- Research base: `docs/02_research/loop_prof_sota/` (cheatsheet, references, experimental design).
-- Forward-looking figures (3-axis cube, generalization 2-D) are labelled EXPECTED — not yet measured.
+`edit_deck.py` rebuilds two image slides LibreOffice cannot render (fingerprint, sensor)
+so the PDF is complete; the pptx itself opens correctly in Google Slides / PowerPoint.

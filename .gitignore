@@ -53,3 +53,6 @@ waste/data/synthetic_ms/
 
 # ── Claude Code local state (worktrees, jobs, settings) ──────
 .claude/
+
+assets/deck_v6/_qa/
+assets/deck_v6/figs/_thumbs/

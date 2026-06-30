@@ -50,3 +50,6 @@ Thumbs.db
 
 # waste synthetic MS arrays (large)
 waste/data/synthetic_ms/
+
+# ── Claude Code local state (worktrees, jobs, settings) ──────
+.claude/

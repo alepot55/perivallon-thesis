@@ -6,14 +6,14 @@ slides and their embedded paper images are preserved; only the content needed
 for the **WV-3 + Pléiades Neo** pivot is changed, and new slides are added in the
 SAME minimal B/W standard style (Calibri 23 bold title / 14 body / 8 grey footer).
 
-## What changed vs the original 19-slide deck
-- New: risk = hazard×exposure×magnitude · asbestos precedents · band→material map ·
-  3-axis ablation · generalization table · material→risk tier · asbestos pilot · novelty+checklist.
-- Edited: pixel-as-spectrum, sensor trade-off, chosen-data table (WV-3 vs Pléiades Neo),
-  Aguilar, more-bands, DOFA, gaps, proposed direction. SuperDove slide → honest-caveat (texture vs chemistry).
-- Figures: 4 clean **black & white** figures (`figs_bw/`) from `figs_bw.py`
-  (SWIR-8 bottleneck from real splib07a, 3-axis cube, band→material grid, pilot workflow).
-  Numbers verified from `papers/notes/`.
+## Structure (24 slides) — a rigorous SOTA of the task
+Reframed as a dataset-independent **state-of-the-art review** of *material classification of
+illegal waste from multispectral satellite imagery* (not an experiment pitch). Paper-dense:
+6 survey-table slides (Work | Input/GSD | Method | Key result) covering ~30 papers, grouped:
+RGB detection · asbestos · plastics/urban · datasets · foundation models · object-vs-material.
+Plus physical basis (spectral fingerprint, RGB-fails, feature→band), the SWIR divide, the
+Aguilar ablation, gaps, generalization, and a light dataset-independent direction.
+Low-resolution Sentinel slides and the experiment/pipeline slides were removed.
 
 ## Regenerate
 ```bash

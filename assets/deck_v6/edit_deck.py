@@ -24,7 +24,7 @@ def fill_tf(tf, specs, wrap=True):
     tf.clear(); tf.word_wrap=wrap
     for k,sp in enumerate(specs):
         p=tf.paragraphs[0] if k==0 else tf.add_paragraph()
-        p.alignment=PP_ALIGN.LEFT; p.space_after=Pt(sp.get("sa",4)); p.line_spacing=sp.get("ls",1.05)
+        p.alignment=PP_ALIGN.LEFT; p.space_after=Pt(sp.get("sa",7)); p.line_spacing=sp.get("ls",1.22)
         r=p.add_run(); r.text=sp["t"]
         r.font.name=F; r.font.size=Pt(sp.get("sz",14)); r.font.bold=sp.get("b",False)
         r.font.italic=sp.get("i",False); r.font.color.rgb=sp.get("c",INK)
@@ -85,9 +85,11 @@ def add_slide():
 def n_title(s,text):
     tb=s.shapes.add_textbox(IN(0.45),IN(0.34),IN(9.10),IN(0.68))
     fill_tf(tb.text_frame,[{"t":text,"b":True,"sz":23,"c":INK}]); return tb
-def n_body(s,specs,top=1.25,w=9.10,h=None):
-    tb=s.shapes.add_textbox(IN(0.45),IN(top),IN(w),IN(h or (5.0-top+1.0)))
-    fill_tf(tb.text_frame,specs); return tb
+def n_body(s,specs,top=1.35,w=9.05,h=3.65,vc=True):
+    tb=s.shapes.add_textbox(IN(0.5),IN(top),IN(w),IN(h))
+    fill_tf(tb.text_frame,specs)
+    if vc: tb.text_frame.vertical_anchor=MSO_ANCHOR.MIDDLE
+    return tb
 def n_foot(s,text):
     tb=s.shapes.add_textbox(IN(0.45),IN(5.29),IN(9.10),IN(0.26))
     fill_tf(tb.text_frame,[{"t":text,"sz":8,"c":GREY}]); return tb
@@ -111,11 +113,15 @@ def style_table(tbl, headerbold=True, fs=10.5):
                     r.font.name=F; r.font.size=Pt(fs); r.font.color.rgb=INK
                     r.font.bold=(i==0 and headerbold)
 
-def new_table(s, data, left=0.45, top=1.25, w=9.10, colw=None, fs=10.5):
+def new_table(s, data, left=0.5, top=1.35, w=9.05, colw=None, fs=10, rh=0.5, hh=0.42, vcenter=False):
     nr=len(data); nc=len(data[0])
-    gt=s.shapes.add_table(nr,nc,IN(left),IN(top),IN(w),IN(0.42*nr)).table
+    th=hh+(nr-1)*rh
+    if vcenter: top=1.35+(3.65-th)/2.0
+    gt=s.shapes.add_table(nr,nc,IN(left),IN(top),IN(w),IN(th)).table
     if colw:
         for j,cw in enumerate(colw): gt.columns[j].width=IN(cw)
+    gt.rows[0].height=IN(hh)
+    for i in range(1,nr): gt.rows[i].height=IN(rh)
     for i,row in enumerate(data):
         for j,val in enumerate(row): gt.cell(i,j).text=str(val)
     style_table(gt,fs=fs); return gt
@@ -139,7 +145,9 @@ new_table(S[11],[
  ["SWIR","8 b @ 3.7 m","none","none"],
  ["Pan","~0.31 m","~0.30 m","-"],
  ["Access","commercial / TPM","commercial / TPM","free, near-daily"],
-], left=0.45, top=1.15, w=8.4, colw=[1.3,2.4,2.4,2.3], fs=11)
+], left=0.5, top=1.35, w=8.5, colw=[1.4,2.4,2.4,2.3], fs=11, rh=0.5)
+_,_b11,_=boxes(S[11])
+for _bb in _b11: _bb.top=IN(3.95); _bb.height=IN(1.25)
 set_body(S[11],[
  {"t":"WorldView-3 is the only sub-2 m platform that also carries SWIR - where the chemistry lives.","sz":13},
  {"t":"Pleiades Neo and SuperDove are VNIR-only: sharp, but blind to the diagnostic SWIR absorptions.","sz":13},
@@ -196,11 +204,10 @@ set_footer(sd,"USGS splib07a (Kokaly et al., 2017) · WV-3 SWIR band centres (Ma
 
 # ════════ NEW SLIDES ════════
 TCW=[2.15,2.25,2.35,2.35]  # survey-table column widths (sum 9.10)
-def survey(title, rows, foot, sub=None):
+def survey(title, rows, foot):
     n=add_slide(); n_title(n,title)
-    if sub: 
-        tb=n.shapes.add_textbox(IN(0.45),IN(1.02),IN(9.10),IN(0.30)); fill_tf(tb.text_frame,[{"t":sub,"sz":11,"i":True,"c":GREY}])
-    new_table(n,[["Work (year)","Input / GSD","Method","Key result"]]+rows, left=0.45, top=(1.42 if sub else 1.22), w=9.10, colw=TCW, fs=9.5)
+    new_table(n,[["Work (year)","Input / GSD","Method","Key result"]]+rows,
+              colw=[2.0,2.15,2.35,2.55], fs=10, rh=0.52, vcenter=True)
     n_foot(n,foot); return n
 
 # N: risk (motivation)
@@ -214,7 +221,7 @@ n_body(n,[
 n_foot(n,"EWC List of Waste (Dec. 2000/532/EC) · Fazzo et al. 2023")
 
 # G1 RGB detection
-survey("State of the art - RGB deep learning detects sites, not materials",
+survey("State of the art: RGB waste detection",
  [["Gibellini 2025","AerialWaste RGB 20 cm","Swin-T + RSP, two-step","F1 92.0%; cross-region -5.1%"],
   ["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","dataset; ResNet+FPN","F1 80.7%; 22 cats, RGB-only"],
   ["Sun 2023 (global)","VHR RGB 0.3-1 m","BCA-Net detection","~2,500 dumpsites; sens. 98%"],
@@ -228,7 +235,7 @@ n_img(n, os.path.join(BW,"band_material_map.png"), left=0.6, top=1.15, w=8.8, h=
 n_foot(n,"Diagnostic absorptions RGB cannot see · USGS splib07a (Kokaly 2017) · Aguilar 2021/2025 · Cilia 2015")
 
 # G2 asbestos
-survey("State of the art - spectral material discrimination: asbestos",
+survey("State of the art: asbestos discrimination",
  [["Shepherd 2025","EnMAP HSI 30 m","8-classifier cascade (ACE)","86% field match; OA 91.4%"],
   ["Cilia 2015","MIVIS airborne HSI 3 m","SAM + MNF, ISD index","PA 89% / UA 86%"],
   ["Saba 2026 †","WV-3 VNIR 1.24 m","32 classifiers, Fine-KNN","Macro-F1 97.6% (VNIR only)"],
@@ -237,7 +244,7 @@ survey("State of the art - spectral material discrimination: asbestos",
  "Asbestos = the sharpest proof MS/HSI recovers material identity. † paywalled / pre-print - motivating, not established.")
 
 # G3 plastics & urban materials
-survey("State of the art - spectral material discrimination: plastics & urban materials",
+survey("State of the art: plastics & urban materials",
  [["Aguilar 2021","WV-3 VNIR + SWIR","OBIA + DT, 3-way ablation","OA 90.85 -> 96.79 -> 97.38"],
   ["Aguilar 2025","WV-3 SWIR 3.7 m","matched filter (USGS spectra)","precision 92.5%; lab-image r=0.95"],
   ["EMIT (Estrela 2025)","EMIT HSI 60 m","matched filter, HDPE/PVC","first global orbital plastic map"],
@@ -247,7 +254,7 @@ survey("State of the art - spectral material discrimination: plastics & urban ma
  "Material identity comes from NIR-SWIR chemistry (C-H, Mg-OH), not colour - but proven outside illegal-waste imagery.")
 
 # G5 datasets
-survey("State of the art - datasets and the structural data gap",
+survey("State of the art: datasets & the data gap",
  [["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","22 material categories","RGB-only; coordinates withheld"],
   ["CWLD 2024","GF-2 0.8 m + GE 0.5 m","C&D segmentation masks","F1 88.9% / IoU 82% (China)"],
   ["MARIDA 2022","Sentinel-2 10 m","15-class pixel benchmark","marine debris - water, not land"],
@@ -255,7 +262,7 @@ survey("State of the art - datasets and the structural data gap",
  "No public dataset combines very-high resolution + terrestrial waste + material labels - the structural gap.")
 
 # G6 foundation models
-survey("State of the art - foundation models and N-band adaptation",
+survey("State of the art: foundation models",
  [["DOFA (Xiong 2024)","5 modalities 1-30 m","wavelength hypernetwork","up to 202 bands; new-sensor plug-in"],
   ["AnySat (Astruc 2025)","11 sensors 0.2-250 m","JEPA multimodal","SOTA on 9 tasks"],
   ["Prithvi-EO-2.0 2024","HLS 6 b incl. SWIR 30 m","3D temporal MAE","+8 pp GEO-Bench; fixed bands"],
@@ -264,7 +271,7 @@ survey("State of the art - foundation models and N-band adaptation",
  "Most pretrain at 10-30 m on Sentinel-2/HLS; transfer to VHR and to material classification is untested.")
 
 # G7 object vs material
-survey("State of the art - the object-vs-material boundary",
+survey("State of the art: object vs material",
  [["Ramachandran 2024","VHR sub-metre","DL object detection","tanks P 0.96 / R 0.97; >169k mapped"],
   ["YOLOv7-OT 2024","VHR satellite","YOLOv7 + CBAM","tanks 90% acc / 95.9% precision"],
   ["ELV Hybrid-YOLOv5 2025","close-range infrared","scrap-metal detection","mAP 84%; needs spectrum / close-range"],
@@ -277,9 +284,9 @@ new_table(n,[
  ["","In-domain","Cross-region","Cross-sensor"],
  ["RGB (today)","strong","-5.1% F1 (Gibellini)","ports trivially"],
  ["+ VNIR","-","gap narrows (physics)","band-shift fragile"],
- ["+ SWIR","-","gap narrows most","widens unless harmonized"],
-], left=0.7, top=1.45, w=8.0, colw=[1.9,2.0,2.05,2.05], fs=12)
-n_body(n,[{"t":"A recurring SOTA blind spot: most works report in-domain only. Whether added bands narrow or widen the gap is itself an open question.","i":True,"sz":12,"c":GREY}], top=4.05)
+ ["+ SWIR","-","gap narrows most","widens w/o SBAF"],
+], left=0.9, top=1.55, w=7.5, colw=[1.8,1.9,1.95,1.85], fs=12, rh=0.6)
+n_body(n,[{"t":"A recurring SOTA blind spot: most works report in-domain only. Whether added bands narrow or widen the gap is itself an open question.","i":True,"sz":12,"c":GREY}], top=3.7, h=0.8, vc=False)
 n_foot(n,"Cross-region -5.1%: Gibellini 2025 · band-shift fragility: GeoCrossBench, DOFA/AnySat · pattern, not yet measured for this task")
 
 # proposed direction (light, dataset-independent)

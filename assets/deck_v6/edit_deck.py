@@ -10,6 +10,7 @@ from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 SRC=os.path.expanduser("~/Downloads/ultime_slide.pptx")
 OUT=os.path.expanduser("/home/alepot55/Desktop/uni/Tesi/assets/deck_v6/deck_bw.pptx")
 BW=os.path.expanduser("/home/alepot55/Desktop/uni/Tesi/assets/deck_v6/figs_bw")
+CL=os.path.expanduser("/home/alepot55/Desktop/uni/Tesi/assets/deck_v6/figs_color")
 INK=RGBColor(0x1A,0x1A,0x1A); GREY=RGBColor(0x66,0x66,0x66)
 HDR=RGBColor(0xDD,0xDD,0xDD); ALT=RGBColor(0xF5,0xF5,0xF5); WHITE=RGBColor(0xFF,0xFF,0xFF)
 F="Calibri"
@@ -219,9 +220,9 @@ set_body(S[17],[
 ])
 set_footer(S[17],"Gaps distilled across the surveyed works · Fraternali et al. 2024")
 
-replace_pic(S[8], os.path.join(BW,"sensor_radar_bw.png"))
-replace_pic(S[12], os.path.join(BW,"aguilar_bars_bw.png"))
-replace_pic(S[13], os.path.join(BW,"bands_plateau_bw.png"))
+replace_pic(S[8], os.path.join(CL,"sensor_radar.png"))
+replace_pic(S[12], os.path.join(CL,"aguilar_bars.png"))
+replace_pic(S[13], os.path.join(CL,"bands_plateau.png"))
 from pptx.enum.shapes import MSO_SHAPE_TYPE as _MST13
 for _sh in list(S[13].shapes):
     if _sh.shape_type==_MST13.PICTURE:
@@ -239,7 +240,7 @@ if bd:
      {"t":"•  SWIR-8 bottleneck: asbestos 2.32 + concrete 2.34 + plastic 2.31 crowd one band.","sz":13},
      {"t":"•  And SWIR is not always needed: Saba 2026 / Abbasi 2024 classify asbestos at VHR with none.","sz":13},
     ])
-n_img(sd, os.path.join(BW,"swir8_bottleneck.png"), left=5.05, top=1.3, w=4.7, h=3.7)
+n_img(sd, os.path.join(CL,"swir8_bottleneck.png"), left=5.05, top=1.3, w=4.7, h=3.7)
 set_footer(sd,"USGS splib07a (Kokaly et al., 2017) · WV-3 SWIR band centres (Maxar)")
 
 # ════════ NEW SLIDES ════════
@@ -271,7 +272,7 @@ survey("State of the art: RGB waste detection",
 
 # band->material (physics)
 n=add_slide(); n_title(n,"Where each hazard becomes separable: feature → band")
-n_img(n, os.path.join(BW,"band_material_map.png"), left=0.6, top=1.15, w=8.8, h=3.95)
+n_img(n, os.path.join(CL,"band_material_map.png"), left=0.6, top=1.15, w=8.8, h=3.95)
 n_foot(n,"Diagnostic absorptions RGB cannot see · USGS splib07a (Kokaly 2017) · Aguilar 2021/2025 · Cilia 2015")
 
 # G2 asbestos

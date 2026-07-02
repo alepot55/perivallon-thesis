@@ -40,7 +40,6 @@ ax.axvspan(2300,2350,facecolor="none",edgecolor=K,hatch="////",lw=0,zorder=1,alp
 ax.annotate("Mg-OH ~2.30-2.33 um (asbestos)",xy=(2330,0.66),xytext=(2080,0.50),
     fontsize=9.5,color=K,fontweight="bold",arrowprops=dict(arrowstyle="->",color=K,lw=1.2))
 ax.set_xlabel("Wavelength (nm)"); ax.set_ylabel("Reflectance"); ax.set_xlim(2000,2500)
-ax.set_title("SWIR-8 bottleneck: three hazards crowd into one WV-3 band",pad=8)
 ax.legend(loc="lower left",frameon=True,fontsize=9.5,edgecolor=LG)
 for s in ("top","right"): ax.spines[s].set_visible(False)
 ax.grid(alpha=0.25,color=LG)
@@ -86,7 +85,6 @@ ax.text(5,nr+0.28,"WorldView-3 adds SWIR",ha="center",fontsize=10,fontweight="bo
 ax.set_xlim(0,nc); ax.set_ylim(0,nr+0.85); ax.set_xticks(np.arange(nc)+0.5); ax.set_xticklabels(feats,fontsize=9)
 ax.set_yticks(np.arange(nr)+0.5); ax.set_yticklabels(mats[::-1],fontsize=9); ax.tick_params(length=0)
 for sp in ax.spines.values(): sp.set_visible(False)
-ax.set_title("Where each hazard becomes separable: diagnostic feature to band",pad=22)
 foot(fig,"USGS splib07a · Aguilar 2021/2025 · Cilia 2015")
 fig.savefig(OUT/"band_material_map.png",bbox_inches="tight"); plt.close(fig)
 
@@ -110,3 +108,63 @@ ax.text(50,34,"Public pixel-accurate labels · textbook SWIR diagnostic · de-ri
 foot(fig,"GT: Lombardia WFS Mappatura_2020 · physics: chrysotile Mg-OH 2.30-2.33um (splib07a)")
 fig.savefig(OUT/"pilot_workflow.png"); plt.close(fig)
 print("BW figs:",len(list(OUT.glob('*.png'))))
+
+# ── 5. aguilar bars, B/W, no embedded title ──
+fig,ax=plt.subplots(figsize=(7.4,4.4))
+vals=[90.85,96.79,97.38]; labs=["VNIR only"+NL+"(8 bands)","SWIR only"+NL+"(8 bands)","All features"+NL+"(16 bands)"]
+cols=["#DDDDDD","#8A8A8A","#3A3A3A"]
+bars=ax.bar(labs,vals,color=cols,edgecolor=K,lw=1.0,width=0.58)
+for b,v in zip(bars,vals):
+    ax.text(b.get_x()+b.get_width()/2,v+0.18,"%.2f%%"%v,ha="center",fontsize=11,fontweight="bold",color=K)
+ax.annotate("+5.94 pp"+NL+"(SWIR > VNIR)",xy=(0.95,96.6),xytext=(0.18,98.7),fontsize=9,color=K,
+    arrowprops=dict(arrowstyle="->",color=K,lw=1.0))
+ax.annotate("+0.59 pp"+NL+"(All > SWIR)",xy=(2,97.38),xytext=(2.05,99.0),fontsize=9,color=K,ha="center")
+ax.set_ylim(85,100.6); ax.set_ylabel("Overall accuracy (%)")
+for sp in ("top","right"): ax.spines[sp].set_visible(False)
+ax.grid(axis="y",alpha=0.25,color=LG)
+fig.savefig(OUT/"aguilar_bars_bw.png"); plt.close(fig)
+
+# ── 6. bands plateau, B/W, no embedded title ──
+fig,ax=plt.subplots(figsize=(8.6,4.2))
+nb=[3,4,5,7,10,20,50,100,250,500,768]
+oa=[85.0,92.0,95.0,95.5,95.8,96.0,96.0,96.0,96.0,96.1,96.2]
+ax.semilogx(nb,oa,color=K,lw=2.0,marker="o",ms=5,label="C&D waste, narrowband selection (Vitek 2025)")
+ax.plot([8],[90.85],marker="s",ms=8,color="#8A8A8A",ls="none",label="WV-3 ablation (Aguilar 2021)")
+ax.plot([8],[96.79],marker="s",ms=8,color="#8A8A8A",ls="none")
+ax.plot([16],[97.38],marker="s",ms=8,color="#8A8A8A",ls="none")
+ax.annotate("VNIR only 90.85%",xy=(8,90.85),xytext=(13,89.6),fontsize=9,color=DG)
+ax.annotate("SWIR only 96.79%",xy=(8,96.79),xytext=(3.2,98.3),fontsize=9,color=DG)
+ax.annotate("All 16: 97.38%",xy=(16,97.38),xytext=(26,98.3),fontsize=9,color=DG)
+ax.annotate("plateau ~96% from ~5 well-chosen bands",xy=(50,96.0),xytext=(90,92.6),fontsize=9.5,color=K,
+    fontweight="bold",arrowprops=dict(arrowstyle="->",color=K,lw=1.0))
+ax.set_xlabel("Number of spectral bands (log scale)"); ax.set_ylabel("Overall accuracy (%)")
+ax.set_ylim(84,100)
+ax.legend(loc="lower right",frameon=True,fontsize=8.5,edgecolor=LG)
+for sp in ("top","right"): ax.spines[sp].set_visible(False)
+ax.grid(alpha=0.25,color=LG)
+fig.savefig(OUT/"bands_plateau_bw.png"); plt.close(fig)
+
+# ── 7. sensor radar, B/W-restrained, WITH Pleiades Neo ──
+sensors=[
+ ("WorldView-3",  [1/1.24, np.log10(16), 1/3.0],  K,   "-",  2.6, "^"),
+ ("Pleiades Neo", [1/1.2,  np.log10(6),  1/2.0],  K,   "--", 2.6, "o"),
+ ("SuperDove",    [1/3.0,  np.log10(8),  1/0.5],  MG,  "-",  1.3, "s"),
+ ("Sentinel-2",   [1/10.0, np.log10(13), 1/5.0],  MG,  "--", 1.3, "D"),
+ ("EnMAP",        [1/30.0, np.log10(228),1/27.0], LG,  "-",  1.3, "v"),
+]
+vals=np.array([x[1] for x in sensors],float); norm=vals/vals.max(axis=0)
+N=3; ang=np.linspace(0,2*np.pi,N,endpoint=False).tolist(); ang+=ang[:1]
+fig=plt.figure(figsize=(6.8,6.2)); ax=plt.subplot(111,polar=True)
+ax.set_theta_offset(np.pi/2); ax.set_theta_direction(-1)
+ax.set_xticks(ang[:-1]); ax.set_xticklabels(["Spatial"+NL+"(1/GSD)","Spectral"+NL+"bands","Revisit"+NL+"(1/days)"],fontsize=11,fontweight="bold")
+ax.set_ylim(0,1.05); ax.set_yticklabels([]); ax.grid(color="#E3E3E3")
+ax.spines["polar"].set_color(LG)
+for (name,_,col,ls,lw,mk),nv in zip(sensors,norm):
+    d=nv.tolist()+[nv.tolist()[0]]
+    ax.plot(ang,d,color=col,ls=ls,lw=lw,marker=mk,ms=6,label=name)
+    if name in ("WorldView-3","Pleiades Neo"): ax.fill(ang,d,color="#000000",alpha=0.05)
+ax.legend(loc="upper right",bbox_to_anchor=(1.38,1.10),fontsize=9,frameon=True,edgecolor=LG)
+fig.text(0.5,0.015,"Outer ring = better. Spatial 1/GSD (log) - bands log10(N) - revisit 1/days (log). Specs: Maxar, Airbus, Planet, ESA, DLR.",
+    ha="center",fontsize=8,style="italic",color=MG)
+fig.savefig(OUT/"sensor_radar_bw.png",bbox_inches="tight"); plt.close(fig)
+print("polish figs done:",len(list(OUT.glob('*.png'))))

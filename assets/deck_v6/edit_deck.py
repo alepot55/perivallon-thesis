@@ -74,6 +74,20 @@ def reencode_all_pictures():
                 except Exception as e:
                     print("  reencode skip:",e)
 
+def replace_pic(slide, path):
+    from pptx.enum.shapes import MSO_SHAPE_TYPE
+    from PIL import Image
+    for sh in list(slide.shapes):
+        if sh.shape_type==MSO_SHAPE_TYPE.PICTURE:
+            L,T,Wb,Hb=sh.left,sh.top,sh.width,sh.height
+            del_shape(sh)
+            iw,ih=Image.open(path).size; ar=iw/ih
+            W=Wb; H=int(W/ar)
+            if H>Hb: H=Hb; W=int(H*ar)
+            slide.shapes.add_picture(path, L+(Wb-W)//2, T+(Hb-H)//2, width=W, height=H)
+            return True
+    return False
+
 def add_slide():
     s=prs.slides.add_slide(prs.slide_layouts[10])  # BLANK
     # strip any leftover placeholders
@@ -128,6 +142,25 @@ def new_table(s, data, left=0.5, top=1.35, w=9.05, colw=None, fs=10, rh=0.5, hh=
 
 # ════════ EDIT EXISTING SLIDES ════════
 # Reframe / update kept original slides
+set_body(S[2],[
+ {"t":"VHR aerial / satellite tile (RGB)  →  CNN or Transformer backbone  →  pretraining (ImageNet, EO SSL)  →  two-step fine-tune  →  binary waste / no-waste.","sz":13},
+ {"t":"•  Accurate within the geographic context it was trained on: Gibellini 2025, F1 92.0% at 20 cm.","sz":13},
+ {"t":"•  Classifies presence, not material.","sz":13},
+ {"t":"•  Tied to chromatic information only.","sz":13},
+ {"t":"•  Generalizzazione collapses outside it: -5.1% F1 cross-region; worse cross-sensor.","sz":13},
+ {"t":"These limits motivate looking at the spectrum.","i":True,"sz":12,"c":GREY},
+])
+set_footer(S[2],"Gibellini et al. 2025 (Waste Mgmt Bull.) · Fraternali et al. 2024 (survey)")
+set_title(S[6],"RGB fails in two distinct ways")
+set_body(S[15],[
+ {"t":"2024-2025: a wave of pretrained backbones for EO (Prithvi, SpectralGPT, DOFA, AnySat).","sz":14},
+ {"t":"Most are pretrained at 10-30 m on Sentinel-2 / HLS - naive transfer to sub-metre VHR is not guaranteed.","sz":14},
+ {"t":"Two routes forward","b":True,"sz":13},
+ {"t":"•  Sensor-agnostic models (DOFA, AnySat), accept arbitrary band sets.","sz":13},
+ {"t":"•  Parameter-efficient adapters (DEFLECT), freeze the backbone, add small heads (<1% parameters).","sz":13},
+ {"t":"Open question: does pretraining at 10-30 m transfer to ~1 m VHR - and to material classification?","i":True,"sz":12,"c":GREY},
+])
+
 set_body(S[3],[
  {"t":"Each pixel is a vector of reflectance values, the material's spectral signature.","sz":14},
  {"t":"•  RGB,  3 broad visible bands (colour only).","sz":14},
@@ -135,7 +168,7 @@ set_body(S[3],[
  {"t":"•  Hyperspectral (HSI),  hundreds of contiguous narrow bands (EnMAP 230; USGS splib07a 2,151 ch).","sz":14},
  {"t":"This vector is the raw input from which any classifier reasons.","sz":14},
 ])
-# S12 -> reframe as the VHR / SWIR landscape (NOT "my data")
+# S12 → reframe as the VHR / SWIR landscape (NOT "my data")
 set_title(S[11],"Very-high resolution: the SWIR divide")
 for sh in list(S[11].shapes):
     if getattr(sh,"has_table",False): del_shape(sh)
@@ -161,8 +194,8 @@ set_body(S[12],[
 ])
 # S14 more-bands
 set_body(S[13],[
- {"t":"•  Aguilar 2021 (WV-3 plastic): VNIR 90.85 -> All 97.38; SWIR carries the jump.","sz":14},
- {"t":"•  CDW 2025 (lab HSI, C&D): RGB 0.87 -> RGB + 2 NIR bands 0.96, on par with full 768-band HSI.","sz":14},
+ {"t":"•  Aguilar 2021 (WV-3 plastic): VNIR 90.85 → All 97.38; SWIR carries the jump.","sz":14},
+ {"t":"•  CDW 2025 (lab HSI, C&D): RGB 0.87 → RGB + 2 NIR bands 0.96, on par with full 768-band HSI.","sz":14},
  {"t":"•  Zhou 2021 (WV-3 SWIR): 8 narrow bands separate aliphatic vs aromatic polymers.","sz":14},
  {"t":"What matters is which bands, not how many: a few well-chosen SWIR bands recover most of the gain.","i":True,"sz":12,"c":GREY},
 ])
@@ -182,11 +215,18 @@ set_body(S[17],[
  {"t":"•  Material evidence is adjacent, not direct: proven on greenhouses / asbestos roofs in isolation, never in a waste pipeline.","sz":13},
  {"t":"•  Generalization (cross-region / cross-sensor / cross-time) is fragile and unmeasured for MS.","sz":13},
  {"t":"•  Foundation models pretrain at 10-30 m and are untested for material at VHR.","sz":13},
- {"t":"•  No link from material -> hazard class -> risk, the decision output agencies actually need.","sz":13},
+ {"t":"•  No link from material → hazard class → risk, the decision output agencies actually need.","sz":13},
 ])
 set_footer(S[17],"Gaps distilled across the surveyed works · Fraternali et al. 2024")
 
-# S15 SuperDove -> Honest caveat (+ swir8 figure)
+replace_pic(S[8], os.path.join(BW,"sensor_radar_bw.png"))
+replace_pic(S[12], os.path.join(BW,"aguilar_bars_bw.png"))
+replace_pic(S[13], os.path.join(BW,"bands_plateau_bw.png"))
+from pptx.enum.shapes import MSO_SHAPE_TYPE as _MST13
+for _sh in list(S[13].shapes):
+    if _sh.shape_type==_MST13.PICTURE:
+        _sh.top=IN(2.60); _sh.left=IN(1.80); _sh.width=IN(6.4); _sh.height=IN(2.55)
+# S15 SuperDove → Honest caveat (+ swir8 figure)
 sd=S[14]
 set_title(sd,"Honest limit: resolution is split between texture and chemistry")
 _,bd,_=boxes(sd)
@@ -223,14 +263,14 @@ n_foot(n,"EWC List of Waste (Dec. 2000/532/EC) · Fazzo et al. 2023")
 # G1 RGB detection
 survey("State of the art: RGB waste detection",
  [["Gibellini 2025","AerialWaste RGB 20 cm","Swin-T + RSP, two-step","F1 92.0%; cross-region -5.1%"],
-  ["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","dataset; ResNet+FPN","F1 80.7%; 22 cats, RGB-only"],
+  ["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","dataset; ResNet+FPN","F1 80.7%; 22 categories, RGB-only"],
   ["Sun 2023 (global)","VHR RGB 0.3-1 m","BCA-Net detection","~2,500 dumpsites; sens. 98%"],
   ["CascadeDumpNet 2024","Pleiades 0.5 m RGB","cascade CNN + AutoML","mAP 84.6%; transfers across cities"],
   ["Disaitek 2024","Pleiades Neo 0.3 m","operational service","waste >=2 m2 ~95% (vendor)"]],
  "All RGB: detect site shape/context; material composition stays out of reach. † vendor/pre-print not peer-benchmarked.")
 
 # band->material (physics)
-n=add_slide(); n_title(n,"Where each hazard becomes separable: feature -> band")
+n=add_slide(); n_title(n,"Where each hazard becomes separable: feature → band")
 n_img(n, os.path.join(BW,"band_material_map.png"), left=0.6, top=1.15, w=8.8, h=3.95)
 n_foot(n,"Diagnostic absorptions RGB cannot see · USGS splib07a (Kokaly 2017) · Aguilar 2021/2025 · Cilia 2015")
 
@@ -245,11 +285,11 @@ survey("State of the art: asbestos discrimination",
 
 # G3 plastics & urban materials
 survey("State of the art: plastics & urban materials",
- [["Aguilar 2021","WV-3 VNIR + SWIR","OBIA + DT, 3-way ablation","OA 90.85 -> 96.79 -> 97.38"],
+ [["Aguilar 2021","WV-3 VNIR + SWIR","OBIA + DT, 3-way ablation","OA 90.85 → 96.79 → 97.38"],
   ["Aguilar 2025","WV-3 SWIR 3.7 m","matched filter (USGS spectra)","precision 92.5%; lab-image r=0.95"],
   ["EMIT (Estrela 2025)","EMIT HSI 60 m","matched filter, HDPE/PVC","first global orbital plastic map"],
   ["MARIDA 2022","Sentinel-2 10 m","RF / U-Net benchmark","F1 0.79; sub-pixel mixing at 10 m"],
-  ["CDW 2025","lab HSI 768 b","narrowband + MLP","RGB 0.87 -> +2 NIR 0.96 ~ full HSI"],
+  ["CDW 2025","lab HSI 768 b","narrowband + MLP","RGB 0.87 → +2 NIR 0.96 ~ full HSI"],
   ["SpectralWaste 2024","RGB + SWIR HSI (conveyor)","RGB/HSI/fusion segmentation","fusion mIoU 58 > RGB 48; HSI wins thin classes"]],
  "Material identity comes from NIR-SWIR chemistry (C-H, Mg-OH), not colour - but proven outside illegal-waste imagery.")
 
@@ -284,7 +324,7 @@ new_table(n,[
  ["","In-domain","Cross-region","Cross-sensor"],
  ["RGB (today)","strong","-5.1% F1 (Gibellini)","ports trivially"],
  ["+ VNIR","-","gap narrows (physics)","band-shift fragile"],
- ["+ SWIR","-","gap narrows most","widens w/o SBAF"],
+ ["+ SWIR","-","gap narrows most","widens if not harmonized"],
 ], left=0.9, top=1.55, w=7.5, colw=[1.8,1.9,1.95,1.85], fs=12, rh=0.6)
 n_body(n,[{"t":"A recurring SOTA blind spot: most works report in-domain only. Whether added bands narrow or widen the gap is itself an open question.","i":True,"sz":12,"c":GREY}], top=3.7, h=0.8, vc=False)
 n_foot(n,"Cross-region -5.1%: Gibellini 2025 · band-shift fragility: GeoCrossBench, DOFA/AnySat · pattern, not yet measured for this task")
@@ -293,7 +333,7 @@ n_foot(n,"Cross-region -5.1%: Gibellini 2025 · band-shift fragility: GeoCrossBe
 n=add_slide(); n_title(n,"What the state of the art points to")
 n_body(n,[
  {"t":"The open question is sharp and unanswered: how much does multiband beat RGB for waste MATERIAL - and where does it stop?","b":True,"sz":14},
- {"t":"•  A controlled band ablation (RGB -> +RedEdge/NIR -> full VNIR -> +SWIR) on a wavelength-agnostic backbone (DOFA).","sz":13},
+ {"t":"•  A controlled band ablation (RGB → +RedEdge/NIR → full VNIR → +SWIR) on a wavelength-agnostic backbone (DOFA).","sz":13},
  {"t":"•  Generalization as a first-class axis (cross-region / sensor / time), not an afterthought.","sz":13},
  {"t":"•  Candidate VHR platforms span the SWIR divide: WorldView-3 (with SWIR) vs Pleiades Neo (VNIR-only).","sz":13},
  {"t":"•  Asbestos is the cleanest first material: public ground truth + a textbook SWIR signature.","sz":13},
@@ -336,7 +376,7 @@ reencode_all_pictures()
 # ════════ REORDER (SOTA narrative) ════════
 sldIdLst=prs.slides._sldIdLst
 ids=list(sldIdLst)
-order=[0, 1, _I_RISK, 2, _I_G1, 3, _I_FP, 6, _I_BM, _I_G2, _I_G3, 12, 13, 14, _I_SN, 11, _I_G5, 15, _I_G6, 16, _I_G7, 17, _I_GEN, _I_DIR]
+order=[0, 1, _I_RISK, 2, _I_G1, 3, _I_FP, 6, _I_G2, _I_G3, 12, 13, _I_SN, 11, _I_BM, 14, _I_G5, 15, _I_G6, 16, _I_G7, 17, _I_GEN, _I_DIR]
 assert len(order)==24 and all(0<=i<len(ids) for i in order), (len(ids),len(order))
 desired=[ids[i] for i in order]
 for sid in ids: sldIdLst.remove(sid)

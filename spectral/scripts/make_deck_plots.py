@@ -151,7 +151,7 @@ def fig_fingerprint() -> None:
     ax.set_xlim(400, 2500)
     ax.set_ylim(0, 1.15)  # headroom for region labels
     # Region labels at the top
-    ax.text(650, 1.10, "SuperDove VNIR", ha="center", va="center",
+    ax.text(650, 1.10, "VNIR", ha="center", va="center",
             color=C["teal_dk"], fontsize=12, fontweight="bold")
     ax.text(1750, 1.10, "SWIR  —  chemistry-diagnostic",
             ha="center", va="center", color="#8B5A2B", fontsize=12,

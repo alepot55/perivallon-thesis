@@ -257,7 +257,7 @@ from pptx.enum.shapes import MSO_SHAPE_TYPE as _MST13
 for _sh in list(S[13].shapes):
     if _sh.shape_type==_MST13.PICTURE:
         _sh.top=IN(2.68); _sh.left=IN(2.10); _sh.width=IN(5.8); _sh.height=IN(2.05)
-replace_biggest_pic(S[6], os.path.join(CL,"rgb_fails.png"))
+replace_biggest_pic(S[6], os.path.join(CL,"iso_chromaticity.png"))
 # S15 SuperDove → Honest caveat (+ swir8 figure)
 sd=S[14]
 set_title(sd,"Honest limit: resolution is split between texture and chemistry")
@@ -390,7 +390,7 @@ def _extract_pic(slide, outpath):
 _fp=os.path.join(BW,"_fingerprint.png"); _sn=os.path.join(BW,"_sensor.png")
 _fpg=_extract_pic(S[5], _fp); _sng=_extract_pic(S[8], _sn)
 nf=add_slide(); n_title(nf,"Every material has a spectral fingerprint")
-n_img(nf, os.path.join(CL,"fingerprint.png"), left=0.55, top=1.10, w=8.9, h=4.0)
+n_img(nf, "/home/alepot55/Desktop/uni/Tesi/spectral/figures/deck/fingerprint_4_materials.png", left=0.50, top=1.15, w=9.0, h=3.95)
 n_foot(nf,"USGS splib07a (Kokaly et al., 2017). Diagnostic features: Cilia 2015, Aguilar 2025.")
 ns=add_slide(); n_title(ns,"The sensor trade-off: spatial x spectral x revisit")
 n_body(ns,[
@@ -409,8 +409,8 @@ reencode_all_pictures()
 # ════════ REORDER (SOTA narrative) ════════
 sldIdLst=prs.slides._sldIdLst
 ids=list(sldIdLst)
-order=[0, 1, _I_RISK, 2, _I_G1, 3, _I_FP, 6, _I_G2, _I_G3, 12, 13, _I_SN, 11, _I_BM, 14, _I_G5, 15, _I_G6, 16, _I_G7, 17, _I_GEN, _I_DIR]
-assert len(order)==24 and all(0<=i<len(ids) for i in order), (len(ids),len(order))
+order=[0, 1, _I_RISK, 2, _I_G1, 3, 4, _I_FP, 6, 7, _I_G2, _I_G3, 12, 13, _I_SN, 11, _I_BM, 14, _I_G5, 15, _I_G6, 16, _I_G7, 17, _I_GEN, _I_DIR]
+assert len(order)==26 and all(0<=i<len(ids) for i in order), (len(ids),len(order))
 desired=[ids[i] for i in order]
 for sid in ids: sldIdLst.remove(sid)
 for sid in desired: sldIdLst.append(sid)
@@ -427,6 +427,24 @@ for pos,sl in enumerate(prs.slides,1):
     pr=tf.paragraphs[0]; pr.alignment=_AL.LEFT
     r=pr.add_run(); r.text=str(pos)
     r.font.name=F; r.font.size=Pt(9); r.font.color.rgb=GREY
+
+# anti-stretch: refit every picture into its box preserving aspect ratio
+import io as _io
+from PIL import Image as _AImg
+from pptx.enum.shapes import MSO_SHAPE_TYPE as _AMST
+for _sl in prs.slides:
+    for _sh in list(_sl.shapes):
+        if _sh.shape_type!=_AMST.PICTURE: continue
+        try:
+            _im=_AImg.open(_io.BytesIO(_sh.image.blob)); _iw,_ih=_im.size
+        except Exception: continue
+        _ar=_iw/_ih; _L,_T,_Wb,_Hb=_sh.left,_sh.top,_sh.width,_sh.height
+        _bar=_Wb/_Hb
+        if abs(_bar-_ar)/_ar > 0.02:
+            _W=_Wb; _H=int(_W/_ar)
+            if _H>_Hb: _H=_Hb; _W=int(_H*_ar)
+            _sh.left=_L+(_Wb-_W)//2; _sh.top=_T+(_Hb-_H)//2
+            _sh.width=_W; _sh.height=_H
 
 # normalize ALL bottom footnotes: same box, same size (Calibri 8, grey)
 for _sl in prs.slides:

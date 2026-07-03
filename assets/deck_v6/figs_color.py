@@ -76,9 +76,9 @@ for sp in ax.spines.values(): sp.set_visible(False)
 fig.savefig(OUT/"band_material_map.png",bbox_inches="tight"); plt.close(fig)
 
 # 3 ── sensor radar (thesis pair emphasised) ──────────────────────────
-sensors=[("WorldView-3",[1/1.24,np.log10(16),1/3.0],WV3,"-",2.8,"^",0.10),
-         ("Pleiades Neo",[1/1.2,np.log10(6),1/2.0],PNEO,"-",2.8,"o",0.10),
-         ("SuperDove",[1/3.0,np.log10(8),1/0.5],SDV,"-",1.6,"s",0.0),
+sensors=[("WorldView-3",[1/1.24,np.log10(16),1/1.0],WV3,"-",2.8,"^",0.10),
+         ("Pleiades Neo",[1/1.2,np.log10(6),1/1.0],PNEO,"-",2.8,"o",0.10),
+         ("SuperDove",[1/3.0,np.log10(8),1/1.0],SDV,"-",1.6,"s",0.0),
          ("Sentinel-2",[1/10.0,np.log10(13),1/5.0],CTX1,"--",1.4,"D",0.0),
          ("EnMAP",[1/30.0,np.log10(228),1/27.0],CTX2,":",1.6,"v",0.0)]
 vals=np.array([x[1] for x in sensors],float); norm=vals/vals.max(axis=0)
@@ -93,7 +93,7 @@ for (name,_,col,ls,lw,mk,fa),nv in zip(sensors,norm):
     ax.plot(ang,d,color=col,ls=ls,lw=lw,marker=mk,ms=7,label=name)
     if fa: ax.fill(ang,d,color=col,alpha=fa)
 leg=ax.legend(loc="upper right",bbox_to_anchor=(1.40,1.10),fontsize=9.5,frameon=True,edgecolor="#CCCCCC")
-fig.text(0.5,0.015,"Outer ring = better. Spatial 1/GSD (log) - bands log10(N) - revisit 1/days (log). Thesis pair emphasised.",
+fig.text(0.5,0.015,"Outer ring = better. Spatial 1/GSD - bands log10(N) - revisit 1/days (vendor capability: WV-3 <1 d, PNeo daily, SuperDove daily).",
     ha="center",fontsize=8.5,style="italic",color=MUT)
 fig.savefig(OUT/"sensor_radar.png",bbox_inches="tight"); plt.close(fig)
 
@@ -114,17 +114,20 @@ fig.savefig(OUT/"aguilar_bars.png"); plt.close(fig)
 
 # 5 ── bands plateau ──────────────────────────────────────────────────
 fig,ax=plt.subplots(figsize=(8.6,4.2))
-nb=[3,4,5,7,10,20,50,100,250,500,768]
-oa=[85.0,92.0,95.0,95.5,95.8,96.0,96.0,96.0,96.0,96.1,96.2]
-ax.semilogx(nb,oa,color=CON,lw=2.2,marker="o",ms=5,label="C&D waste, narrowband selection (Vitek 2025)")
+nbv=[3,5,768]; oav=[87.0,96.0,96.0]
+ax.semilogx(nbv,oav,color=CON,lw=0,marker="o",ms=9,label="C&D waste, reported points (Vitek 2025)")
+ax.semilogx([3,5,768],[87.0,96.0,96.0],color=CON,lw=1.6,ls="--",alpha=0.55)
+ax.annotate("RGB (3 b): 87%",xy=(3,87),xytext=(3.3,85.4),fontsize=9,color=CON,fontweight="bold")
+ax.annotate("RGB + 2 narrowbands: 96%",xy=(5,96),xytext=(3.0,99.2),fontsize=9,color=CON,fontweight="bold")
+ax.annotate("full HSI (768 b): ~96%",xy=(768,96),xytext=(200,93.6),fontsize=9,color=CON,fontweight="bold")
 ax.plot([8,8,16],[90.85,96.79,97.38],marker="s",ms=8,color=PLA,ls="none",label="WV-3 band ablation (Aguilar 2021)")
-ax.annotate("VNIR only 90.85%",xy=(8,90.85),xytext=(12.5,89.8),fontsize=9,color=PLA,fontweight="bold")
-ax.annotate("SWIR only 96.79%",xy=(8,96.79),xytext=(3.2,98.3),fontsize=9,color=PLA,fontweight="bold")
-ax.annotate("All 16: 97.38%",xy=(16,97.38),xytext=(25,98.3),fontsize=9,color=PLA,fontweight="bold")
-ax.annotate("plateau ~96% from ~5 well-chosen bands",xy=(50,96.0),xytext=(85,92.4),fontsize=9.5,
-    color="#0d366b",fontweight="bold",arrowprops=dict(arrowstyle="->",color="#0d366b",lw=1.1))
+ax.annotate("VNIR only 90.85%",xy=(8,90.85),xytext=(11.5,90.3),fontsize=9,color=PLA,fontweight="bold")
+ax.annotate("SWIR only 96.79%",xy=(8,96.79),xytext=(10.5,95.1),fontsize=9,color=PLA,fontweight="bold")
+ax.annotate("All 16: 97.38%",xy=(16,97.38),xytext=(24,97.9),fontsize=9,color=PLA,fontweight="bold")
+ax.annotate("dashed = schematic between reported points",xy=(60,96.0),xytext=(60,90.6),fontsize=8.5,
+    color=MUT,style="italic")
 ax.set_xlabel("Number of spectral bands (log scale)"); ax.set_ylabel("Overall accuracy (%)")
-ax.set_ylim(84,100)
+ax.set_ylim(84,100.5)
 ax.legend(loc="lower right",frameon=True,fontsize=8.5,edgecolor="#CCCCCC")
 for sp in ("top","right"): ax.spines[sp].set_visible(False)
 ax.grid(alpha=0.4,color=GRID)
@@ -175,3 +178,59 @@ for sp in ("top","right"): ax.spines[sp].set_visible(False)
 ax.grid(alpha=0.3,color=GRID)
 fig.savefig(OUT/"evidence_timeline.png"); plt.close(fig)
 print("timeline v2 done")
+
+VEG="#008300"
+# 7 ── fingerprint (replaces the SuperDove-era original) ───────────────
+mats4=[("Green vegetation","Vegetation",VEG,"-"),
+       ("HDPE (white opaque)","Plastic (HDPE)",PLA,"-"),
+       ("Concrete (road)","Concrete",CON,"-"),
+       ("Chrysotile (asbestos)","Asbestos (chrysotile)",ASB,"-")]
+fig,ax=plt.subplots(figsize=(10.2,4.6))
+ax.axvspan(400,1000,color="#EAF2FB",zorder=0)
+ax.axvspan(1000,2500,color="#FBF3EA",zorder=0)
+ends={}
+for nm,lab,col,ls in mats4:
+    fp,wt,_=config.SPECTRA[nm]; wl,r=load_spectrum(ZIP,fp,wt)
+    wl=wl*1000.0 if np.nanmax(wl)<100 else wl
+    m=~np.isnan(r)&(r>-1.0)&(wl>=400)&(wl<=2500)
+    ax.plot(wl[m],r[m],color=col,ls=ls,lw=2.2,label=lab)
+    ends[lab]=(wl[m][-1],r[m][-1],col)
+off={"Vegetation":-0.01,"Plastic (HDPE)":0.03,"Concrete":0.0,"Asbestos (chrysotile)":0.0}
+for lab,(x,y,col) in ends.items():
+    ax.annotate(lab,xy=(x,y),xytext=(6,off.get(lab,0)*300),textcoords="offset points",
+                fontsize=9.5,color=col,fontweight="bold",va="center")
+ax.text(700,1.06,"VNIR",fontsize=11,fontweight="bold",color=CON,ha="center")
+ax.text(1750,1.06,"SWIR - chemistry-diagnostic",fontsize=11,fontweight="bold",color="#B06A2A",ha="center")
+for x0,lab,col,yl in [(680,"Chl 0.68 um",VEG,0.20),(1730,"C-H 1.73 um",PLA,0.05),(2200,"Al-OH 2.20 um",CON,0.44),(2330,"Mg-OH 2.33 um",ASB,0.55)]:
+    ax.axvline(x0,color=col,lw=0.8,ls=":",alpha=0.7)
+    ax.annotate(lab,xy=(x0,yl),xytext=(-4,0),textcoords="offset points",fontsize=8,color=col,ha="right",va="center",
+                bbox=dict(boxstyle="round,pad=0.15",fc="white",ec=col,lw=0.5,alpha=0.9))
+ax.set_xlim(400,2720); ax.set_ylim(0,1.12)
+ax.set_xlabel("Wavelength (nm)"); ax.set_ylabel("Reflectance")
+for sp in ("top","right"): ax.spines[sp].set_visible(False)
+ax.grid(alpha=0.3,color=GRID)
+fig.savefig(OUT/"fingerprint.png"); plt.close(fig)
+
+# 8 ── rgb-fails curves (replaces the SuperDove-era original) ──────────
+# normalised to visible mean: same 'colour' shape in VIS, separable in SWIR
+fig,ax=plt.subplots(figsize=(7.4,4.6))
+ax.axvspan(400,700,color="#EDEDED",zorder=0)
+trio=[("HDPE (white opaque)","HDPE plastic film",PLA,"-"),
+      ("Chrysotile (asbestos)","Asbestos-cement roof",ASB,"--"),
+      ("Concrete (road)","Light concrete slab",CON,":")]
+for nm,lab,col,ls in trio:
+    fp,wt,_=config.SPECTRA[nm]; wl,r=load_spectrum(ZIP,fp,wt)
+    wl=wl*1000.0 if np.nanmax(wl)<100 else wl
+    m=~np.isnan(r)&(r>-1.0)&(wl>=400)&(wl<=2500)
+    vis=r[m][(wl[m]>=400)&(wl[m]<=700)].mean()
+    ax.plot(wl[m],r[m]/vis,color=col,ls=ls,lw=2.2,label=lab)
+ax.set_ylim(0,1.45)
+ax.text(550,0.30,"visible:"+NL+"same flat 'grey'",fontsize=9.5,ha="center",color="#555555",fontweight="bold")
+ax.annotate("SWIR: the three separate",xy=(1980,0.52),fontsize=10,color=INK,fontweight="bold",ha="center")
+ax.set_xlim(400,2500); ax.set_xlabel("Wavelength (nm)")
+ax.set_ylabel("Reflectance (normalised to visible mean)")
+ax.legend(loc="upper right",frameon=True,fontsize=9,edgecolor="#CCCCCC")
+for sp in ("top","right"): ax.spines[sp].set_visible(False)
+ax.grid(alpha=0.3,color=GRID)
+fig.savefig(OUT/"rgb_fails.png"); plt.close(fig)
+print("fingerprint + rgb_fails done")

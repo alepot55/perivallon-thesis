@@ -89,6 +89,20 @@ def replace_pic(slide, path):
             return True
     return False
 
+def replace_biggest_pic(slide, path):
+    from pptx.enum.shapes import MSO_SHAPE_TYPE
+    from PIL import Image
+    pics=[sh for sh in slide.shapes if sh.shape_type==MSO_SHAPE_TYPE.PICTURE]
+    if not pics: return False
+    sh=max(pics, key=lambda x: x.width*x.height)
+    L,T,Wb,Hb=sh.left,sh.top,sh.width,sh.height
+    del_shape(sh)
+    iw,ih=Image.open(path).size; ar=iw/ih
+    W=Wb; H=int(W/ar)
+    if H>Hb: H=Hb; W=int(H*ar)
+    slide.shapes.add_picture(path, L+(Wb-W)//2, T+(Hb-H)//2, width=W, height=H)
+    return True
+
 def add_slide():
     s=prs.slides.add_slide(prs.slide_layouts[10])  # BLANK
     # strip any leftover placeholders
@@ -243,6 +257,7 @@ from pptx.enum.shapes import MSO_SHAPE_TYPE as _MST13
 for _sh in list(S[13].shapes):
     if _sh.shape_type==_MST13.PICTURE:
         _sh.top=IN(2.68); _sh.left=IN(2.10); _sh.width=IN(5.8); _sh.height=IN(2.05)
+replace_biggest_pic(S[6], os.path.join(CL,"rgb_fails.png"))
 # S15 SuperDove → Honest caveat (+ swir8 figure)
 sd=S[14]
 set_title(sd,"Honest limit: resolution is split between texture and chemistry")
@@ -375,7 +390,7 @@ def _extract_pic(slide, outpath):
 _fp=os.path.join(BW,"_fingerprint.png"); _sn=os.path.join(BW,"_sensor.png")
 _fpg=_extract_pic(S[5], _fp); _sng=_extract_pic(S[8], _sn)
 nf=add_slide(); n_title(nf,"Every material has a spectral fingerprint")
-if _fpg: nf.shapes.add_picture(_fp, _fpg[0], _fpg[1], width=_fpg[2], height=_fpg[3])
+n_img(nf, os.path.join(CL,"fingerprint.png"), left=0.55, top=1.10, w=8.9, h=4.0)
 n_foot(nf,"USGS splib07a (Kokaly et al., 2017). Diagnostic features: Cilia 2015, Aguilar 2025.")
 ns=add_slide(); n_title(ns,"The sensor trade-off: spatial x spectral x revisit")
 n_body(ns,[
@@ -400,15 +415,18 @@ desired=[ids[i] for i in order]
 for sid in ids: sldIdLst.remove(sid)
 for sid in desired: sldIdLst.append(sid)
 
-# stamp page numbers on slides without a slide-number placeholder
+# uniform page numbers: bottom-LEFT on every slide except the title
 from pptx.enum.text import PP_ALIGN as _AL
 for pos,sl in enumerate(prs.slides,1):
-    hasnum=any(sh.is_placeholder and sh.placeholder_format.type is not None and "SLIDE_NUMBER" in str(sh.placeholder_format.type) for sh in sl.shapes)
-    if not hasnum:
-        tb=sl.shapes.add_textbox(IN(4.12),IN(5.21),IN(1.75),IN(0.30))
-        tf=tb.text_frame; tf.word_wrap=False; r=tf.paragraphs[0].add_run(); r.text=str(pos)
-        tf.paragraphs[0].alignment=_AL.CENTER
-        r.font.name=F; r.font.size=Pt(9); r.font.color.rgb=GREY
+    for sh in list(sl.shapes):
+        if sh.is_placeholder and sh.placeholder_format.type is not None and "SLIDE_NUMBER" in str(sh.placeholder_format.type):
+            del_shape(sh)
+    if pos==1: continue
+    tb=sl.shapes.add_textbox(IN(0.10),IN(5.28),IN(0.45),IN(0.28))
+    tf=tb.text_frame; tf.word_wrap=False
+    pr=tf.paragraphs[0]; pr.alignment=_AL.LEFT
+    r=pr.add_run(); r.text=str(pos)
+    r.font.name=F; r.font.size=Pt(9); r.font.color.rgb=GREY
 
 prs.save(OUT)
 import shutil; shutil.copy(OUT, os.path.expanduser("~/Downloads/ultime_slide_v2.pptx"))

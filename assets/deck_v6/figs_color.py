@@ -130,3 +130,48 @@ for sp in ("top","right"): ax.spines[sp].set_visible(False)
 ax.grid(alpha=0.4,color=GRID)
 fig.savefig(OUT/"bands_plateau.png"); plt.close(fig)
 print("color figs:",len(list(OUT.glob('*.png'))))
+
+# 6 ── evidence timeline: the field is moving 2023-2026 ────────────────
+# (year, GSD m, input, label, material-level?, ox pt, oy pt, ha) — verified from papers/notes
+W=[(2015,3.0,"HSI","Cilia (MIVIS)",True,0,-11,"center"),
+   (2021,1.24,"MS","Aguilar (WV-3)",True,0,-11,"center"),
+   (2022,10.0,"MS","MARIDA (S-2)",True,0,-11,"center"),
+   (2023,0.30,"RGB","AerialWaste",False,-9,9,"right"),
+   (2023,0.60,"RGB","Sun, 28 cities",False,-9,-9,"right"),
+   (2024,0.50,"RGB","CascadeDumpNet",False,11,-3,"left"),
+   (2024,0.70,"RGB","CWLD",False,11,-11,"left"),
+   (2024,0.30,"RGB","Disaitek (PNeo)",False,11,6,"left"),
+   (2024,0.15,"RGB","Abbasi, asbestos",True,0,11,"center"),
+   (2025,30.0,"HSI","Shepherd (EnMAP)",True,11,0,"left"),
+   (2025,60.0,"HSI","EMIT, plastics",True,11,0,"left"),
+   (2025,3.7,"MS","Aguilar (WV-3 SWIR)",True,-9,-10,"right"),
+   (2026,1.24,"MS","Saba (WV-3)",True,-2,11,"center"),
+   (2026.25,1.35,"MS","Bonifazi (WV-3)",True,4,-12,"center")]
+COLI={"RGB":"#999999","MS":WV3,"HSI":ASB}
+fig,ax=plt.subplots(figsize=(9.8,4.9))
+ax.axhspan(5,100,color="#F2F2F2",zorder=0)
+ax.text(2015.0,40,"coarser than the task (>5 m GSD)",fontsize=8.5,style="italic",color=MUT)
+ax.axvspan(2023.5,2026.6,color=WV3,alpha=0.045,zorder=0)
+for yr,g,inp,lab,mat,ox,oy,ha in W:
+    mk="^" if mat else "o"
+    fc=COLI[inp] if mat else "white"
+    ax.plot([yr],[g],marker=mk,ms=9,mec=COLI[inp],mfc=fc,mew=1.8,ls="none",zorder=3)
+    va="bottom" if oy>0 else ("top" if oy<0 else "center")
+    ax.annotate(lab,xy=(yr,g),xytext=(ox,oy),textcoords="offset points",
+                fontsize=8.2,color=COLI[inp],ha=ha,va=va,fontweight="bold")
+ax.set_yscale("log"); ax.set_ylim(100,0.08)
+ax.set_yticks([0.1,0.3,1,3,10,30,60]); ax.set_yticklabels(["0.1","0.3","1","3","10","30","60"])
+ax.set_xlim(2014.4,2027.4); ax.set_xticks([2015,2017,2019,2021,2023,2024,2025,2026])
+ax.set_xlabel("Year"); ax.set_ylabel("GSD (m, log)  -  finer resolution up")
+from matplotlib.lines import Line2D
+leg=[Line2D([0],[0],marker="^",ls="none",mec=WV3,mfc=WV3,ms=9,label="material-level"),
+     Line2D([0],[0],marker="o",ls="none",mec="#777777",mfc="white",ms=9,label="site-level"),
+     Line2D([0],[0],marker="s",ls="none",mec="#999999",mfc="#999999",ms=8,label="RGB"),
+     Line2D([0],[0],marker="s",ls="none",mec=WV3,mfc=WV3,ms=8,label="Multispectral"),
+     Line2D([0],[0],marker="s",ls="none",mec=ASB,mfc=ASB,ms=8,label="Hyperspectral")]
+ax.legend(handles=leg,loc="upper left",bbox_to_anchor=(0.005,0.99),frameon=True,fontsize=8.5,
+          edgecolor="#CCCCCC",ncol=2)
+for sp in ("top","right"): ax.spines[sp].set_visible(False)
+ax.grid(alpha=0.3,color=GRID)
+fig.savefig(OUT/"evidence_timeline.png"); plt.close(fig)
+print("timeline v2 done")

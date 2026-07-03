@@ -143,6 +143,16 @@ def new_table(s, data, left=0.5, top=1.35, w=9.05, colw=None, fs=10, rh=0.5, hh=
 
 # ════════ EDIT EXISTING SLIDES ════════
 # Reframe / update kept original slides
+set_body(S[1],[
+ {"t":"Illegal waste dumping (discariche abusive) is an environmental crime and a public-health issue.","sz":14},
+ {"t":"Agencies such as ARPA cannot inspect everything: with limited inspectors, they must prioritise - and priority depends on WHAT is dumped, the material.","sz":14},
+ {"t":"Automated pipelines now find sites well (detection is essentially mature) - but they classify presence, not what is there.","sz":14},
+ {"t":"The advisor's own survey (Fraternali et al. 2024, 50 works, 1987-2023): nearly all RGB; material identification declared an open gap requiring <=30 cm imagery + multispectral data.","sz":14},
+ {"t":"Research question","b":True,"sz":14},
+ {"t":"What is the added value of multispectral data, vs. RGB only, for waste material classification from satellite imagery?","sz":14},
+])
+set_footer(S[1],"Framing distilled from Fraternali et al. 2024 (PoliMi survey, arXiv:2402.09066)")
+
 set_body(S[2],[
  {"t":"VHR aerial / satellite tile (RGB)  →  CNN or Transformer backbone  →  pretraining (ImageNet, EO SSL)  →  two-step fine-tune  →  binary waste / no-waste.","sz":13},
  {"t":"•  Accurate within the geographic context it was trained on: Gibellini 2025, F1 92.0% at 20 cm.","sz":13},
@@ -183,23 +193,30 @@ new_table(S[11],[
 _,_b11,_=boxes(S[11])
 for _bb in _b11: _bb.top=IN(3.95); _bb.height=IN(1.25)
 set_body(S[11],[
- {"t":"WorldView-3 is the only sub-2 m platform that also carries SWIR - where the chemistry lives.","sz":13},
- {"t":"Pleiades Neo and SuperDove are VNIR-only: sharp, but blind to the diagnostic SWIR absorptions.","sz":13},
- {"t":"The trade-off the whole SOTA turns on: spatial detail vs spectral (chemical) information.","sz":13,"i":True,"c":GREY},
+ {"t":"WorldView-3 is the only sub-2 m platform that also carries SWIR - where the chemistry lives.","sz":12.5},
+ {"t":"Pleiades Neo and SuperDove are VNIR-only: sharp, but blind to the diagnostic SWIR absorptions.","sz":12.5},
+ {"t":"Precision (the Sentinel-2 trap): S-2 DOES carry SWIR, at 20 m - its limit here is resolution, not the band. The VHR question is who carries SWIR at all.","sz":12.5,"i":True},
 ])
 set_footer(S[11],"Specs: Maxar WorldView-3 · Airbus Pleiades Neo · Planet SuperDove")
-# S13 Aguilar
+# S13 (was Aguilar 2021) → REPURPOSED: evidence-timeline (recency) slide
+set_title(S[12],"A moving field: material-level evidence is 2024-2026")
 set_body(S[12],[
- {"t":"Most-cited band ablation on WV-3 for waste-like classification (greenhouse plastic, n = 14.3 M pixels).","sz":14},
- {"t":"OBIA + Decision Tree, 10-fold CV. The canonical evidence that SWIR adds material-discriminative power.","sz":14},
+ {"t":"Site-level RGB detection matured in 2023-2024; material-level discrimination is being demonstrated NOW (2024-2026) - but not yet inside an illegal-waste pipeline at task resolution.","sz":13},
 ])
+replace_pic(S[12], os.path.join(CL,"evidence_timeline.png"))
+from pptx.enum.shapes import MSO_SHAPE_TYPE as _MST12
+for _sh in list(S[12].shapes):
+    if _sh.shape_type==_MST12.PICTURE:
+        _sh.top=IN(2.0); _sh.left=IN(1.2); _sh.width=IN(7.6); _sh.height=IN(3.15)
+set_footer(S[12],"Years/GSD from the surveyed works · shaded band = coarser than the task (>5 m GSD)")
 # S14 more-bands
 set_body(S[13],[
- {"t":"•  Aguilar 2021 (WV-3 plastic): VNIR 90.85 → All 97.38; SWIR carries the jump.","sz":14},
- {"t":"•  CDW 2025 (lab HSI, C&D): RGB 0.87 → RGB + 2 NIR bands 0.96, on par with full 768-band HSI.","sz":14},
- {"t":"•  Zhou 2021 (WV-3 SWIR): 8 narrow bands separate aliphatic vs aromatic polymers.","sz":14},
- {"t":"What matters is which bands, not how many: a few well-chosen SWIR bands recover most of the gain.","i":True,"sz":12,"c":GREY},
+ {"t":"•  Vitek 2025 (lab HSI, C&D waste): RGB 0.87 → RGB + 2 NIR bands 0.96 - on par with the full 768-band HSI.","sz":14},
+ {"t":"•  SpectralWaste 2024: RGB+SWIR fusion beats either alone (mIoU 58 vs 48); SWIR wins the thin, iso-colour classes.","sz":14},
+ {"t":"•  Historical anchor - Aguilar 2021 (WV-3): VNIR 90.85 → All 97.38, and the jump came from SWIR.","sz":14},
 ])
+_tb13=S[13].shapes.add_textbox(IN(0.45),IN(4.82),IN(9.10),IN(0.45))
+fill_tf(_tb13.text_frame,[{"t":"Why it matters: WHICH bands is material-dependent - VNIR suffices on some materials (Saba 2026); chemistry-bound hazards need SWIR. Exactly what a controlled ablation must measure.","i":True,"sz":11,"c":GREY}])
 # S17 DOFA
 set_body(S[16],[
  {"t":"Dynamic One-For-All (Xiong et al. 2024).","b":True,"sz":14},
@@ -221,12 +238,11 @@ set_body(S[17],[
 set_footer(S[17],"Gaps distilled across the surveyed works · Fraternali et al. 2024")
 
 replace_pic(S[8], os.path.join(CL,"sensor_radar.png"))
-replace_pic(S[12], os.path.join(CL,"aguilar_bars.png"))
 replace_pic(S[13], os.path.join(CL,"bands_plateau.png"))
 from pptx.enum.shapes import MSO_SHAPE_TYPE as _MST13
 for _sh in list(S[13].shapes):
     if _sh.shape_type==_MST13.PICTURE:
-        _sh.top=IN(2.60); _sh.left=IN(1.80); _sh.width=IN(6.4); _sh.height=IN(2.55)
+        _sh.top=IN(2.68); _sh.left=IN(2.10); _sh.width=IN(5.8); _sh.height=IN(2.05)
 # S15 SuperDove → Honest caveat (+ swir8 figure)
 sd=S[14]
 set_title(sd,"Honest limit: resolution is split between texture and chemistry")
@@ -247,27 +263,28 @@ set_footer(sd,"USGS splib07a (Kokaly et al., 2017) · WV-3 SWIR band centres (Ma
 TCW=[2.15,2.25,2.35,2.35]  # survey-table column widths (sum 9.10)
 def survey(title, rows, foot):
     n=add_slide(); n_title(n,title)
-    new_table(n,[["Work (year)","Input / GSD","Method","Key result"]]+rows,
-              colw=[2.0,2.15,2.35,2.55], fs=10, rh=0.52, vcenter=True)
+    new_table(n,[["Work (year)","Input / GSD","Task","Method","Key result"]]+rows,
+              colw=[1.72,1.62,1.28,1.98,2.45], fs=9, rh=0.52, vcenter=True)
     n_foot(n,foot); return n
 
 # N: risk (motivation)
 n=add_slide(); n_title(n,"Why material matters: risk = hazard x exposure x magnitude")
 n_body(n,[
  {"t":"•  The hazard is material-bound: inert rubble vs plastics vs asbestos-cement are worlds apart.","sz":14},
- {"t":"•  Material carries the hazard; the European Waste Catalogue flags hazardous codes with * (asbestos 17 06 05*).","sz":14},
- {"t":"•  Priority risk = hazard (material) x exposure (who is nearby) x magnitude (how much).","sz":14},
- {"t":"•  So identifying the MATERIAL - not just locating the site - is the decision-relevant question.","sz":14},
+ {"t":"•  Material carries the hazard: the European Waste Catalogue (EWC) flags hazardous codes with * - asbestos-containing construction material is 17 06 05*.","sz":14},
+ {"t":"•  Priority risk = hazard (material) x exposure (who/what is nearby) x magnitude (how much).","sz":14},
+ {"t":"•  Regione Lombardia already operationalises this for asbestos roofs: the Indice di Degrado (d.d.g. 13237/2008) score triggers re-evaluation, 3-year remediation, or 12-month removal.","sz":14},
+ {"t":"•  So identifying the MATERIAL - not just locating the site - is the decision-relevant question.","b":True,"sz":14},
 ])
-n_foot(n,"EWC List of Waste (Dec. 2000/532/EC) · Fazzo et al. 2023")
+n_foot(n,"EWC List of Waste (Dec. 2000/532/EC) · Indice di Degrado d.d.g. 13237/2008 · Fazzo et al. 2023")
 
 # G1 RGB detection
 survey("State of the art: RGB waste detection",
- [["Gibellini 2025","AerialWaste RGB 20 cm","Swin-T + RSP, two-step","F1 92.0%; cross-region -5.1%"],
-  ["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","dataset; ResNet+FPN","F1 80.7%; 22 categories, RGB-only"],
-  ["Sun 2023 (global)","VHR RGB 0.3-1 m","BCA-Net detection","~2,500 dumpsites; sens. 98%"],
-  ["CascadeDumpNet 2024","Pleiades 0.5 m RGB","cascade CNN + AutoML","mAP 84.6%; transfers across cities"],
-  ["Disaitek 2024","Pleiades Neo 0.3 m","operational service","waste >=2 m2 ~95% (vendor)"]],
+ [["Gibellini 2025","AerialWaste RGB 20 cm","classification","Swin-T + RSP, two-step","F1 92.0%; cross-region -5.1%"],
+  ["Disaitek 2024","Pleiades Neo 0.3 m","detection","operational service","waste >=2 m2 ~95% (vendor)"],
+  ["CascadeDumpNet 2024","Pleiades 0.5 m RGB","object detection","cascade CNN + AutoML","mAP 84.6%; transfers across cities"],
+  ["Sun 2023 (global)","VHR RGB 0.3-1 m","object detection","BCA-Net (Faster R-CNN)","~2,500 dumpsites; sens. 98%"],
+  ["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","dataset + cls.","ResNet+FPN baseline","F1 80.7%; 22 categories, RGB-only"]],
  "All RGB: detect site shape/context; material composition stays out of reach. † vendor/pre-print not peer-benchmarked.")
 
 # band->material (physics)
@@ -277,46 +294,46 @@ n_foot(n,"Diagnostic absorptions RGB cannot see · USGS splib07a (Kokaly 2017) �
 
 # G2 asbestos
 survey("State of the art: asbestos discrimination",
- [["Shepherd 2025","EnMAP HSI 30 m","8-classifier cascade (ACE)","86% field match; OA 91.4%"],
-  ["Cilia 2015","MIVIS airborne HSI 3 m","SAM + MNF, ISD index","PA 89% / UA 86%"],
-  ["Saba 2026 †","WV-3 VNIR 1.24 m","32 classifiers, Fine-KNN","Macro-F1 97.6% (VNIR only)"],
-  ["Bonifazi 2026 †","WV-3 16 b 1.24/3.7 m","Max-Likelihood + aggregation","AC roofs; multi-temporal monitoring"],
-  ["Abbasi 2024 †","aerial RGB (no SWIR)","DenseNet + LSTM, temporal","OA ~96%, AC 94% by shape+time"]],
+ [["Saba 2026 †","WV-3 VNIR 1.24 m","pixel classification","32 classifiers, Fine-KNN","Macro-F1 97.6% (VNIR only)"],
+  ["Bonifazi 2026 †","WV-3 16 b 1.24/3.7 m","pixel cls. + aggregation","Max-Likelihood, multi-temporal","AC roofs; removal monitoring"],
+  ["Shepherd 2025","EnMAP HSI 30 m","target detection","8-classifier cascade (ACE)","86% field match; OA 91.4%"],
+  ["Abbasi 2024 †","aerial RGB (no SWIR)","OBIA classification","DenseNet + LSTM, temporal","OA ~96%, AC 94% by shape+time"],
+  ["Cilia 2015 (hist.)","MIVIS airborne HSI 3 m","pixel classification","SAM + MNF, ISD index","PA 89% / UA 86%"]],
  "Asbestos = the sharpest proof MS/HSI recovers material identity. † paywalled / pre-print - motivating, not established.")
 
 # G3 plastics & urban materials
 survey("State of the art: plastics & urban materials",
- [["Aguilar 2021","WV-3 VNIR + SWIR","OBIA + DT, 3-way ablation","OA 90.85 → 96.79 → 97.38"],
-  ["Aguilar 2025","WV-3 SWIR 3.7 m","matched filter (USGS spectra)","precision 92.5%; lab-image r=0.95"],
-  ["EMIT (Estrela 2025)","EMIT HSI 60 m","matched filter, HDPE/PVC","first global orbital plastic map"],
-  ["MARIDA 2022","Sentinel-2 10 m","RF / U-Net benchmark","F1 0.79; sub-pixel mixing at 10 m"],
-  ["CDW 2025","lab HSI 768 b","narrowband + MLP","RGB 0.87 → +2 NIR 0.96 ~ full HSI"],
-  ["SpectralWaste 2024","RGB + SWIR HSI (conveyor)","RGB/HSI/fusion segmentation","fusion mIoU 58 > RGB 48; HSI wins thin classes"]],
+ [["Aguilar 2025","WV-3 SWIR 3.7 m","target detection","matched filter (USGS spectra)","precision 92.5%; lab-image r=0.95"],
+  ["CDW (Vitek) 2025","lab HSI 768 b","classification","narrowband selection + MLP","RGB 0.87 → +2 NIR 0.96 ~ full HSI"],
+  ["EMIT (Estrela 2025)","EMIT HSI 60 m","target detection","matched filter, HDPE/PVC","first global orbital plastic map"],
+  ["SpectralWaste 2024","RGB + SWIR HSI (conveyor)","segmentation","RGB/HSI/fusion (CMX)","fusion mIoU 58 > RGB 48"],
+  ["MARIDA 2022","Sentinel-2 10 m","segmentation","RF / U-Net benchmark","F1 0.79; sub-pixel mixing at 10 m"],
+  ["Aguilar 2021 (hist.)","WV-3 VNIR + SWIR","OBIA classification","DT, 3-way band ablation","OA 90.85 → 96.79 → 97.38"]],
  "Material identity comes from NIR-SWIR chemistry (C-H, Mg-OH), not colour - but proven outside illegal-waste imagery.")
 
 # G5 datasets
 survey("State of the art: datasets & the data gap",
- [["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","22 material categories","RGB-only; coordinates withheld"],
-  ["CWLD 2024","GF-2 0.8 m + GE 0.5 m","C&D segmentation masks","F1 88.9% / IoU 82% (China)"],
-  ["MARIDA 2022","Sentinel-2 10 m","15-class pixel benchmark","marine debris - water, not land"],
-  ["SpectralWaste 2024","RGB + SWIR HSI","conveyor-belt segmentation","sorting plant, not Earth observation"]],
+ [["CWLD 2024","GF-2 0.8 m + GE 0.5 m","segmentation","C&D masks, DeepLabV3+","F1 88.9% / IoU 82% (China)"],
+  ["SpectralWaste 2024","RGB + SWIR HSI","segmentation","conveyor-belt, 224-band","sorting plant, not Earth observation"],
+  ["AerialWaste (Torres 2023)","aerial RGB 20-50 cm","classification","22 material categories","RGB-only; coordinates withheld"],
+  ["MARIDA 2022","Sentinel-2 10 m","segmentation","15-class pixel benchmark","marine debris - water, not land"]],
  "No public dataset combines very-high resolution + terrestrial waste + material labels - the structural gap.")
 
 # G6 foundation models
 survey("State of the art: foundation models",
- [["DOFA (Xiong 2024)","5 modalities 1-30 m","wavelength hypernetwork","up to 202 bands; new-sensor plug-in"],
-  ["AnySat (Astruc 2025)","11 sensors 0.2-250 m","JEPA multimodal","SOTA on 9 tasks"],
-  ["Prithvi-EO-2.0 2024","HLS 6 b incl. SWIR 30 m","3D temporal MAE","+8 pp GEO-Bench; fixed bands"],
-  ["SoftCon 2024","Sentinel-1/2 13 b","soft contrastive + DINOv2","SOTA 10/11; random-init extra bands"],
-  ["DEFLECT 2025","MS 6-13 b","PEFT adapter <1% params","on par with full fine-tune"]],
+ [["AnySat (Astruc 2025)","11 sensors 0.2-250 m","pretraining","JEPA multimodal","SOTA on 9 tasks"],
+  ["DEFLECT 2025","MS 6-13 b","adaptation","PEFT adapter <1% params","on par with full fine-tune"],
+  ["DOFA (Xiong 2024)","5 modalities 1-30 m","pretraining","wavelength hypernetwork","202 bands; new-sensor plug-in"],
+  ["SoftCon 2024","Sentinel-1/2 13 b","pretraining","soft contrastive + DINOv2","SOTA 10/11; random-init extra bands"],
+  ["Prithvi-EO-2.0 2024","HLS 6 b incl. SWIR 30 m","pretraining","3D temporal MAE","+8 pp GEO-Bench; fixed bands"]],
  "Most pretrain at 10-30 m on Sentinel-2/HLS; transfer to VHR and to material classification is untested.")
 
 # G7 object vs material
 survey("State of the art: object vs material",
- [["Ramachandran 2024","VHR sub-metre","DL object detection","tanks P 0.96 / R 0.97; >169k mapped"],
-  ["YOLOv7-OT 2024","VHR satellite","YOLOv7 + CBAM","tanks 90% acc / 95.9% precision"],
-  ["ELV Hybrid-YOLOv5 2025","close-range infrared","scrap-metal detection","mAP 84%; needs spectrum / close-range"],
-  ["UAV solid-waste 2024","UAV","dual-branch segmentation","OA >94%; generic pile, no per-material"]],
+ [["ELV Hybrid-YOLOv5 2025","close-range infrared","object detection","Hybrid-YOLOv5","mAP 84%; needs spectrum / close-range"],
+  ["Ramachandran 2024","VHR sub-metre","object detection","DL detector (Nat. Comm.)","tanks P 0.96 / R 0.97; >169k mapped"],
+  ["YOLOv7-OT 2024","VHR satellite","object detection","YOLOv7 + CBAM","tanks 90% acc / 95.9% precision"],
+  ["UAV solid-waste 2024","UAV","segmentation","dual-branch network","OA >94%; generic pile, no per-material"]],
  "Objects (tanks, vehicles) are mature on shape; material composition (scrap, slag) still needs the spectrum.")
 
 # generalization (table)

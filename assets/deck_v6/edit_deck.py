@@ -428,6 +428,22 @@ for pos,sl in enumerate(prs.slides,1):
     r=pr.add_run(); r.text=str(pos)
     r.font.name=F; r.font.size=Pt(9); r.font.color.rgb=GREY
 
+# normalize ALL bottom footnotes: same box, same size (Calibri 8, grey)
+for _sl in prs.slides:
+    for _sh in _sl.shapes:
+        if not (getattr(_sh,"has_text_frame",False) and _sh.has_text_frame): continue
+        _t=_sh.text_frame.text.strip()
+        if not _t or _t.isdigit(): continue
+        if _sh.top is None or _sh.width is None: continue
+        if _sh.top >= IN(5.02) and _sh.width > IN(1.0):
+            _sh.left=IN(0.45); _sh.top=IN(5.29); _sh.width=IN(9.10); _sh.height=IN(0.26)
+            _sh.text_frame.word_wrap=True
+            for _pp in _sh.text_frame.paragraphs:
+                _pp.line_spacing=1.0
+                for _r in _pp.runs:
+                    _r.font.name=F; _r.font.size=Pt(8); _r.font.bold=False
+                    _r.font.italic=False; _r.font.color.rgb=GREY
+
 prs.save(OUT)
 import shutil; shutil.copy(OUT, os.path.expanduser("~/Downloads/ultime_slide_v2.pptx"))
 print("saved", OUT, "·", len(list(prs.slides)), "slides")

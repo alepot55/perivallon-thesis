@@ -1,7 +1,7 @@
 ---
 id: "cascadedumpnet-2024"
 title: "CascadeDumpNet: open dumpsite detection via deep learning + AutoML on high-resolution satellite imagery"
-authors: ["Aljabri", "Ma"]
+authors: ["Zhang", "Ma"]
 year: 2024
 venue: "Remote Sensing of Environment"
 doi: "10.1016/j.rse.2024.114349"

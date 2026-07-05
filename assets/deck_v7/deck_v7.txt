@@ -1,0 +1,247 @@
+Classification of waste materials in very-high-
+resolution satellite imagery
+State of the art and thesis proposal
+
+
+
+
+Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
+    Context
+
+
+
+    Illegal waste dumping is an environmental crime with direct public-health consequences.
+    Environmental agencies (ARPA) have limited inspection capacity. Intervention priority depends on what is
+    dumped: inert rubble, plastics and asbestos-cement imply very different hazards.
+    Automatic detection of dump sites from aerial and satellite images is mature. Recognising the material is not:
+    the reference survey lists 50 works from 1987 to 2023, almost all RGB, and marks material identification as an
+    open problem.
+    Within PERIVALLON, one thesis in the group has addressed material classification directly (Alari 2024). This work
+    starts from there.
+
+
+
+
+2   Fraternali et al. 2024, survey (arXiv:2402.09066) · Alari 2024, M.Sc. thesis PoliMi (10589/230633)
+    Task definition
+
+
+    Task: multi-label classification of waste materials in satellite images, at image level.
+    Input: very-high-resolution optical imagery, GSD 0.2 to 1.3 m: aerial RGB for the baseline (AerialWaste), satellite
+    VNIR for the multispectral arm. Bands: RGB and VNIR (up to 8). SWIR is excluded: not part of the planned
+    acquisitions, and its 3.7 m GSD does not match the sub-metre task. Sentinel-2 (10-20 m) is excluded: too coarse.
+    Output: the set of materials present in each image, from a fixed list of categories.
+    Technique: classification, not object detection or segmentation. The available annotations are image-level (Alari
+    2024: over 11,400 multi-label annotations). Waste piles have no stable shape for boxes, and no segmentation
+    masks exist for these datasets.
+    Research question: does VNIR multispectral input improve waste-material classification compared with RGB,
+    and for which materials?
+
+
+
+3   Annotations: Alari 2024 · imagery: WorldView-3, Pléiades Neo (VNIR + pan)
+    Materials: which are considered and why
+
+    Material                                              Classification target                Spectral analysis (RGB vs VNIR)          Note
+
+
+    Rubble / inert                                        yes                                  yes                                      frequent; grey, confusable in RGB
+
+
+    Plastic                                               yes                                  yes                                      same colour as other bright surfaces in RGB
+
+
+    Wood and firewood                                     yes                                  yes                                      confusable with soil and vegetation
+
+
+    Tires                                                 yes                                  yes                                      dark target, low contrast
+
+
+    Asbestos-cement                                       yes                                  yes, dedicated pilot                     public regional ground truth (WFS)
+
+
+    Vehicles, tanks, containers                           yes                                  no                                       shape-based, RGB sufficient in literature
+
+
+    Scrap, bulky items, big bags                          yes                                  no                                       shape-based, few spectral cues expected
+
+
+    Sludge, foundry waste                                 yes                                  no                                       few labels; visually ambiguous at this GSD
+
+
+
+4   13 categories, same taxonomy as Alari 2024. All remain classification targets; the band ablation focuses on the ambiguous subset.
+    Literature search: method and numbers
+
+    Scripted queries on the Scopus API, two query sets: waste detection in remote sensing; asbestos roof mapping.
+    After deduplication: 699 unique records (622 waste, 77 asbestos).
+    Screening criteria: task pertinence (terrestrial waste or roof materials), GSD compatible with the task, recency and
+    citations, peer review. Snowballing from the Fraternali 2024 survey and from the Alari 2024 thesis references.
+    Result: a curated library of 47 papers with structured notes, synchronised with the team Excel. 13 works are cited in this
+    deck.
+
+
+
+
+5   Search artifacts: papers/literature_search (queries, raw and deduplicated records) · library: papers/notes
+    Related work: site-level waste detection
+
+
+    Work (year)                                   Input / GSD                                  Task               Method                    Result
+
+
+    Gibellini 2025                                aerial RGB, 20 cm                            classification     Swin-T, RSP pretraining   F1 92.0; cross-region -5.1
+
+
+    Disaitek 2024                                 Pléiades Neo, 30 cm                          detection          operational service       ~95% on sites >2 m2 (vendor)
+
+
+    CascadeDumpNet 2024                           Pléiades, 50 cm                              object detection   two-stage CNN + AutoML    mAP 84.6, cross-city transfer
+
+
+    Sun 2023                                      VHR RGB, 0.3-1 m                             object detection   BCA-Net (Faster R-CNN)    ~2,500 dumpsites, 28 cities
+
+
+    CWLD 2024                                     GF-2 + GE, 0.5-0.8 m                         segmentation       DeepLabV3+ variant        F1 88.9, construction waste
+
+
+    AerialWaste, Torres 2023                      aerial RGB, 20-50 cm                         dataset + cls.     ResNet-FPN baseline       F1 80.7; 22 material tags
+
+
+
+
+6   All RGB. They answer where a site is, not what it contains. Disaitek is a vendor figure.
+    Related work: material-level classification
+
+
+
+    Work (year)                                  Input / GSD                              Task                             Method                     Result
+
+
+    Alari 2024 (PoliMi)                          satellite RGB                            multi-label cls.                 ResNet / Swin + FPN        wF1 69.2 (5 cat.), 59.4 (10 cat.)
+
+
+    Saba 2026                                    WV-3 VNIR, 1.24 m                        pixel cls.                       Fine-KNN (32 tested)       asbestos, Macro-F1 97.6
+
+
+    Bonifazi 2026                                WV-3 VNIR+SWIR, 1.24/3.7 m               pixel cls.                       max likelihood, temporal   asbestos roofs, removal tracking
+
+
+    Abbasi 2024                                  aerial RGB                               OBIA cls.                        DenseNet + LSTM            asbestos, OA ~96 (shape + time)
+
+
+    Cilia 2015                                   airborne HSI, 3 m                        pixel cls.                       SAM + weathering index     asbestos, PA 89 / UA 86
+
+
+
+
+7   One multi-material predecessor (Alari, group thesis). The rest is asbestos only. Saba and Abbasi: paywalled or preprint.
+    Where RGB falls short, and what VNIR adds
+
+
+    Different materials share the same colour at 0.3-1.3
+    m: plastic sheets, asbestos-cement and concrete all
+    appear grey.
+    In the group predecessor, moving from 5 to 10
+    material categories costs 9.8 F1 points (69.2 to
+    59.4). Finer material distinctions are the hard part.
+    Red Edge and NIR separate vegetation, bare soil
+    and weathered surfaces; in Saba 2026 they drive
+    asbestos discrimination.
+    Whether this helps waste materials, and which
+    ones, has not been measured. It is the object of this
+    thesis.
+
+
+
+8   Reflectance: USGS splib07a (Kokaly et al. 2017), 400-1050 nm. Band centres: Maxar, Airbus.
+    Available imagery
+
+
+
+                                                          WorldView-3                                     Pléiades Neo
+
+    Multispectral                                         8 VNIR bands, 1.24 m                            6 VNIR bands, 1.2 m
+
+
+    Panchromatic                                          0.31 m                                          0.30 m
+
+
+    Extra bands vs RGB+NIR                                Coastal, Yellow, Red Edge, NIR2                 Deep Blue, Red Edge
+
+
+    Access                                                commercial / ESA proposal                       commercial / ESA proposal
+    Both sensors are sub-metre with pan-sharpening and carry VNIR beyond RGB. This is the band budget of the study: no SWIR, no
+    Sentinel-2.
+
+
+
+9   Specs: Maxar WorldView-3, Airbus Pléiades Neo. Reference RGB baseline data: AerialWaste (20-50 cm).
+     What is missing in the literature
+
+
+
+
+     1. Multi-material classification has one direct precedent, with ample margin: wF1 59-69 (Alari 2024).
+     2. No work measures the added value of VNIR bands over RGB for waste materials at very high resolution.
+     3. Results are reported as aggregate scores; per-material behaviour is not analysed.
+     4. Generalisation across regions is rarely evaluated. At site level it costs 5 F1 points (Gibellini 2025).
+     5. Asbestos is studied on roofs, in isolation, and never inside a waste-material taxonomy.
+
+
+
+
+10   Each gap maps to one element of the proposal on the next slide.
+     Proposed work: approach
+
+
+
+     Technique: multi-label image classification, continuing the group line (Gibellini 2025, Alari 2024).
+     Backbone: Swin-T with remote-sensing pretraining, the current group baseline. Extra VNIR bands enter by
+     extending the input layer of the pretrained network.
+     Data: AerialWaste with the Alari material annotations as RGB baseline; WorldView-3 / Pléiades Neo acquisitions
+     for the multispectral arm; Lombardy WFS asbestos registry (10,903 roofs) as ground truth for a controlled pilot.
+     Band ablation: RGB, then RGB + NIR, then full VNIR. Same architecture, same splits, only the input changes.
+     Asbestos pilot first: public labels, single material, clear VNIR evidence in literature. It validates the pipeline
+     before the full taxonomy.
+
+
+
+
+11   Continuity: same task and taxonomy as Alari 2024, extended from RGB to VNIR input.
+     Proposed work: evaluation
+
+
+
+
+     Per-material F1 alongside weighted and macro averages. Aggregates hide exactly the classes this thesis targets.
+     Delta versus the RGB baseline for each band configuration, with confidence intervals over repeated runs.
+     Generalisation protocol: train and test on disjoint geographic areas, in addition to the standard split.
+     Reference points: wF1 69.2 / 59.4 (Alari 2024) for the multi-label task; Macro-F1 97.6 (Saba 2026, per-pixel) as
+     upper reference for the asbestos pilot, not directly comparable.
+     Outcome either way: if VNIR does not help a material, that is a documented negative result with practical value
+     for sensor choice.
+
+
+
+
+12   Metrics: per-class F1, macro-F1, weighted F1, confusion matrices. Splits frozen before testing.
+     References
+
+
+
+     Alari 2024. Fighting environmental crime with deep learning: classifying waste materials from illegal landfills in satellite imagery. M.Sc. thesis,
+     PoliMi, 10589/230633.
+     Fraternali et al. 2024. Solid waste detection, monitoring and mapping in remote sensing images: a survey. arXiv:2402.09066.
+     Gibellini et al. 2025. A deep learning pipeline for solid waste detection in remote sensing images. Waste Management Bulletin.
+     Torres, Fraternali 2023. AerialWaste: a dataset for illegal landfill discovery in aerial images. Scientific Data.
+     Zhang, Ma 2024. CascadeDumpNet. Remote Sensing of Environment. · Sun et al. 2023. Nature Communications 14. · CWLD 2024. Scientific
+     Data.
+     Saba et al. 2026. J. Hazardous Materials. · Bonifazi et al. 2026. Geomatics. · Abbasi et al. 2024. RSASE. · Cilia et al. 2015. ISPRS IJGI.
+     Kokaly et al. 2017. USGS Spectral Library v7 (splib07a). USGS Data Series 1035. · Disaitek 2024, vendor report (Airbus).
+
+
+
+
+13   Full annotated library: 47 papers, papers/INDEX.md
+

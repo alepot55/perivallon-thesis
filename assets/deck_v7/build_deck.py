@@ -6,7 +6,7 @@ from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 
-ROOT="/home/alepot55/Desktop/uni/Tesi"
+ROOT=os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 FIG=os.path.join(ROOT,"assets/deck_v7/figs")
 OUTP=os.path.join(ROOT,"assets/deck_v7/deck_v7.pptx")
 INK=RGBColor(0x1A,0x1A,0x1A); GREY=RGBColor(0x66,0x66,0x66)
@@ -27,7 +27,7 @@ def slide(): return prs.slides.add_slide(BLANK)
 def title(s,t):
     tb=s.shapes.add_textbox(IN(0.45),IN(0.28),IN(9.10),IN(0.6))
     tf_fill(tb.text_frame,[{"t":t,"b":True,"sz":22}])
-def body(s,items,top=1.20,left=0.45,w=9.10,h=3.85,mid=True):
+def body(s,items,top=1.15,left=0.45,w=9.10,h=3.85,mid=False):
     tb=s.shapes.add_textbox(IN(left),IN(top),IN(w),IN(h)); tf_fill(tb.text_frame,items)
     if mid: tb.text_frame.vertical_anchor=MSO_ANCHOR.MIDDLE
     return tb
@@ -82,12 +82,12 @@ foot(s,"Images: AerialWaste positive examples, Torres and Fraternali 2023 (CC BY
 # 3 ── task definition
 s=slide(); title(s,"Task definition")
 body(s,[
- {"t":"Objective: given a VHR satellite image of a suspected dump site, output the set of waste materials present.","b":True,"sz":13},
- {"t":"Task: multi-label classification at image level.","sz":13},
- {"t":"Input: VHR optical imagery, GSD 0.2 to 1.3 m. Aerial RGB for the baseline (AerialWaste); satellite VNIR for the multispectral arm, up to 8 bands. SWIR excluded: not in the planned acquisitions, and its 3.7 m GSD does not match the task. Sentinel-2 excluded: too coarse (10-20 m).","sz":13},
- {"t":"Technique: classification, not object detection or segmentation. Annotations are image-level (Alari 2024: 11,477 multi-label); waste piles have no stable shape for boxes; no segmentation masks exist for these datasets.","sz":13},
+ {"t":"Objective: given a VHR satellite image of a suspected dump site, output the set of waste materials present.","b":True,"sz":13,"sa":14},
+ {"t":"Task: multi-label classification at image level.","sz":13,"sa":14},
+ {"t":"Input: VHR optical imagery, GSD 0.2 to 1.3 m. Aerial RGB for the baseline (AerialWaste); satellite VNIR for the multispectral arm, up to 8 bands. SWIR excluded: not in the planned acquisitions, and its 3.7 m GSD does not match the task. Sentinel-2 excluded: too coarse (10-20 m).","sz":13,"sa":14},
+ {"t":"Technique: classification, not object detection or segmentation. Annotations are image-level (Alari 2024: 11,477 multi-label); waste piles have no stable shape for boxes; no segmentation masks exist for these datasets.","sz":13,"sa":14},
  {"t":"Research question: does VNIR input improve waste-material classification over RGB, and for which materials?","b":True,"sz":13},
-])
+],top=1.15,h=3.95)
 foot(s,"Annotations: Alari 2024  ·  imagery: WorldView-3, Pléiades Neo (VNIR + pan)")
 
 # 4 ── task scheme
@@ -111,8 +111,8 @@ table(s,[
  ["Asbestos-cement","yes","yes, dedicated pilot","public regional ground truth (WFS)"],
  ["Vehicles, tanks, containers, scrap, bulky, big bags","yes","no","shape-based; RGB sufficient in literature"],
  ["Sludge, foundry waste","yes","no","few labels; visually ambiguous at this GSD"],
-],left=0.45,top=1.45,w=9.10,colw=[3.4,0.95,1.85,2.9],fs=9.5,rh=0.52,hh=0.40)
-body(s,[{"t":"All 13 categories remain classification targets, for continuity with the group dataset. The RGB-versus-VNIR analysis concentrates on the subset where colour is ambiguous and labels are sufficient.","sz":12}],top=4.15,h=0.85,mid=False)
+],left=0.45,top=1.30,w=9.10,colw=[3.4,0.95,1.85,2.9],fs=9.5,rh=0.55,hh=0.42)
+body(s,[{"t":"All 13 categories remain classification targets, for continuity with the group dataset. The RGB-versus-VNIR analysis concentrates on the subset where colour is ambiguous and labels are sufficient.","sz":12}],top=4.20,h=0.85)
 foot(s,"Decision criteria: visual ambiguity in RGB, label availability, hazard relevance")
 
 # 7 ── material x literature coverage
@@ -127,7 +127,7 @@ table(s,[
  ["Rubble / inert","CWLD 2024; debris volume UAV 2022","C&D segmentation; UAV photogrammetry"],
  ["Plastic, wood, tires, bulky, big bags","none found in scope","only as classes in AerialWaste / Alari"],
  ["Sludge, foundry waste","none found","only as classes in Alari"],
-],left=0.45,top=1.18,w=9.10,colw=[2.30,3.55,3.25],fs=8.5,rh=0.44,hh=0.36)
+],left=0.45,top=1.22,w=9.10,colw=[2.30,3.55,3.25],fs=8.5,rh=0.43,hh=0.36)
 foot(s,"Scope: terrestrial, GSD compatible with the task. This table answers how thin the material-level literature actually is.")
 
 # 8 ── search method
@@ -168,10 +168,10 @@ foot(s,"All RGB: they answer where a site is, not what it contains. * preprint; 
 # 11 ── deep-dive AerialWaste
 s=slide(); title(s,"AerialWaste: the reference dataset")
 body(s,[
- {"t":"10,434 locations from ARPA Lombardia records, 487 municipalities; three sources: AGEA orthophotos (20 cm), WorldView-3 (30 cm), Google Earth (50 cm).","sz":11.5},
- {"t":"Binary site labels for detection, plus 22 material tags (type of visible object + storage mode) annotated by experts.","sz":11.5},
- {"t":"Material tags cover about 72% of positives, but the dataset was published for detection: material tags are metadata, not a benchmark.","sz":11.5},
- {"t":"This is the label base both Gibellini 2025 and Alari 2024 build on.","sz":11.5},
+ {"t":"10,434 locations from ARPA Lombardia records, 487 municipalities; three sources: AGEA orthophotos (20 cm), WorldView-3 (30 cm), Google Earth (50 cm).","sz":11.5,"sa":10},
+ {"t":"Binary site labels for detection, plus 22 material tags (type of visible object + storage mode) annotated by experts.","sz":11.5,"sa":10},
+ {"t":"Material tags cover about 72% of positives, but the dataset was published for detection: material tags are metadata, not a benchmark.","sz":11.5,"sa":10},
+ {"t":"This is the label base both Gibellini 2025 and Alari 2024 build on.","sz":11.5,"sa":10},
 ],top=1.15,left=0.45,w=4.10,h=3.90)
 img(s,os.path.join(FIG,"aerialwaste_grid.png"),4.75,1.10,4.85,4.00)
 foot(s,"Image: annotated-label examples, Torres and Fraternali 2023, Scientific Data (CC BY 4.0)")
@@ -179,10 +179,10 @@ foot(s,"Image: annotated-label examples, Torres and Fraternali 2023, Scientific 
 # 12 ── deep-dive Gibellini
 s=slide(); title(s,"Gibellini 2025: the site-level baseline")
 body(s,[
- {"t":"Binary waste / no-waste classification on AerialWaste; Swin-T with remote-sensing pretraining, two-step fine-tuning.","sz":11.5},
- {"t":"F1 92.02 in domain. Cross-region generalisation drops 5.1 points on average (Greece 85.4, Serbia 83.8, Romania 91.5).","sz":11.5},
- {"t":"Saliency maps confirm the model looks at waste heaps, but the output is presence only: no material information.","sz":11.5},
- {"t":"This architecture and training recipe is the starting point of the proposal.","sz":11.5},
+ {"t":"Binary waste / no-waste classification on AerialWaste; Swin-T with remote-sensing pretraining, two-step fine-tuning.","sz":11.5,"sa":10},
+ {"t":"F1 92.02 in domain. Cross-region generalisation drops 5.1 points on average (Greece 85.4, Serbia 83.8, Romania 91.5).","sz":11.5,"sa":10},
+ {"t":"Saliency maps confirm the model looks at waste heaps, but the output is presence only: no material information.","sz":11.5,"sa":10},
+ {"t":"This architecture and training recipe is the starting point of the proposal.","sz":11.5,"sa":10},
 ],top=1.15,left=0.45,w=4.10,h=3.90)
 img(s,os.path.join(FIG,"gibellini_cams.png"),4.75,1.30,4.85,3.55)
 foot(s,"Image: true positives with saliency overlays, Gibellini et al. 2025 (Greek generalisation set)")
@@ -190,12 +190,12 @@ foot(s,"Image: true positives with saliency overlays, Gibellini et al. 2025 (Gre
 # 13 ── deep-dive Alari
 s=slide(); title(s,"Alari 2024: the direct predecessor")
 body(s,[
- {"t":"First work in the group to frame waste-material recognition as multi-label classification.","sz":12},
- {"t":"Dataset: 11,477 multi-label annotations over 13 categories; 3,190 positive and 7,190 negative images, built on AerialWaste imagery and ARPA records.","sz":12},
- {"t":"Models: ResNet-50 and Swin backbones with FPN; three classification-head designs; weighted binary cross-entropy for label imbalance; different pretraining sources compared.","sz":12},
- {"t":"Results: weighted F1 69.21 on five categories, 59.42 on ten. Growing the taxonomy from 5 to 10 costs 9.8 points.","sz":12},
+ {"t":"First work in the group to frame waste-material recognition as multi-label classification.","sz":12,"sa":14},
+ {"t":"Dataset: 11,477 multi-label annotations over 13 categories; 3,190 positive and 7,190 negative images, built on AerialWaste imagery and ARPA records.","sz":12,"sa":14},
+ {"t":"Models: ResNet-50 and Swin backbones with FPN; three classification-head designs; weighted binary cross-entropy for label imbalance; different pretraining sources compared.","sz":12,"sa":14},
+ {"t":"Results: weighted F1 69.21 on five categories, 59.42 on ten. Growing the taxonomy from 5 to 10 costs 9.8 points.","sz":12,"sa":14},
  {"t":"Input is RGB only. The spectral dimension is untouched: that is the opening this thesis takes.","b":True,"sz":12},
-])
+],top=1.20,h=3.90)
 foot(s,"Alari 2024, M.Sc. thesis, PoliMi (advisor Fraternali, co-advisor Gibellini), politesi 10589/230633")
 
 # 14 ── material-level table
@@ -214,12 +214,12 @@ foot(s,"* paywalled or preprint, reported as such")
 # 15 ── deep-dive asbestos
 s=slide(); title(s,"The asbestos line, in detail")
 body(s,[
- {"t":"Saba 2026: WorldView-3, VNIR only, 32 classifiers compared; best Macro-F1 97.6 per-pixel. Red Edge and NIR carry the discrimination.","sz":11.5},
- {"t":"Bonifazi 2026: WorldView-3 multi-temporal workflow; building-level decisions from pixel classification; tracks roof removals between acquisitions.","sz":11.5},
- {"t":"Abbasi 2024: aerial RGB with temporal features, OA ~96: shape and time can substitute spectra at fine GSD.","sz":11.5},
- {"t":"Cilia 2015: airborne hyperspectral, PA 89 / UA 86, plus a weathering index from red/NIR: the degradation angle.","sz":11.5},
- {"t":"Asbestos slate on drone RGB (2023): partially recognisable by shape and texture alone.","sz":11.5},
- {"t":"Why it matters here: public ground truth (Lombardy WFS, 10,903 roofs) and VNIR evidence make asbestos the natural pilot.","b":True,"sz":11.5},
+ {"t":"Saba 2026: WorldView-3, VNIR only, 32 classifiers compared; best Macro-F1 97.6 per-pixel. Red Edge and NIR carry the discrimination.","sz":11.5,"sa":10},
+ {"t":"Bonifazi 2026: WorldView-3 multi-temporal workflow; building-level decisions from pixel classification; tracks roof removals between acquisitions.","sz":11.5,"sa":10},
+ {"t":"Abbasi 2024: aerial RGB with temporal features, OA ~96: shape and time can substitute spectra at fine GSD.","sz":11.5,"sa":10},
+ {"t":"Cilia 2015: airborne hyperspectral, PA 89 / UA 86, plus a weathering index from red/NIR: the degradation angle.","sz":11.5,"sa":10},
+ {"t":"Asbestos slate on drone RGB (2023): partially recognisable by shape and texture alone.","sz":11.5,"sa":10},
+ {"t":"Why it matters here: public ground truth (Lombardy WFS, 10,903 roofs) and VNIR evidence make asbestos the natural pilot.","b":True,"sz":11.5,"sa":10},
 ],top=1.10,left=0.45,w=4.10,h=4.0)
 img(s,os.path.join(FIG,"bonifazi_example.png"),4.85,1.20,4.65,3.85)
 foot(s,"Image: building-level asbestos classification on WorldView-3, Bonifazi et al. 2026, Geomatics (CC BY 4.0)")
@@ -242,9 +242,9 @@ foot(s,"Shape-defined objects are mature; material composition still needs spect
 # 17 ── rgb limits + vnir
 s=slide(); title(s,"Where RGB falls short, and what VNIR adds")
 body(s,[
- {"t":"Different materials share the same colour at 0.3-1.3 m: plastic sheets, asbestos-cement and concrete all appear grey.","sz":12},
- {"t":"In the group predecessor, moving from 5 to 10 material categories costs 9.8 F1 points (69.2 to 59.4). Finer material distinctions are the hard part.","sz":12},
- {"t":"Red Edge and NIR separate vegetation, bare soil and weathered surfaces; in Saba 2026 they drive asbestos discrimination.","sz":12},
+ {"t":"Different materials share the same colour at 0.3-1.3 m: plastic sheets, asbestos-cement and concrete all appear grey.","sz":12,"sa":11},
+ {"t":"In the group predecessor, moving from 5 to 10 material categories costs 9.8 F1 points (69.2 to 59.4). Finer material distinctions are the hard part.","sz":12,"sa":11},
+ {"t":"Red Edge and NIR separate vegetation, bare soil and weathered surfaces; in Saba 2026 they drive asbestos discrimination.","sz":12,"sa":11},
  {"t":"Whether this helps waste materials, and which ones, has not been measured. It is the object of this thesis.","sz":12},
 ],top=1.15,left=0.45,w=3.85,h=3.90)
 img(s,os.path.join(FIG,"vnir_signatures.png"),4.45,1.20,5.15,3.85)
@@ -273,18 +273,18 @@ table(s,[
  ["CWLD 2024","GF-2 + GE","segmentation","one material (C&D)"],
  ["Saba / Bonifazi / Abbasi / Cilia","WV-3, aerial, HSI","pixel cls.","one material (asbestos)"],
  ["Tanks / vehicles / scrap works","VHR, close range","object detection","shape, not composition"],
-],left=0.45,top=1.12,w=9.10,colw=[2.90,1.75,1.95,2.50],fs=8.5,rh=0.40,hh=0.34)
+],left=0.45,top=1.08,w=9.10,colw=[2.90,1.75,1.95,2.50],fs=8.5,rh=0.37,hh=0.33)
 foot(s,"Ten lines summarise every in-scope line of work. Material-level evidence: one multi-label predecessor + one material studied in isolation.")
 
 # 20 ── gaps
 s=slide(); title(s,"What is missing in the literature")
 body(s,[
- {"t":"1.  Multi-material classification has one direct precedent, with ample margin: wF1 59-69 (Alari 2024)."},
- {"t":"2.  No work measures the added value of VNIR bands over RGB for waste materials at very high resolution."},
- {"t":"3.  Results are reported as aggregate scores; per-material behaviour is not analysed."},
- {"t":"4.  Generalisation across regions is rarely evaluated. At site level it costs 5 F1 points (Gibellini 2025)."},
+ {"t":"1.  Multi-material classification has one direct precedent, with ample margin: wF1 59-69 (Alari 2024).","sa":20},
+ {"t":"2.  No work measures the added value of VNIR bands over RGB for waste materials at very high resolution.","sa":20},
+ {"t":"3.  Results are reported as aggregate scores; per-material behaviour is not analysed.","sa":20},
+ {"t":"4.  Generalisation across regions is rarely evaluated. At site level it costs 5 F1 points (Gibellini 2025).","sa":20},
  {"t":"5.  Asbestos is studied on roofs, in isolation, and never inside a waste-material taxonomy."},
-])
+],top=1.30,h=3.70)
 foot(s,"Each gap maps to one element of the proposal on the next slides.")
 
 # 21 ── proposal approach
@@ -292,28 +292,28 @@ s=slide(); title(s,"Proposed work: approach")
 body(s,[
  {"t":"Multi-label image classification, continuing the group line (Gibellini 2025, Alari 2024). Same taxonomy, input extended from RGB to VNIR.","b":True,"sz":12},
  {"t":"Band ablation with everything else fixed: same architecture, same splits, only the input changes.","sz":12},
-],top=0.95,h=1.15,mid=False)
+],top=1.05,h=1.10)
 img(s,os.path.join(FIG,"pipeline.png"),0.55,2.15,8.9,2.75)
 foot(s,"Backbone: Swin-T with remote-sensing pretraining (group baseline); extra bands enter via the input layer.")
 
 # 22 ── pilot
 s=slide(); title(s,"First step: the asbestos pilot")
 body(s,[
- {"t":"1.  Extract roof polygons from the Lombardy WFS registry (10,903 mapped asbestos-cement roofs) and pair them with the available imagery.","sz":12.5},
- {"t":"2.  Build matched RGB and VNIR inputs for the same roofs; add negative roofs from regional building footprints.","sz":12.5},
- {"t":"3.  Train the same classifier on both inputs; compare F1, precision, recall on held-out areas.","sz":12.5},
- {"t":"4.  Decision point: the measured VNIR delta on a single, well-labelled material tells whether the full multi-label extension is worth the acquisition cost.","sz":12.5},
+ {"t":"1.  Extract roof polygons from the Lombardy WFS registry (10,903 mapped asbestos-cement roofs) and pair them with the available imagery.","sz":12.5,"sa":13},
+ {"t":"2.  Build matched RGB and VNIR inputs for the same roofs; add negative roofs from regional building footprints.","sz":12.5,"sa":13},
+ {"t":"3.  Train the same classifier on both inputs; compare F1, precision, recall on held-out areas.","sz":12.5,"sa":13},
+ {"t":"4.  Decision point: the measured VNIR delta on a single, well-labelled material tells whether the full multi-label extension is worth the acquisition cost.","sz":12.5,"sa":13},
  {"t":"Why asbestos first: public pixel-accurate labels, one material, VNIR evidence in literature (Saba 2026), and direct regulatory value.","b":True,"sz":12.5},
-])
+],top=1.20,h=3.90)
 foot(s,"Ground truth: Regione Lombardia WFS, Mappatura 2020 (EPSG:32632)")
 
 # 23 ── evaluation
 s=slide(); title(s,"Proposed work: evaluation")
 body(s,[
- {"t":"Per-material F1 alongside weighted and macro averages: aggregates hide exactly the classes this thesis targets.","sz":12},
- {"t":"Delta versus the RGB baseline for each band configuration, with confidence intervals over repeated runs.","sz":12},
- {"t":"Generalisation: train and test on disjoint geographic areas, besides the standard split.","sz":12},
- {"t":"Reference points: wF1 69.2 / 59.4 (Alari 2024); Macro-F1 97.6 (Saba 2026, per-pixel) as upper reference for the pilot, not directly comparable.","sz":12},
+ {"t":"Per-material F1 alongside weighted and macro averages: aggregates hide exactly the classes this thesis targets.","sz":12,"sa":11},
+ {"t":"Delta versus the RGB baseline for each band configuration, with confidence intervals over repeated runs.","sz":12,"sa":11},
+ {"t":"Generalisation: train and test on disjoint geographic areas, besides the standard split.","sz":12,"sa":11},
+ {"t":"Reference points: wF1 69.2 / 59.4 (Alari 2024); Macro-F1 97.6 (Saba 2026, per-pixel) as upper reference for the pilot, not directly comparable.","sz":12,"sa":11},
  {"t":"If VNIR does not help a material, that is a documented negative result with practical value for sensor choice.","sz":12},
 ],top=1.15,left=0.45,w=4.7,h=3.9)
 img(s,os.path.join(FIG,"eval_grid.png"),5.35,1.55,4.25,2.9)
@@ -322,29 +322,29 @@ foot(s,"Metrics: per-class F1, macro-F1, weighted F1, confusion matrices. Splits
 # 24 ── references 1
 s=slide(); title(s,"References (1/2)")
 body(s,[
- {"t":"Alari 2024. Fighting environmental crime with deep learning: classifying waste materials from illegal landfills in satellite imagery. M.Sc. thesis, PoliMi, 10589/230633.","sz":10.5},
- {"t":"Fraternali et al. 2024. Solid waste detection, monitoring and mapping in remote sensing images: a survey. Waste Management / arXiv:2402.09066.","sz":10.5},
- {"t":"Gibellini et al. 2025. A deep learning pipeline for solid waste detection in remote sensing images. Waste Management Bulletin.","sz":10.5},
- {"t":"Torres, Fraternali 2023. AerialWaste: a dataset for illegal landfill discovery in aerial images. Scientific Data 10:63.","sz":10.5},
- {"t":"Sharmily et al. 2025. AerialWaste ensembles (preprint).  ·  Zhang, Ma 2024. CascadeDumpNet. Remote Sensing of Environment 313.","sz":10.5},
- {"t":"Sun et al. 2023. Revealing influencing factors on global waste distribution. Nature Communications 14:1444.","sz":10.5},
- {"t":"CWLD 2024. Construction waste landfill dataset. Scientific Data.  ·  Disaitek 2024, vendor report (Airbus).","sz":10.5},
- {"t":"Saba et al. 2026. J. Hazardous Materials.  ·  Bonifazi et al. 2026. Geomatics 6(3):41.  ·  Abbasi et al. 2024. RSASE.  ·  Cilia et al. 2015. ISPRS IJGI 4(2).","sz":10.5},
-])
+ {"t":"Alari 2024. Fighting environmental crime with deep learning: classifying waste materials from illegal landfills in satellite imagery. M.Sc. thesis, PoliMi, 10589/230633.","sz":10.5,"sa":12},
+ {"t":"Fraternali et al. 2024. Solid waste detection, monitoring and mapping in remote sensing images: a survey. Waste Management / arXiv:2402.09066.","sz":10.5,"sa":12},
+ {"t":"Gibellini et al. 2025. A deep learning pipeline for solid waste detection in remote sensing images. Waste Management Bulletin.","sz":10.5,"sa":12},
+ {"t":"Torres, Fraternali 2023. AerialWaste: a dataset for illegal landfill discovery in aerial images. Scientific Data 10:63.","sz":10.5,"sa":12},
+ {"t":"Sharmily et al. 2025. AerialWaste ensembles (preprint).  ·  Zhang, Ma 2024. CascadeDumpNet. Remote Sensing of Environment 313.","sz":10.5,"sa":12},
+ {"t":"Sun et al. 2023. Revealing influencing factors on global waste distribution. Nature Communications 14:1444.","sz":10.5,"sa":12},
+ {"t":"CWLD 2024. Construction waste landfill dataset. Scientific Data.  ·  Disaitek 2024, vendor report (Airbus).","sz":10.5,"sa":12},
+ {"t":"Saba et al. 2026. J. Hazardous Materials.  ·  Bonifazi et al. 2026. Geomatics 6(3):41.  ·  Abbasi et al. 2024. RSASE.  ·  Cilia et al. 2015. ISPRS IJGI 4(2).","sz":10.5,"sa":12},
+],top=1.20,h=3.90)
 foot(s,"Full annotated library: 47 papers, papers/INDEX.md")
 
 # 25 ── references 2
 s=slide(); title(s,"References (2/2)")
 body(s,[
- {"t":"Asbestos slate from drone imagery, 2023 (training-data study).","sz":10.5},
- {"t":"Ramachandran et al. 2024. Deep learning to map well pads and storage tanks. Nature Communications.","sz":10.5},
- {"t":"YOLOv7-OT 2024. Storage tank detection for large-scale remote sensing images. Remote Sensing.","sz":10.5},
- {"t":"Truck-and-container detection from satellite imagery, 2025 (preprint).","sz":10.5},
- {"t":"Vehicle detection with domain adaptation in VHR imagery, 2020.","sz":10.5},
- {"t":"ELV Hybrid-YOLOv5 2025. Non-ferrous metal detection in end-of-life vehicles (close-range infrared).","sz":10.5},
- {"t":"UAV solid-waste segmentation, 2024.  ·  C&D debris volume from UAV photogrammetry, 2022. Drones.","sz":10.5},
- {"t":"fCLIPSeg 2025. Event-agnostic debris segmentation.  ·  Kokaly et al. 2017. USGS Spectral Library v7 (splib07a). USGS DS 1035.","sz":10.5},
-])
+ {"t":"Asbestos slate from drone imagery, 2023 (training-data study).","sz":10.5,"sa":12},
+ {"t":"Ramachandran et al. 2024. Deep learning to map well pads and storage tanks. Nature Communications.","sz":10.5,"sa":12},
+ {"t":"YOLOv7-OT 2024. Storage tank detection for large-scale remote sensing images. Remote Sensing.","sz":10.5,"sa":12},
+ {"t":"Truck-and-container detection from satellite imagery, 2025 (preprint).","sz":10.5,"sa":12},
+ {"t":"Vehicle detection with domain adaptation in VHR imagery, 2020.","sz":10.5,"sa":12},
+ {"t":"ELV Hybrid-YOLOv5 2025. Non-ferrous metal detection in end-of-life vehicles (close-range infrared).","sz":10.5,"sa":12},
+ {"t":"UAV solid-waste segmentation, 2024.  ·  C&D debris volume from UAV photogrammetry, 2022. Drones.","sz":10.5,"sa":12},
+ {"t":"fCLIPSeg 2025. Event-agnostic debris segmentation.  ·  Kokaly et al. 2017. USGS Spectral Library v7 (splib07a). USGS DS 1035.","sz":10.5,"sa":12},
+],top=1.20,h=3.90)
 foot(s,"23 works cited; the remaining library papers are kept as screened context (excluded groups on slide 9)")
 
 # page numbers

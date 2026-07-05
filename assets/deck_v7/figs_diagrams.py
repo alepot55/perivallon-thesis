@@ -6,7 +6,7 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 import matplotlib.image as mpimg
 
 OUT = Path("/home/alepot55/Desktop/uni/Tesi/assets/deck_v7/figs")
-INK="#1A1A1A"; MUT="#666666"; BLU="#2a78d6"; ORA="#eb6834"; BG="#F4F6FA"; BG2="#FDF1EA"
+INK="#1A1A1A"; MUT="#666666"; BLU="#1A1A1A"; ORA="#1A1A1A"; BG="white"; BG2="white"
 plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Arial","DejaVu Sans"],
  "text.color":INK,"figure.facecolor":"white","savefig.facecolor":"white",
  "savefig.dpi":300,"savefig.bbox":"tight"})
@@ -35,15 +35,15 @@ ax.imshow(tile,extent=(x0,x0+w2,y0,y0+h2),aspect="auto",zorder=3)
 ax.plot([x0,x0+w2,x0+w2,x0,x0],[y0,y0,y0+h2,y0+h2,y0],color=INK,lw=1.2,zorder=4)
 ax.text(12,7,"input tile, RGB / VNIR",ha="center",fontsize=10,color=MUT)
 arr(ax,23,53,33,53)
-rbox(ax,33,32,26,42,fc=BG,ec=BLU,lw=1.6)
+rbox(ax,33,32,26,42,fc="white",ec=INK,lw=1.3)
 ax.text(46,60,"CNN / Transformer",ha="center",fontsize=11.5,fontweight="bold",color=INK)
 ax.text(46,44,"Swin-T, RS pretraining",ha="center",fontsize=9.6,color=MUT)
 arr(ax,61,53,71,53)
-rbox(ax,71,10,26,82,fc="white",ec=INK,lw=1.4)
+rbox(ax,71,10,26,82,fc="white",ec=INK,lw=1.3)
 ax.text(84,84,"materials present",ha="center",fontsize=10.5,fontweight="bold")
 for i,(lab,on) in enumerate([("scrap",True),("bulky items",True),("rubble",False),("tires",False),("asbestos-cement",False)]):
     y=70-i*12.5
-    ax.text(75.4,y,"☑" if on else "☐",fontsize=12,color=(BLU if on else "#B5B5B5"),va="center")
+    ax.text(75.4,y,"☑" if on else "☐",fontsize=12,color=(INK if on else "#B5B5B5"),va="center")
     ax.text(80,y,lab,fontsize=10.5,va="center",color=(INK if on else MUT))
 fig.savefig(OUT/"task_io.png"); plt.close(fig)
 
@@ -52,12 +52,12 @@ fig,ax=canvas(9.6,2.5)
 steps=[("Scopus API","2 scripted\nquery sets","",BG),
        ("699","unique records","622 waste\n77 asbestos",BG),
        ("screening","task fit, GSD,\nrecency, review","",BG),
-       ("47","annotated library","notes and\nteam Excel",BG2),
-       ("13","cited here","",BG2)]
+       ("47","annotated library","notes and\nteam Excel",BG),
+       ("23","cited here","",BG2)]
 n=len(steps); w=17.2; gap=(100-n*w)/(n+1)
 for i,(big,small,tiny,fc) in enumerate(steps):
     x=gap+i*(w+gap)
-    rbox(ax,x,12,w,74,fc=fc,ec=(ORA if fc==BG2 else BLU),lw=1.6)
+    rbox(ax,x,12,w,74,fc="white",ec=INK,lw=1.3)
     if big.isdigit():
         ax.text(x+w/2,64,big,ha="center",fontsize=20,fontweight="bold",color=INK)
         ax.text(x+w/2,42,small,ha="center",fontsize=8.8,color=INK)
@@ -112,19 +112,19 @@ srcs=[("AerialWaste + Alari labels","RGB baseline, 20-50 cm",BG),
       ("Lombardy WFS registry","asbestos pilot, 10,903 roofs",BG2)]
 for i,(t,st,fc) in enumerate(srcs):
     y=71-i*27
-    rbox(ax,2,y,29,22,fc=fc,ec=(ORA if fc==BG2 else BLU),lw=1.5)
+    rbox(ax,2,y,29,22,fc="white",ec=INK,lw=1.3)
     ax.text(16.5,y+14,t,ha="center",fontsize=9.4,fontweight="bold")
     ax.text(16.5,y+6,st,ha="center",fontsize=8.4,color=MUT)
     arr(ax,31.5,y+11,38.5,52,lw=1.3)
-rbox(ax,39,30,22,44,fc="white",ec=INK,lw=1.6)
+rbox(ax,39,30,22,44,fc="white",ec=INK,lw=1.3)
 ax.text(50,63,"Swin-T backbone",ha="center",fontsize=10.5,fontweight="bold")
 ax.text(50,46,"input layer extended\nto extra bands",ha="center",fontsize=8.6,color=MUT)
 arr(ax,61.5,52,66.5,52)
-rbox(ax,66.5,30,14,44,fc=BG,ec=BLU,lw=1.5)
+rbox(ax,66.5,30,14,44,fc="white",ec=INK,lw=1.3)
 ax.text(73.5,64,"band ablation",ha="center",fontsize=9.4,fontweight="bold")
 ax.text(73.5,44,"RGB\nRGB + NIR\nfull VNIR",ha="center",fontsize=8.6,color=MUT)
 arr(ax,81,52,85.5,52)
-rbox(ax,85.5,22,13,60,fc="white",ec=INK,lw=1.4)
+rbox(ax,85.5,22,13,60,fc="white",ec=INK,lw=1.3)
 ax.text(92,70,"per-material\nF1",ha="center",fontsize=8.4)
 ax.text(92,51,"Δ vs RGB",ha="center",fontsize=8.4)
 ax.text(92,33,"generalisation\nsplit",ha="center",fontsize=8.4)
@@ -136,7 +136,7 @@ rows=["RGB","RGB + NIR","full VNIR"]; cols=["standard split","cross-region split
 for i in range(len(rows)):
     for j in range(len(cols)):
         base=(i==0)
-        ax.add_patch(plt.Rectangle((j,2-i),1,1,fc=("#EDEDED" if base else BG),ec="white",lw=2.5))
+        ax.add_patch(plt.Rectangle((j,2-i),1,1,fc="white",ec="#1A1A1A",lw=1.0))
         ax.text(j+0.5,2-i+0.5,"baseline F1" if base else "ΔF1 per material",
                 ha="center",va="center",fontsize=9,color=(MUT if base else INK),
                 fontweight=("normal" if base else "bold"))

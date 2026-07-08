@@ -74,7 +74,7 @@ s=slide(); title(s,"Context")
 body(s,[
  {"t":"Illegal waste dumping is an environmental crime with direct public-health consequences. Agencies (ARPA) have limited inspection capacity, and priority depends on what is dumped: rubble, plastics and asbestos-cement imply very different hazards.","sz":12.5},
  {"t":"Detecting dump sites from images is mature. Recognising the material is not: the reference survey (50 works, 1987-2023, almost all RGB) marks it as an open problem.","sz":12.5},
- {"t":"One thesis in the group has addressed material classification directly (Alari 2024). This work starts from there.","sz":12.5},
+ {"t":"One thesis in the group has addressed material classification directly (Alari 2024). It is examined here alongside the rest of the literature.","sz":12.5},
 ],top=1.00,h=1.85,mid=False)
 img(s,os.path.join(FIG,"torres_examples.png"),0.7,2.95,8.6,2.20)
 foot(s,"Images: AerialWaste positive examples, Torres and Fraternali 2023 (CC BY 4.0)  ·  survey: Fraternali et al. 2024")
@@ -188,9 +188,9 @@ img(s,os.path.join(FIG,"gibellini_cams.png"),4.75,1.30,4.85,3.55)
 foot(s,"Image: true positives with saliency overlays, Gibellini et al. 2025 (Greek generalisation set)")
 
 # 13 ── deep-dive Alari
-s=slide(); title(s,"Alari 2024: the direct predecessor")
+s=slide(); title(s,"Alari 2024: the closest work")
 body(s,[
- {"t":"First work in the group to frame waste-material recognition as multi-label classification.","sz":12,"sa":14},
+ {"t":"First work in the group to frame waste-material recognition as multi-label classification. It entered the library through the same screening as every other paper; the coverage table shows it is the only in-scope multi-material work, which makes it the operational comparison.","sz":12,"sa":14},
  {"t":"Dataset: 11,477 multi-label annotations over 13 categories; 3,190 positive and 7,190 negative images, built on AerialWaste imagery and ARPA records.","sz":12,"sa":14},
  {"t":"Models: ResNet-50 and Swin backbones with FPN; three classification-head designs; weighted binary cross-entropy for label imbalance; different pretraining sources compared.","sz":12,"sa":14},
  {"t":"Results: weighted F1 69.21 on five categories, 59.42 on ten. Growing the taxonomy from 5 to 10 costs 9.8 points.","sz":12,"sa":14},
@@ -208,6 +208,19 @@ body(s,[
  {"t":"This per-class picture is what the band ablation is designed to move.","b":True,"sz":11.5},
 ],top=1.20,left=6.15,w=3.45,h=3.85)
 foot(s,"Data: Alari 2024, Table 4.13 (ResNet-50 + IDA, ten categories), politesi 10589/230633")
+
+# 14b -- what Alari's conclusions leave open
+s=slide(); title(s,"Alari 2024: what the conclusions leave open")
+body(s,[
+ {"t":"1.  Dataset extension: 5 of the 13 classes have fewer than 400 samples; underrepresented classes limit generalisation.","sz":12.5,"sa":13},
+ {"t":"2.  Multi- and hyper-spectral imagery: a wider spectral input \u201cmay also prove useful in the identification of waste types\u201d. Named explicitly as a future direction.","sz":12.5,"sa":13},
+ {"t":"3.  Synthetic augmentation: high co-occurrence between classes confounds the model; single-category images would isolate class representations.","sz":12.5,"sa":13},
+ {"t":"4.  Multi-class pre-training: fewer than 300 single-annotation images make it infeasible on the current dataset.","sz":12.5,"sa":13},
+ {"t":"5.  Object detection: boxes could focus attention, at the cost of new annotations.","sz":12.5,"sa":13},
+ {"t":"Point 2 is this thesis. Points 1 and 3 explain part of the per-class collapse on the previous slide.","b":True,"sz":12.5},
+],top=1.10,h=4.0)
+foot(s,"Alari 2024, Chapter 5, Conclusions and Future Works. The thesis is compared like every other library paper.")
+
 
 
 # 14 ── material-level table
@@ -300,7 +313,7 @@ foot(s,"Ten lines summarise every in-scope line of work. Material-level evidence
 s=slide(); title(s,"What is missing in the literature")
 body(s,[
  {"t":"1.  Multi-material classification has one direct precedent, with ample margin: wF1 59-69 (Alari 2024).","sa":20},
- {"t":"2.  No work measures the added value of VNIR bands over RGB for waste materials at very high resolution.","sa":20},
+ {"t":"2.  No work measures the added value of VNIR bands over RGB for waste materials at very high resolution; Alari 2024 names the multispectral extension as future work.","sa":20},
  {"t":"3.  Results are reported as aggregate scores; per-material behaviour is not analysed.","sa":20},
  {"t":"4.  Generalisation across regions is rarely evaluated. At site level it costs 5 F1 points (Gibellini 2025).","sa":20},
  {"t":"5.  Asbestos is studied on roofs, in isolation, and never inside a waste-material taxonomy."},

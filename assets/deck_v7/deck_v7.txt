@@ -12,7 +12,8 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
     hazards.
     Detecting dump sites from images is mature. Recognising the material is not: the reference survey (50 works, 1987-2023,
     almost all RGB) marks it as an open problem.
-    One thesis in the group has addressed material classification directly (Alari 2024). This work starts from there.
+    One thesis in the group has addressed material classification directly (Alari 2024). It is examined here alongside the rest of the
+    literature.
 
 
 
@@ -216,9 +217,11 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 12   Image: true positives with saliency overlays, Gibellini et al. 2025 (Greek generalisation set)
-     Alari 2024: the direct predecessor
+     Alari 2024: the closest work
 
-     First work in the group to frame waste-material recognition as multi-label classification.
+     First work in the group to frame waste-material recognition as multi-label classification. It entered the library through the same
+     screening as every other paper; the coverage table shows it is the only in-scope multi-material work, which makes it the operational
+     comparison.
 
      Dataset: 11,477 multi-label annotations over 13 categories; 3,190 positive and 7,190 negative images, built on AerialWaste imagery
      and ARPA records.
@@ -256,6 +259,26 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 14   Data: Alari 2024, Table 4.13 (ResNet-50 + IDA, ten categories), politesi 10589/230633
+     Alari 2024: what the conclusions leave open
+
+     1. Dataset extension: 5 of the 13 classes have fewer than 400 samples; underrepresented classes limit generalisation.
+
+     2. Multi- and hyper-spectral imagery: a wider spectral input “may also prove useful in the identification of waste types”.
+     Named explicitly as a future direction.
+
+     3. Synthetic augmentation: high co-occurrence between classes confounds the model; single-category images would isolate
+     class representations.
+
+     4. Multi-class pre-training: fewer than 300 single-annotation images make it infeasible on the current dataset.
+
+     5. Object detection: boxes could focus attention, at the cost of new annotations.
+
+     Point 2 is this thesis. Points 1 and 3 explain part of the per-class collapse on the previous slide.
+
+
+
+
+15   Alari 2024, Chapter 5, Conclusions and Future Works. The thesis is compared like every other library paper.
      Related work: material-level classification
 
 
@@ -282,7 +305,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-15   * paywalled or preprint, reported as such
+16   * paywalled or preprint, reported as such
      The asbestos line, in detail
 
      Saba 2026: WorldView-3, VNIR only, 32 classifiers
@@ -306,7 +329,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
      10,903 roofs) and VNIR evidence make asbestos the
      natural pilot.
 
-16   Image: building-level asbestos classification on WorldView-3, Bonifazi et al. 2026, Geomatics (CC BY 4.0)
+17   Image: building-level asbestos classification on WorldView-3, Bonifazi et al. 2026, Geomatics (CC BY 4.0)
      Asbestos weathering is visible in VNIR
 
      Cilia 2015 measured asbestos-cement roofs of different age and
@@ -328,7 +351,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-17   Figure: field and MIVIS spectra of asbestos-cement roofs, Cilia et al. 2015, ISPRS IJGI 4(2) (CC BY)
+18   Figure: field and MIVIS spectra of asbestos-cement roofs, Cilia et al. 2015, ISPRS IJGI 4(2) (CC BY)
      Where RGB falls short, and what VNIR adds
 
      Different materials share the same colour at 0.3-1.3
@@ -349,7 +372,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-18   Reflectance: USGS splib07a (Kokaly et al. 2017), 400-1050 nm. Band centres: Maxar, Airbus.
+19   Reflectance: USGS splib07a (Kokaly et al. 2017), 400-1050 nm. Band centres: Maxar, Airbus.
      How many extra bands close the RGB gap
      Controlled-condition evidence (Vitek 2025, laboratory hyperspectral, 10 construction and demolition materials): RGB alone reaches
      0.87 accuracy; two well-chosen extra bands bring it to 0.96; the full 768-band spectrum adds almost nothing more.
@@ -361,7 +384,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
      Laboratory study, reported as such: it bounds what spectra can add. Whether it transfers to satellite GSD is what this thesis measures.
 
-19   Vitek, Zbiral, Nezerka 2025. Resources, Conservation and Recycling. Band ranges: Maxar, Airbus data sheets
+20   Vitek, Zbiral, Nezerka 2025. Resources, Conservation and Recycling. Band ranges: Maxar, Airbus data sheets
      Available imagery
 
 
@@ -373,7 +396,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-20   Band ranges: Maxar WorldView-3, Airbus Pléiades Neo data sheets
+21   Band ranges: Maxar WorldView-3, Airbus Pléiades Neo data sheets
       The in-scope state of the art at a glance
      Work                                                            Input                                  Task                                   Material info
 
@@ -407,12 +430,13 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
      Tanks / vehicles / scrap works                                  VHR, close range                       object detection                       shape, not composition
 
 
-21    Ten lines summarise every in-scope line of work. Material-level evidence: one multi-label predecessor + one material studied in isolation.
+22    Ten lines summarise every in-scope line of work. Material-level evidence: one multi-label predecessor + one material studied in isolation.
      What is missing in the literature
 
      1. Multi-material classification has one direct precedent, with ample margin: wF1 59-69 (Alari 2024).
 
-     2. No work measures the added value of VNIR bands over RGB for waste materials at very high resolution.
+     2. No work measures the added value of VNIR bands over RGB for waste materials at very high resolution; Alari
+     2024 names the multispectral extension as future work.
 
      3. Results are reported as aggregate scores; per-material behaviour is not analysed.
 
@@ -423,7 +447,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-22   Each gap maps to one element of the proposal on the next slides.
+23   Each gap maps to one element of the proposal on the next slides.
      Proposed work: approach
      Multi-label image classification, continuing the group line (Gibellini 2025, Alari 2024). Same taxonomy, input extended from RGB
      to VNIR.
@@ -432,7 +456,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-23   Backbone: Swin-T with remote-sensing pretraining (group baseline); extra bands enter via the input layer.
+24   Backbone: Swin-T with remote-sensing pretraining (group baseline); extra bands enter via the input layer.
      First step: the asbestos pilot
 
      1. Extract roof polygons from the Lombardy WFS registry (10,903 mapped asbestos-cement roofs) and pair them with the
@@ -451,7 +475,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-24   Ground truth: Regione Lombardia WFS, Mappatura 2020 (EPSG:32632)
+25   Ground truth: Regione Lombardia WFS, Mappatura 2020 (EPSG:32632)
      Proposed work: evaluation
 
      Per-material F1 alongside weighted and macro averages:
@@ -473,7 +497,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-25   Metrics: per-class F1, macro-F1, weighted F1, confusion matrices. Splits frozen before testing.
+26   Metrics: per-class F1, macro-F1, weighted F1, confusion matrices. Splits frozen before testing.
      References (1/2)
 
      Alari 2024. Fighting environmental crime with deep learning: classifying waste materials from illegal landfills in satellite imagery. M.Sc. thesis, PoliMi,
@@ -496,7 +520,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-26   Full annotated library: 47 papers, papers/INDEX.md
+27   Full annotated library: 47 papers, papers/INDEX.md
      References (2/2)
 
      Asbestos slate from drone imagery, 2023 (training-data study).
@@ -520,5 +544,5 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-27   24 works cited; the remaining library papers are kept as screened context (excluded groups on slide 9)
+28   24 works cited; the remaining library papers are kept as screened context (excluded groups on slide 9)
 

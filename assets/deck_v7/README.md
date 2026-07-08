@@ -1,6 +1,6 @@
 # Deck v7 — full rewrite after Thomas's 2026-07-03 review
 
-`deck_v7.pptx` (27 slides) + `deck_v7.pdf` + `discorso_v7.pdf`. Copy in `~/Downloads/slide_v7.pptx`.
+`deck_v7.pptx` (28 slides) + `deck_v7.pdf` + `discorso_v7.pdf`. Copy in `~/Downloads/slide_v7.pptx`.
 
 Addresses every review point: explicit task slide + visual task scheme (technique =
 multi-label image classification, justified); material taxonomy with real Alari tiles,
@@ -15,7 +15,7 @@ Anchor reference: Alari 2024 (group thesis, politesi 10589/230633).
 Structure: context → task (definition, scheme) → materials (taxonomy, in/out,
 coverage) → search (method, kept/excluded) → site-level (table + AerialWaste /
 Gibellini / Alari deep-dives) → material-level (Alari per-class chart, table,
-asbestos deep-dive, Cilia weathering) → RGB limits → band-count evidence (Vitek) →
+asbestos deep-dive, Cilia weathering, Alari open conclusions) → RGB limits → band-count evidence (Vitek) →
 available imagery → SOTA at a glance → gaps → proposal (approach, pilot,
 evaluation) → references (24 works). Objects/close-range works appear only in the
 coverage table: their task is not ours.

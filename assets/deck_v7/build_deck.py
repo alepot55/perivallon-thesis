@@ -145,7 +145,7 @@ table(s,[
  ["Sentinel-2 and marine debris","MARIDA 2022, Tisza 2023","10-20 m: pixels too mixed; different domain"],
  ["Spaceborne hyperspectral","Shepherd 2025 (EnMAP), EMIT 2025","material evidence, but 30-60 m GSD"],
  ["SWIR-based VHR","Aguilar 2021, Aguilar 2025, Zhou 2021","SWIR not in our acquisitions; 3.7 m GSD"],
- ["Laboratory / conveyor","Vitek 2025, SpectralWaste 2024","not Earth observation"],
+ ["Laboratory / conveyor","Vitek 2025, SpectralWaste 2024","not EO; Vitek reused as band-selection evidence"],
  ["EO foundation models","DOFA 2024, AnySat 2025, Prithvi 2024, +6","pretrained at 10-30 m; sub-metre transfer unproven"],
 ],left=0.45,top=1.30,w=9.10,colw=[2.55,3.20,3.35],fs=9,rh=0.50,hh=0.38)
 body(s,[{"t":"Kept: works on terrestrial waste or roof materials at task-compatible GSD, plus the reference spectral library. The excluded papers stay in the annotated library as context.","sz":11.5}],top=4.35,h=0.7,mid=False)
@@ -198,6 +198,18 @@ body(s,[
 ],top=1.20,h=3.90)
 foot(s,"Alari 2024, M.Sc. thesis, PoliMi (advisor Fraternali, co-advisor Gibellini), politesi 10589/230633")
 
+# 13b -- Alari per-material results
+s=slide(); title(s,"Alari 2024: results per material")
+img(s,os.path.join(FIG,"alari_perclass.png"),0.40,1.15,5.55,3.90)
+body(s,[
+ {"t":"Per-class F1 of the ten-category model. The weighted average, 59.4, hides a split: classes defined by shape or extent stay near 70; classes defined by material appearance fall below 45.","sz":11.5,"sa":12},
+ {"t":"The thesis attributes the low scores to few annotations (tires, big bags), high intra-class variance (wood) and inter-class similarity in RGB.","sz":11.5,"sa":12},
+ {"t":"Three of the four spectral-analysis targets sit in the bottom half. Rubble is the exception: large extents make it visible even in RGB.","sz":11.5,"sa":12},
+ {"t":"This per-class picture is what the band ablation is designed to move.","b":True,"sz":11.5},
+],top=1.20,left=6.15,w=3.45,h=3.85)
+foot(s,"Data: Alari 2024, Table 4.13 (ResNet-50 + IDA, ten categories), politesi 10589/230633")
+
+
 # 14 ── material-level table
 s=slide(); title(s,"Related work: material-level classification")
 table(s,[
@@ -224,20 +236,17 @@ body(s,[
 img(s,os.path.join(FIG,"bonifazi_example.png"),4.85,1.20,4.65,3.85)
 foot(s,"Image: building-level asbestos classification on WorldView-3, Bonifazi et al. 2026, Geomatics (CC BY 4.0)")
 
-# 16 ── object-level table
-s=slide(); title(s,"Related work: objects and close range")
-table(s,[
- ["Work (year)","Input","Task","Result"],
- ["Ramachandran 2024","VHR satellite","object detection","tanks, P 0.96 / R 0.97, >169k mapped"],
- ["YOLOv7-OT 2024 *","VHR satellite","object detection","tanks, precision 95.9"],
- ["Truck-and-container 2025 *","VHR satellite","object detection","container size and status"],
- ["Vehicle DA 2020 *","VHR 30-50 cm","object detection","+10% with domain adaptation"],
- ["ELV Hybrid-YOLOv5 2025","close-range IR","object detection","scrap metals, mAP 84.2"],
- ["UAV solid waste 2024 *","UAV RGB","segmentation","OA >94, generic waste piles"],
- ["C&D debris UAV 2022 *","UAV + photogrammetry","segmentation","IoU 0.90 + volume estimation"],
- ["fCLIPSeg 2025","aerial RGB","segmentation","debris, Dice 0.70, event-agnostic"],
-],colw=[2.30,1.80,1.75,3.25],fs=8.5,rh=0.40,hh=0.34,vc=True)
-foot(s,"Shape-defined objects are mature; material composition still needs spectra or close range. * pending full-text verification")
+# 15b -- asbestos weathering in VNIR (Cilia 2015)
+s=slide(); title(s,"Asbestos weathering is visible in VNIR")
+body(s,[
+ {"t":"Cilia 2015 measured asbestos-cement roofs of different age and exposure, on the ground and from the MIVIS airborne sensor. The 0.48-0.82 um window is shown: pure VNIR.","sz":11.5,"sa":12},
+ {"t":"Older roofs are darker across the whole visible range; vegetation colonising the surface adds a chlorophyll absorption near 680 nm; north-exposed roofs amplify both effects.","sz":11.5,"sa":12},
+ {"t":"From these features the paper builds a deterioration index and ranks removal priority; the effects of age and exposure are statistically significant (ANOVA, p < 0.001).","sz":11.5,"sa":12},
+ {"t":"The discriminating features fall inside the VNIR window of the planned sensors: degradation state, not only presence, is within reach of the pilot.","b":True,"sz":11.5},
+],top=1.15,left=0.45,w=4.55,h=3.95)
+img(s,os.path.join(FIG,"cilia_weathering.png"),5.25,1.10,4.30,4.00)
+foot(s,"Figure: field and MIVIS spectra of asbestos-cement roofs, Cilia et al. 2015, ISPRS IJGI 4(2) (CC BY)")
+
 
 # 17 ── rgb limits + vnir
 s=slide(); title(s,"Where RGB falls short, and what VNIR adds")
@@ -249,6 +258,17 @@ body(s,[
 ],top=1.15,left=0.45,w=3.85,h=3.90)
 img(s,os.path.join(FIG,"vnir_signatures.png"),4.45,1.20,5.15,3.85)
 foot(s,"Reflectance: USGS splib07a (Kokaly et al. 2017), 400-1050 nm. Band centres: Maxar, Airbus.")
+
+# 17b -- how many extra bands close the gap
+s=slide(); title(s,"How many extra bands close the RGB gap")
+body(s,[
+ {"t":"Controlled-condition evidence (Vitek 2025, laboratory hyperspectral, 10 construction and demolition materials): RGB alone reaches 0.87 accuracy; two well-chosen extra bands bring it to 0.96; the full 768-band spectrum adds almost nothing more.","sz":12,"sa":8},
+ {"t":"The optimal extra bands fall at 650-750 and 850-1000 nm: where the Red Edge and NIR bands of WorldView-3 and Pléiades Neo sit.","sz":12},
+],top=1.02,h=1.30)
+img(s,os.path.join(FIG,"bands_evidence.png"),0.50,2.28,9.00,2.52)
+body(s,[{"t":"Laboratory study, reported as such: it bounds what spectra can add. Whether it transfers to satellite GSD is what this thesis measures.","sz":10.5,"c":GREY}],top=4.82,h=0.40)
+foot(s,"Vitek, Zbiral, Nezerka 2025. Resources, Conservation and Recycling. Band ranges: Maxar, Airbus data sheets")
+
 
 # 18 ── imagery
 s=slide(); title(s,"Available imagery")
@@ -344,8 +364,9 @@ body(s,[
  {"t":"ELV Hybrid-YOLOv5 2025. Non-ferrous metal detection in end-of-life vehicles (close-range infrared).","sz":10.5,"sa":12},
  {"t":"UAV solid-waste segmentation, 2024.  ·  C&D debris volume from UAV photogrammetry, 2022. Drones.","sz":10.5,"sa":12},
  {"t":"fCLIPSeg 2025. Event-agnostic debris segmentation.  ·  Kokaly et al. 2017. USGS Spectral Library v7 (splib07a). USGS DS 1035.","sz":10.5,"sa":12},
+ {"t":"Vitek, Zbiral, Nezerka 2025. Critical wavelengths for construction and demolition waste materials. Resources, Conservation and Recycling.","sz":10.5,"sa":12},
 ],top=1.20,h=3.90)
-foot(s,"23 works cited; the remaining library papers are kept as screened context (excluded groups on slide 9)")
+foot(s,"24 works cited; the remaining library papers are kept as screened context (excluded groups on slide 9)")
 
 # page numbers
 for pos,sl in enumerate(prs.slides,1):

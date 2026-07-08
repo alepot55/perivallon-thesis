@@ -136,7 +136,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
     SWIR-based VHR                                        Aguilar 2021, Aguilar 2025, Zhou 2021      SWIR not in our acquisitions; 3.7 m GSD
 
 
-    Laboratory / conveyor                                 Vitek 2025, SpectralWaste 2024             not Earth observation
+    Laboratory / conveyor                                 Vitek 2025, SpectralWaste 2024             not EO; Vitek reused as band-selection evidence
 
 
     EO foundation models                                  DOFA 2024, AnySat 2025, Prithvi 2024, +6   pretrained at 10-30 m; sub-metre transfer unproven
@@ -234,6 +234,28 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 13   Alari 2024, M.Sc. thesis, PoliMi (advisor Fraternali, co-advisor Gibellini), politesi 10589/230633
+     Alari 2024: results per material
+
+                                                                                             Per-class F1 of the ten-category model. The
+                                                                                             weighted average, 59.4, hides a split: classes
+                                                                                             defined by shape or extent stay near 70; classes
+                                                                                             defined by material appearance fall below 45.
+
+                                                                                             The thesis attributes the low scores to few
+                                                                                             annotations (tires, big bags), high intra-class
+                                                                                             variance (wood) and inter-class similarity in RGB.
+
+                                                                                             Three of the four spectral-analysis targets sit in
+                                                                                             the bottom half. Rubble is the exception: large
+                                                                                             extents make it visible even in RGB.
+
+                                                                                             This per-class picture is what the band ablation
+                                                                                             is designed to move.
+
+
+
+
+14   Data: Alari 2024, Table 4.13 (ResNet-50 + IDA, ten categories), politesi 10589/230633
      Related work: material-level classification
 
 
@@ -260,7 +282,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-14   * paywalled or preprint, reported as such
+15   * paywalled or preprint, reported as such
      The asbestos line, in detail
 
      Saba 2026: WorldView-3, VNIR only, 32 classifiers
@@ -284,38 +306,29 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
      10,903 roofs) and VNIR evidence make asbestos the
      natural pilot.
 
-15   Image: building-level asbestos classification on WorldView-3, Bonifazi et al. 2026, Geomatics (CC BY 4.0)
-     Related work: objects and close range
+16   Image: building-level asbestos classification on WorldView-3, Bonifazi et al. 2026, Geomatics (CC BY 4.0)
+     Asbestos weathering is visible in VNIR
 
-     Work (year)                                       Input                                    Task                               Result
+     Cilia 2015 measured asbestos-cement roofs of different age and
+     exposure, on the ground and from the MIVIS airborne sensor. The
+     0.48-0.82 um window is shown: pure VNIR.
 
-     Ramachandran 2024                                 VHR satellite                            object detection                   tanks, P 0.96 / R 0.97, >169k mapped
+     Older roofs are darker across the whole visible range; vegetation
+     colonising the surface adds a chlorophyll absorption near 680 nm;
+     north-exposed roofs amplify both effects.
 
+     From these features the paper builds a deterioration index and
+     ranks removal priority; the effects of age and exposure are
+     statistically significant (ANOVA, p < 0.001).
 
-     YOLOv7-OT 2024 *                                  VHR satellite                            object detection                   tanks, precision 95.9
-
-
-     Truck-and-container 2025 *                        VHR satellite                            object detection                   container size and status
-
-
-     Vehicle DA 2020 *                                 VHR 30-50 cm                             object detection                   +10% with domain adaptation
-
-
-     ELV Hybrid-YOLOv5 2025                            close-range IR                           object detection                   scrap metals, mAP 84.2
-
-
-     UAV solid waste 2024 *                            UAV RGB                                  segmentation                       OA >94, generic waste piles
-
-
-     C&D debris UAV 2022 *                             UAV + photogrammetry                     segmentation                       IoU 0.90 + volume estimation
-
-
-     fCLIPSeg 2025                                     aerial RGB                               segmentation                       debris, Dice 0.70, event-agnostic
+     The discriminating features fall inside the VNIR window of the
+     planned sensors: degradation state, not only presence, is within
+     reach of the pilot.
 
 
 
 
-16   Shape-defined objects are mature; material composition still needs spectra or close range. * pending full-text verification
+17   Figure: field and MIVIS spectra of asbestos-cement roofs, Cilia et al. 2015, ISPRS IJGI 4(2) (CC BY)
      Where RGB falls short, and what VNIR adds
 
      Different materials share the same colour at 0.3-1.3
@@ -336,7 +349,19 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-17   Reflectance: USGS splib07a (Kokaly et al. 2017), 400-1050 nm. Band centres: Maxar, Airbus.
+18   Reflectance: USGS splib07a (Kokaly et al. 2017), 400-1050 nm. Band centres: Maxar, Airbus.
+     How many extra bands close the RGB gap
+     Controlled-condition evidence (Vitek 2025, laboratory hyperspectral, 10 construction and demolition materials): RGB alone reaches
+     0.87 accuracy; two well-chosen extra bands bring it to 0.96; the full 768-band spectrum adds almost nothing more.
+
+     The optimal extra bands fall at 650-750 and 850-1000 nm: where the Red Edge and NIR bands of WorldView-3 and Pléiades Neo sit.
+
+
+
+
+     Laboratory study, reported as such: it bounds what spectra can add. Whether it transfers to satellite GSD is what this thesis measures.
+
+19   Vitek, Zbiral, Nezerka 2025. Resources, Conservation and Recycling. Band ranges: Maxar, Airbus data sheets
      Available imagery
 
 
@@ -348,7 +373,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-18   Band ranges: Maxar WorldView-3, Airbus Pléiades Neo data sheets
+20   Band ranges: Maxar WorldView-3, Airbus Pléiades Neo data sheets
       The in-scope state of the art at a glance
      Work                                                            Input                                  Task                                   Material info
 
@@ -382,7 +407,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
      Tanks / vehicles / scrap works                                  VHR, close range                       object detection                       shape, not composition
 
 
-19    Ten lines summarise every in-scope line of work. Material-level evidence: one multi-label predecessor + one material studied in isolation.
+21    Ten lines summarise every in-scope line of work. Material-level evidence: one multi-label predecessor + one material studied in isolation.
      What is missing in the literature
 
      1. Multi-material classification has one direct precedent, with ample margin: wF1 59-69 (Alari 2024).
@@ -398,7 +423,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-20   Each gap maps to one element of the proposal on the next slides.
+22   Each gap maps to one element of the proposal on the next slides.
      Proposed work: approach
      Multi-label image classification, continuing the group line (Gibellini 2025, Alari 2024). Same taxonomy, input extended from RGB
      to VNIR.
@@ -407,7 +432,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-21   Backbone: Swin-T with remote-sensing pretraining (group baseline); extra bands enter via the input layer.
+23   Backbone: Swin-T with remote-sensing pretraining (group baseline); extra bands enter via the input layer.
      First step: the asbestos pilot
 
      1. Extract roof polygons from the Lombardy WFS registry (10,903 mapped asbestos-cement roofs) and pair them with the
@@ -426,7 +451,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-22   Ground truth: Regione Lombardia WFS, Mappatura 2020 (EPSG:32632)
+24   Ground truth: Regione Lombardia WFS, Mappatura 2020 (EPSG:32632)
      Proposed work: evaluation
 
      Per-material F1 alongside weighted and macro averages:
@@ -448,7 +473,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-23   Metrics: per-class F1, macro-F1, weighted F1, confusion matrices. Splits frozen before testing.
+25   Metrics: per-class F1, macro-F1, weighted F1, confusion matrices. Splits frozen before testing.
      References (1/2)
 
      Alari 2024. Fighting environmental crime with deep learning: classifying waste materials from illegal landfills in satellite imagery. M.Sc. thesis, PoliMi,
@@ -471,7 +496,7 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
 
 
-24   Full annotated library: 47 papers, papers/INDEX.md
+26   Full annotated library: 47 papers, papers/INDEX.md
      References (2/2)
 
      Asbestos slate from drone imagery, 2023 (training-data study).
@@ -490,8 +515,10 @@ Alessandro Potenza · M.Sc. Computer Science and Engineering, AI · PERIVALLON
 
      fCLIPSeg 2025. Event-agnostic debris segmentation. · Kokaly et al. 2017. USGS Spectral Library v7 (splib07a). USGS DS 1035.
 
+     Vitek, Zbiral, Nezerka 2025. Critical wavelengths for construction and demolition waste materials. Resources, Conservation and Recycling.
 
 
 
-25   23 works cited; the remaining library papers are kept as screened context (excluded groups on slide 9)
+
+27   24 works cited; the remaining library papers are kept as screened context (excluded groups on slide 9)
 

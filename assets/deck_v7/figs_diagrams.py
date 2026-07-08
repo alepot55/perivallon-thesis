@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 import matplotlib.image as mpimg
 
-OUT = Path("/home/alepot55/Desktop/uni/Tesi/assets/deck_v7/figs")
+OUT = Path(__file__).resolve().parent / "figs"
 INK="#1A1A1A"; MUT="#666666"; BLU="#1A1A1A"; ORA="#1A1A1A"; BG="white"; BG2="white"
 plt.rcParams.update({"font.family":"sans-serif","font.sans-serif":["Arial","DejaVu Sans"],
  "text.color":INK,"figure.facecolor":"white","savefig.facecolor":"white",
@@ -53,7 +53,7 @@ steps=[("Scopus API","2 scripted\nquery sets","",BG),
        ("699","unique records","622 waste\n77 asbestos",BG),
        ("screening","task fit, GSD,\nrecency, review","",BG),
        ("47","annotated library","notes and\nteam Excel",BG),
-       ("23","cited here","",BG2)]
+       ("24","cited here","",BG2)]
 n=len(steps); w=17.2; gap=(100-n*w)/(n+1)
 for i,(big,small,tiny,fc) in enumerate(steps):
     x=gap+i*(w+gap)

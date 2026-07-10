@@ -32,7 +32,7 @@ Tesi/
 ├── waste/             ← codice replica baseline AerialWaste (CLAUDE.md locale con comandi)
 ├── asbestos/          ← pilot amianto pre-pivot (in pausa; reference/Mazzola_2024_Thesis.pdf)
 ├── spectral/          ← firme spettrali USGS (in pausa, knowledge base)
-└── assets/            ← deck slides (deck_v7 = ultimo)
+└── assets/            ← deck slides (deck_v8 = ultimo, presentato alla call 17/7)
 ```
 
 **Non in repo**: tesi LaTeX (Overleaf) · codice esperimenti del gruppo (GitLab PoliMi, sul server eagle — vedi `docs/00_context/server_eagle_howto.md`) · checkpoint pesanti e imagery (`.gitignore`).

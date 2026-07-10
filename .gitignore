@@ -58,8 +58,13 @@ waste/data/synthetic_ms/
 !.claude/settings.json
 .claude/settings.local.json
 
+# ── Personal Claude working notes + memory import (not for advisors) ─
+CLAUDE.local.md
+.cc-memory-import/
+
 assets/deck_v6/_qa/
 assets/deck_v6/figs/_thumbs/
 assets/deck_v6/figs_bw/_*.png
 assets/deck_v6/figs_bw/_t/
 assets/deck_v6/_q/
+.~lock.*

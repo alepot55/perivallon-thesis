@@ -29,7 +29,7 @@ Pivot del 17/7: da material classification MS a **binary landfill detection sate
 - **Punteggio**: journal thesis ≤8 punti a contenuto; impostazione attuale ≈5; +2 solo con innovazione. Media Ale 28.7 → base ~105.
 - **Formato tesi**: article/journal **≈30 pagine** + **Executive Summary ~6 pp** (errata di Thomas — in call si era detto ~10). Serve consenso scritto del relatore per il formato article. Template su pagina IngIndInf "Modelli formato tesi" (anche Overleaf). Strategia: scrivere lunga → condensare. Esempi: Alari (lunga), Merlo 10589/252150, Mazzola 10589/230433.
 - **Infra**: server **eagle**, container **multispectralwaste**, porta **2212** — guida completa in `docs/00_context/server_eagle_howto.md`. Codice tesi del gruppo su **GitLab** (non GitHub), assegnato da Enrico.
-- **Timeline**: sprint ferie **10–23/8**; checkpoint +2 con Thomas **~metà settembre**; contratto Ale finisce fine settembre; scrittura ott–nov; **deposito ~inizio-metà novembre (data esatta DA VERIFICARE — biblioteca PoliMi)**; laurea dicembre. Thomas via 1–15/8.
+- **Timeline**: sprint ferie **10–23/8**; checkpoint +2 con Thomas **~metà settembre**; contratto Ale finisce fine settembre; scrittura ott–nov. **Sessione dicembre 2026** [MEDIUM, da calendari PoliMi via web 19/7 — riconferma su scadenziario con login]: iscrizione esame di laurea + upload tesi UniTesi **23/10–12/11**; approvazione relatore entro **19/11**; **discussione mar 15/12, proclamazione mer 16/12**. → tesi chiusa entro ~10/11, review Thomas/prof entro fine ottobre. Thomas via 1–15/8.
 
 ## TODO aperti
 
@@ -37,7 +37,7 @@ Pivot del 17/7: da material classification MS a **binary landfill detection sate
 2. **Msg a Thomas (lun 20/7)**: VPN + chiave SSH pubblica (+ PS: short "Asha" change detection, se esiste).
 3. **Call Enrico (mar/mer 21–22/7)**: domande in `docs/04_planning/2026-07-19_piano_7_punti.md` §Domande — gating: poligoni per test-set localizzazione.
 4. **Claude, in ordine**: (1) doc-baseline Gibellini congelato; (2) mini-SOTA WSOL/WSSS in RS (parte da Mazzola, `asbestos/reference/Mazzola_2024_Thesis.pdf`); (3) indice tesi v0 (formato article); (4) related work detection (riorienta `docs/02_research/loop_prof_sota/10_related_work_draft.md`); (5) tenere vivi `EXPERIMENTS_LOG.md` + `CLAIMS.md`.
-5. Verificare **date deposito dicembre** (biblioteca PoliMi) + scaricare template Overleaf article.
+5. ~~Verificare date deposito dicembre~~ ✅ 19/7 (v. Timeline). Resta: aprire su Overleaf i template ufficiali IngIndInf — [Article Format](https://www.overleaf.com/latex/templates/article-format-thesis-scuola-di-ingegneria-industriale-e-dellinformazione-politecnico-di-milano/vtqgsrqwzdmy), [Executive Summary](https://www.overleaf.com/latex/templates/executive-summary-scuola-di-ingegneria-industriale-e-dellinformazione-politecnico-di-milano/yfvqyfyyhwrp), [Classical](https://www.overleaf.com/latex/templates/classical-format-thesis-scuola-di-ingegneria-industriale-e-dellinformazione-politecnico-di-milano/dkmvtndqkyxg) — e clonare article+exec summary nel progetto; ricordare **consenso scritto del relatore** per il formato article.
 6. In attesa: short "Asha" change detection (Thomas, se esiste); tempi pesi FM in-house; tempi campagna annotazione.
 
 ## Filone materiali (in pausa, non morto)

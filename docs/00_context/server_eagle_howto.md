@@ -45,7 +45,7 @@ Senza 1+2 non entri. Il resto è self-service.
 Portale DEIB: **`gp-deib-saml.vpn.polimi.it`** ([guida ICT PoliMi](https://www.ict.polimi.it/configurazioni/vpn/)). Account già abilitato (conferma Thomas 19/7). Due autenticazioni in sequenza (portal + gateway) sono normali.
 
 - **Windows / WSL**: da browser Windows apri `https://gp-deib-saml.vpn.polimi.it` → login PoliMi → scarica e installa il client GlobalProtect 64-bit → apri il client, portal `gp-deib-saml.vpn.polimi.it`, Connect. La VPN di Windows copre anche WSL.
-- **Linux nativo**: (a) prova il portale da browser: dopo il login la pagina Palo Alto a volte offre il pacchetto Linux del client ufficiale; (b) altrimenti open-source: `sudo apt install openconnect pipx && pipx install gp-saml-gui`, poi `gp-saml-gui gp-deib-saml.vpn.polimi.it` (apre il login SAML e attacca openconnect; varianti in `--help`).
+- **Linux nativo**: (a) prova il portale da browser: dopo il login la pagina Palo Alto a volte offre il pacchetto Linux del client ufficiale; (b) altrimenti open-source: `sudo apt install openconnect gp-saml-gui` (su Ubuntu 24.04 è pacchettizzato; NON è su PyPI), poi `gp-saml-gui gp-deib-saml.vpn.polimi.it` — apre la finestra di login SAML PoliMi e attacca openconnect (chiede la password sudo per il tunnel; varianti in `--help`).
 - Per capire se sei in WSL: `grep -qi microsoft /proc/version && echo WSL || echo nativo`.
 - Se il login SAML risponde "non autorizzato" → account non abilitato al portale DEIB: solo in quel caso serve Thomas→IT.
 

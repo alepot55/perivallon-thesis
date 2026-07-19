@@ -53,6 +53,22 @@ ssh-keygen -t ed25519 -C "ap.alessandro.potenza@gmail.com"
 cat ~/.ssh/id_ed25519.pub   # ← QUESTA la mandi a Thomas (mai la privata)
 ```
 
+**✅ Fatto il 2026-07-19** sul PC "Jimmy" (`/home/alepot55/.ssh/id_ed25519`). Chiave pubblica (questa è pubblica, si può committare — la privata resta SOLO su Jimmy):
+
+```
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGw92Gix74c2jZFqKQCVF5QR8hb0mst0d+mwneRFfEqz ap.alessandro.potenza@gmail.com
+```
+
+Fingerprint: `SHA256:XGA3NHeEcZGWY38+ITzi+SzXpDsmPCBOW9usGibPMKQ`
+
+> ⚠️ Da un **altro PC** questa chiave non funziona: la privata sta solo su Jimmy → una chiave per macchina.
+>
+> **Setup multi-PC (script pronto)**: su ogni PC lancia `bash docs/00_context/setup_eagle_ssh.sh` — idempotente: genera la chiave solo se manca, aggiunge il blocco eagle a `~/.ssh/config`, stampa la `.pub`. Per abilitare la chiave di un PC nuovo **non serve Thomas**: da un PC già abilitato (VPN accesa) basta
+> ```bash
+> ssh multispectralwaste.eagle "echo '<riga ssh-ed25519 del PC nuovo>' >> ~/.ssh/authorized_keys"
+> ```
+> La VPN invece va configurata su **ciascun** PC (guida ICT, portale DEIB).
+
 ### 3. Config SSH (una tantum)
 
 Aggiungi a `~/.ssh/config` sul tuo computer:

@@ -29,15 +29,16 @@ Pivot del 17/7: da material classification MS a **binary landfill detection sate
 - **Punteggio**: journal thesis ≤8 punti a contenuto; impostazione attuale ≈5; +2 solo con innovazione. Media Ale 28.7 → base ~105.
 - **Formato tesi**: article/journal **≈30 pagine** + **Executive Summary ~6 pp** (errata di Thomas — in call si era detto ~10). Serve consenso scritto del relatore per il formato article. Template su pagina IngIndInf "Modelli formato tesi" (anche Overleaf). Strategia: scrivere lunga → condensare. Esempi: Alari (lunga), Merlo 10589/252150, Mazzola 10589/230433.
 - **Infra**: server **eagle**, container **multispectralwaste**, porta **2212** — guida completa in `docs/00_context/server_eagle_howto.md`. Codice tesi del gruppo su **GitLab** (non GitHub), assegnato da Enrico.
-- **Timeline**: sprint ferie **10–23/8**; checkpoint +2 con Thomas **~metà settembre**; contratto Ale finisce fine settembre; scrittura ott–nov; **deposito ~inizio-metà novembre (data esatta DA VERIFICARE — biblioteca PoliMi)**; laurea dicembre. Thomas via 1–15/8.
+- **Timeline**: sprint ferie **10–23/8**; checkpoint +2 con Thomas **~metà settembre**; contratto Ale finisce fine settembre; scrittura ott–nov. **Sessione dicembre 2026** [HIGH — verificato 19/7 su scadenzario da loggato + PDF calendario a.a. 2026/27, forniti da Ale]: iscrizione appello + deposito tesi UniTesi **23/10 (00:00) → 12/11 (23:59)**; verbalizzazione esami entro 12/11; approvazione tesi del relatore entro **19/11**; **appello di laurea Milano mer 16/12** (il 15/12 è poli territoriali). Fallback: sessione aprile 2027 (Milano gio 8/4). → tesi chiusa entro ~10/11, review Thomas/prof entro fine ottobre. Thomas via 1–15/8.
 
 ## TODO aperti
 
-1. **Bloccanti infra**: (a) VPN PoliMi — attivazione via Thomas→IT (lead time!); (b) chiave SSH → `.pub` a Thomas; (c) username GitLab a Enrico.
-2. **Call Enrico (mar/mer 21–22/7)**: domande in `docs/04_planning/2026-07-19_piano_7_punti.md` §Domande — gating: poligoni per test-set localizzazione.
-3. **Claude, in ordine**: (1) doc-baseline Gibellini congelato; (2) mini-SOTA WSOL/WSSS in RS (parte da Mazzola, `asbestos/reference/Mazzola_2024_Thesis.pdf`); (3) indice tesi v0 (formato article); (4) related work detection (riorienta `docs/02_research/loop_prof_sota/10_related_work_draft.md`); (5) tenere vivi `EXPERIMENTS_LOG.md` + `CLAIMS.md`.
-4. Verificare **date deposito dicembre** (biblioteca PoliMi) + scaricare template Overleaf article.
-5. In attesa: short "Asha" change detection (Thomas, se esiste); tempi pesi FM in-house; tempi campagna annotazione.
+1. **Bloccanti infra**: (a) VPN PoliMi — **già attiva secondo Thomas (19/7)**, da testare: configurare client (guida ICT, portale DEIB `gp-deib-saml.vpn.polimi.it`); (b) chiave SSH — ✅ generata su "Jimmy" e ✅ **inviata a Thomas (19/7)**; attesa abilitazione, poi test `ssh multispectralwaste.eagle` a VPN accesa. Secondo PC: script `docs/00_context/setup_eagle_ssh.sh` + abilitazione self-service via `authorized_keys` (v. howto §2); (c) ~~username GitLab a Enrico~~ → **msg a Enrico inviato (19/7)**, attesa risposta per call mar/mer.
+2. ~~Msg a Thomas: chiave SSH~~ ✅ inviata 19/7 (VPN già attiva secondo lui). Da chiedergli prima o poi: short "Asha" change detection, se esiste.
+3. **Call Enrico (mar/mer 21–22/7)**: domande in `docs/04_planning/2026-07-19_piano_7_punti.md` §Domande — gating: poligoni per test-set localizzazione.
+4. **Claude, in ordine**: (1) doc-baseline Gibellini congelato; (2) mini-SOTA WSOL/WSSS in RS (parte da Mazzola, `asbestos/reference/Mazzola_2024_Thesis.pdf`); (3) indice tesi v0 (formato article); (4) related work detection (riorienta `docs/02_research/loop_prof_sota/10_related_work_draft.md`); (5) tenere vivi `EXPERIMENTS_LOG.md` + `CLAIMS.md`.
+5. ~~Verificare date deposito dicembre~~ ✅ 19/7 (v. Timeline). Resta: aprire su Overleaf i template ufficiali IngIndInf — [Article Format](https://www.overleaf.com/latex/templates/article-format-thesis-scuola-di-ingegneria-industriale-e-dellinformazione-politecnico-di-milano/vtqgsrqwzdmy), [Executive Summary](https://www.overleaf.com/latex/templates/executive-summary-scuola-di-ingegneria-industriale-e-dellinformazione-politecnico-di-milano/yfvqyfyyhwrp), [Classical](https://www.overleaf.com/latex/templates/classical-format-thesis-scuola-di-ingegneria-industriale-e-dellinformazione-politecnico-di-milano/dkmvtndqkyxg) — e clonare article+exec summary nel progetto; ricordare **consenso scritto del relatore** per il formato article.
+6. In attesa: short "Asha" change detection (Thomas, se esiste); tempi pesi FM in-house; tempi campagna annotazione.
 
 ## Filone materiali (in pausa, non morto)
 
@@ -45,7 +46,7 @@ RQ pre-pivot: MS vs RGB per material classification (hazard/risk framing Fazzo 2
 
 ## Log decisioni
 
-- **2026-07-19**: obiettivo ≥7 dichiarato; piano operativo (`docs/04_planning/2026-07-19_piano_7_punti.md`); infra ricevuta (eagle/2212/multispectralwaste); errata formato (article ≈30 pp + exec summary); novelty alert Mazzola; repo riorganizzata per handoff agente (STATO.md, `.claude/commands/`, 04_planning).
+- **2026-07-19**: obiettivo ≥7 dichiarato; piano operativo (`docs/04_planning/2026-07-19_piano_7_punti.md`); infra ricevuta (eagle/2212/multispectralwaste); errata formato (article ≈30 pp + exec summary); novelty alert Mazzola; repo riorganizzata per handoff agente (STATO.md, `.claude/commands/`, 04_planning). Sera: msg a Enrico inviato; root repo ripulita (build legacy → `assets/_legacy_builds/`, temp eliminati, `datasets_study_guide.pdf` → `docs/02_research/`).
 - **2026-07-17 (pomeriggio)**: punteggio ≈5 vs 8; strategia base-poi-upgrade (`docs/01_calls/2026-07-17_punteggio_strategia.md`).
 - **2026-07-17 (mattina)**: **pivot a binary detection satellite-only** (`docs/01_calls/2026-07-17_pivot_binary_detection.md`).
 - **2026-06-30**: revisione deck direzione WV-3+Pléiades Neo. **2026-06-28**: loop SOTA materiali completo (`docs/02_research/loop_prof_sota/00_LOOP_LOG.md`).

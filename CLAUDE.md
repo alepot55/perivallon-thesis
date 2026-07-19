@@ -1,91 +1,68 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guida per Claude Code su questa repo. **Prima azione di ogni sessione: leggi `STATO.md`** (memoria di lavoro), poi l'ultima call per data in `docs/01_calls/` — se divergono, vince la call e correggi STATO.md.
 
-## Project
+## Progetto
 
-**PERIVALLON** — Multispectral waste detection from remote sensing imagery.
-Master's Thesis (Politecnico di Milano), part of PERIVALLON Horizon Europe (Grant 101073952).
-Advisor: Thomas Martinoli.
+Tesi magistrale di Alessandro Potenza ("Ale") al PoliMi, dentro PERIVALLON (Horizon Europe, Grant 101073952). Relatore: Prof. Piero Fraternali. Supervisore operativo: Thomas Martinoli. Parte AI/codice: Enrico Targhini.
 
-Three parallel workstreams, organized as top-level pillars:
+**Fase corrente (post-pivot 2026-07-17): binary landfill detection su imagery satellitare multispettrale, asse risoluzione (30 cm → 1.2 m). Obiettivo: ≥7 punti a dicembre 2026.** Dettagli e TODO: `STATO.md`. Piano: `docs/04_planning/2026-07-19_piano_7_punti.md`.
 
-| Pillar | Purpose | Main artifact |
-|---|---|---|
-| `waste/` | Main baseline — illegal waste classification on AerialWaste v3 | Swin-T + RSP, 95.2% F1 (best ckpt) |
-| `asbestos/` | Pilot Fase 1 — asbestos roof detection on Lombardia (SuperDove + SAM) | WFS ground truth + Planet PSScene |
-| `spectral/` | Reference spectral signatures from USGS splib07a | 9 plots + PDF + CSVs |
+## Protocollo di sessione
 
-Plus `papers/` (reference bibliography) and the LaTeX thesis (kept on Overleaf, not in this repo).
+1. `STATO.md` → ultima call in `docs/01_calls/` → (se serve) `docs/04_planning/`.
+2. Lavora. Esperimenti → `/experiment` (log + claims). Nuove trascrizioni call → `/call`.
+3. Chiudi aggiornando `STATO.md`: sostituisci il superato, data in testa, compatto.
 
-## Layout
+Slash commands in `.claude/commands/`: `/catchup`, `/call`, `/experiment`.
+
+## Mappa repo
 
 ```
 Tesi/
-├── README.md          ← top-level index
-├── CLAUDE.md          ← this file
-├── waste/             ← FILONE 1: deep-learning baseline (was perivallon-waste/)
-├── asbestos/          ← FILONE 2: parallel task amianto Lombardia
-├── spectral/          ← FILONE 3: spectral signatures (was firme-spettrali/)
-└── papers/            ← reference bibliography (PDFs)
+├── STATO.md           ← memoria di lavoro (LEGGI PRIMA) — stato, TODO, decisioni
+├── docs/              ← knowledge base testuale (INDEX.md = mappa e ordine di lettura)
+│   ├── 00_context/    ← overview tesi, fondamenti tecnici, guida server eagle
+│   ├── 01_calls/      ← UNA call = UN doc datato YYYY-MM-DD_slug.md; la più recente vince
+│   ├── 02_research/   ← ricerca (loop_prof_sota/ = SOTA materiali pre-pivot, riusabile)
+│   ├── 03_papers/     ← pdf chiave (Gibellini 2025 = baseline)
+│   └── 04_planning/   ← piano 7 punti, EXPERIMENTS_LOG.md, CLAIMS.md
+├── papers/            ← sistema bibliografico (README.md = regole; ID kebab-case = chiave primaria;
+│                         INDEX.md/index.json AUTO-GENERATI — non editare a mano; usa gli script)
+├── waste/             ← codice replica baseline AerialWaste (CLAUDE.md locale con comandi)
+├── asbestos/          ← pilot amianto pre-pivot (in pausa; reference/Mazzola_2024_Thesis.pdf)
+├── spectral/          ← firme spettrali USGS (in pausa, knowledge base)
+└── assets/            ← deck slides (deck_v7 = ultimo)
 ```
 
-Each pillar has its own `README.md`. The `waste/` pillar has its own `CLAUDE.md` with build/run details.
+**Non in repo**: tesi LaTeX (Overleaf) · codice esperimenti del gruppo (GitLab PoliMi, sul server eagle — vedi `docs/00_context/server_eagle_howto.md`) · checkpoint pesanti e imagery (`.gitignore`).
 
-## Quick commands
+## Regole di lavoro
 
-### waste/ (main baseline)
+- **Gerarchia fonti**: (1) ciò che dice Ale → (2) call più recente in `docs/01_calls/` → (3) `STATO.md` → (4) resto dei docs (possono essere pre-pivot: verifica la data).
+- **Rigore**: distingui fatto verificato / inferenza / speculazione; tag HIGH/MEDIUM/UNCERTAIN dove usati; novelty claims sempre hedged ("to our knowledge"); numeri solo con fonte riproducibile (EXP-ID, paper, path run).
+- **Trascrizioni STT**: nomi propri spesso storpiati — verifica contro STATO.md/repo, flagga `[STT, da confermare]` se irrisolto.
+- **Bibliografia**: usa i riferimenti verificati (`docs/02_research/loop_prof_sota/11_references.md` + `references.bib`); correzioni già registrate nei log — non reintrodurre errori corretti.
+- **Stile con Ale**: italiano informale, termini tecnici in inglese, output scannable, zero preamboli. Deliverable di tesi in inglese. Slide: convenzioni nei doc call (B/N minimal, una idea per slide, refs su ogni slide).
+- **Punteggio**: la commissione riconosce contenuto, non volume — ogni contributo va reso difendibile via `docs/04_planning/CLAIMS.md`.
+
+## Comandi rapidi (pillar codice)
+
 ```bash
-cd waste
-uv venv --python 3.11 && source .venv/bin/activate && uv pip install -e ".[dev]"
-python scripts/download_data.py --download-rsp     # dataset + RSP weights (~18 GB)
-python scripts/train.py training.phase=both        # full two-step training
-pytest tests/ -v
-ruff check src/ scripts/ tests/ && mypy src/
+# waste/ — replica baseline (dettagli in waste/CLAUDE.md)
+cd waste && uv venv --python 3.11 && source .venv/bin/activate && uv pip install -e ".[dev]"
+python scripts/train.py training.phase=both        # two-step TL→FT (Gibellini)
+pytest tests/ -v && ruff check src/ scripts/ tests/
+
+# papers/ — pipeline bibliografia (mai editare Excel/INDEX a mano)
+cd papers && python3 scripts/bootstrap_papers.py && python3 scripts/build_index.py
+
+# spectral/ — rigenera figure firme
+cd spectral && python3 scripts/generate.py
 ```
 
-### asbestos/ (briefing + analysis)
-```bash
-cd asbestos/notebooks
-jupyter lab 05_amianto_briefing.ipynb              # uses geopandas/rasterio/folium
-```
-Reuses the `waste/` Python environment (geopandas, rasterio already pulled in).
+Baseline personale: Swin-T+RSP su AerialWaste v3, val F1 **0.9519** (ckpt non in repo — vedi waste/CLAUDE.md §Checkpoints). Due-step training e convenzioni Hydra: `waste/CLAUDE.md`.
 
-### spectral/ (regenerate plots)
-```bash
-cd spectral
-python3 scripts/generate.py                        # rebuilds figures/, csv/, PDF
-```
+## Infra esperimenti tesi
 
-## Conventions
-
-- **Two-step training** (Gibellini et al. 2025): Transfer Learning (10 ep, head only, LR 2.236e-3) → Fine-Tuning (20 ep, last Swin stage unfrozen, LR 2.236e-4). LR = paper × √5 to compensate gradient accumulation (eff. batch = 24 × 5 = 120).
-- **Models** in `waste/src/waste_detection/models/`: `swin_rsp_baseline.py` (core), `swin_ms_adapter.py` (multispectral via weight_inflation / random_init_extra / late_fusion), `dofa_classifier.py`, `ssl4eo_classifier.py`.
-- **Configs** via Hydra YAML in `waste/configs/`. All hyperparams CLI-overridable.
-- **Tests** use synthetic fixtures from `waste/tests/conftest.py` — no real data needed.
-- **Asbestos paths** in the notebook resolve via `ROOT = '/home/alepot55/Desktop/uni/Tesi'`, then `f'{ROOT}/asbestos/data'`, `f'{ROOT}/spectral'`.
-
-## Checkpoints
-
-- `waste/checkpoints/rsp_swin_t_e300.pth` — RSP pretrained Swin-T backbone (input weights).
-- `waste/checkpoints/baseline_swin_rsp_best_f1_0.9519.ckpt` — current best result (val F1 = **0.9519**, epoch 13 of the FT phase).
-- Heavy intermediate ckpts (eurosat_ablation, backbone_comparison, all non-best baseline epochs) have been removed — results are preserved in `waste/data/processed/eurosat_ablation_results.json` and in the analysis notebooks.
-
-## Datasets
-
-- **AerialWaste v3** (`waste/data/raw/`): ~11.7k RGB tiles 500×500 px, 3 sources (AGEA 20 cm, WV3 30 cm, Google Earth 50 cm). 80/20 split, 2:1 neg:pos. 22 fine-grained → 5 coarse groups (`waste/configs/data/class_groups.yaml`).
-- **EuroSAT MS** (`waste/data/eurosat/`): 13-band Sentinel-2, used for band-ablation experiments.
-- **Lombardia WFS** (`asbestos/data/*.gpkg`): `Mappatura_2020` (10,903 roofs) + `Mappature_precedenti` (50,131) + aree + comuni + province, all in EPSG:32632.
-- **Planet PSScene** (`asbestos/data/planet/PSScene/`): 7 strip 2026-03-30 (`prima prova`), 4-band SR. Coverage ↔ GT = 0 (out-of-area), kept as pipeline-test data only.
-
-## Disk footprint (current)
-
-| Pillar | Size | Notes |
-|---|---|---|
-| `waste/` | ~23 GB | Dominated by `data/raw/images/` (17 GB) + `data/eurosat/` (4.8 GB) |
-| `asbestos/` | ~1.9 GB | Mostly Planet PSScene tiles |
-| `spectral/` | 29 MB | Library + plots + CSVs |
-| `papers/` | 43 MB | Reference PDFs |
-| **Total** | **~25 GB** | |
-
-The `.venv/` (~8 GB) is **not committed** — regenerate with `cd waste && uv venv --python 3.11 && uv pip install -e ".[dev]"`. AerialWaste imagery zips (~17 GB) are also gone — re-download with `python scripts/download_data.py` if needed (the extracted images in `data/raw/images/` are sufficient for training).
+Gli esperimenti della tesi girano sul **server eagle** del gruppo (container `multispectralwaste`, porta 2212), non in questa repo: setup, storage, regole GPU e tmux in `docs/00_context/server_eagle_howto.md`. Risultati e conclusioni tornano qui: `docs/04_planning/EXPERIMENTS_LOG.md` + `CLAIMS.md`.

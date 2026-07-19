@@ -51,8 +51,12 @@ Thumbs.db
 # waste synthetic MS arrays (large)
 waste/data/synthetic_ms/
 
-# ── Claude Code local state (worktrees, jobs, settings) ──────
-.claude/
+# ── Claude Code: stato locale ignorato, config condivisa committata ──
+.claude/*
+!.claude/commands/
+!.claude/agents/
+!.claude/settings.json
+.claude/settings.local.json
 
 assets/deck_v6/_qa/
 assets/deck_v6/figs/_thumbs/

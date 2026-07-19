@@ -44,6 +44,7 @@ Tesi/
 - **Trascrizioni STT**: nomi propri spesso storpiati — verifica contro STATO.md/repo, flagga `[STT, da confermare]` se irrisolto.
 - **Bibliografia**: usa i riferimenti verificati (`docs/02_research/loop_prof_sota/11_references.md` + `references.bib`); correzioni già registrate nei log — non reintrodurre errori corretti.
 - **Stile con Ale**: italiano informale, termini tecnici in inglese, output scannable, zero preamboli. Deliverable di tesi in inglese. Slide: convenzioni nei doc call (B/N minimal, una idea per slide, refs su ogni slide).
+- **Bozze messaggi (Teams/mail per Thomas, Enrico, prof)**: brevi, semplici, cortesi, tono naturale da telefono — niente elenchi, niente em dash, niente formattazione o struttura.
 - **Punteggio**: la commissione riconosce contenuto, non volume — ogni contributo va reso difendibile via `docs/04_planning/CLAIMS.md`.
 
 ## Comandi rapidi (pillar codice)

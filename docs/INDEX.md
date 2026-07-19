@@ -24,6 +24,7 @@ Mappa dei documenti di tesi PERIVALLON. I file sono numerati per **ordine di let
 | Qual è la rotta corrente e perché? | `01_calls/2026-07-17_pivot_binary_detection.md` |
 | Cosa serve per ≥7 punti e qual è il piano? | `04_planning/2026-07-19_piano_7_punti.md` + `01_calls/2026-07-17_punteggio_strategia.md` |
 | Come accedo al server / lancio un training? | `00_context/server_eagle_howto.md` |
+| Come scrivo un messaggio a Thomas (stile, processo)? | `00_context/chat_thomas_log.md` |
 | Quali numeri deve battere/avvicinare la tesi? | `03_papers/gibellini_polimi_waste.pdf` (F1 92.02 @20 cm) + `../papers/notes/gibellini-2025-pipeline.md` |
 | Cosa è già stato fatto nel gruppo su CAM/localizzazione? | Gibellini pipeline (Grad-CAM→GIS) + Mazzola 2024 (`../asbestos/reference/Mazzola_2024_Thesis.pdf`) — vedi anche CLAIMS C-7 |
 | Quali esperimenti sono pianificati/fatti? | `04_planning/EXPERIMENTS_LOG.md` |

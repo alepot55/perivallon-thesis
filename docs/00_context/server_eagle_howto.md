@@ -9,7 +9,7 @@
 | Server | **eagle** |
 | Environment (container) | **multispectralwaste** |
 | Porta SSH | **2212** |
-| Hostname | `multispectralwaste.eagle.rslab.cc` *(pattern `<ENV>.<SERVER>.rslab.cc` dalla guida — [inferenza] verifica al primo accesso, se non risolve chiedi a Thomas l'hostname esatto)* |
+| Hostname | `multispectralwaste.eagle.rslab.cc` ✅ *(verificato 21/7 a VPN accesa: risolve su 10.79.0.28; host key ED25519 `SHA256:ePvWq1OJ20lB3EtPsf7BVLS6uQpBU1MLI0VHkpcVT2U`)* |
 | User | `dev` (home: `/home/dev`) |
 | GPU | 2 per server, **condivise** tra tutti gli utenti (nell'esempio della guida: 2× RTX PRO 6000 Blackwell — verifica con `check-gpu`) |
 | Web (TensorBoard ecc.) | `https://multispectralwaste.eagle.rslab.cc` → mappato sulla **porta 6006** interna |

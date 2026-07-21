@@ -2,7 +2,7 @@
 
 > **Memoria di lavoro della repo.** Chi (umano o agente) inizia una sessione parte da qui; chi la chiude aggiorna questo file: sostituisci il contenuto superato (non appendere), aggiorna la data, tieni compatto. La cronologia fine sta in `docs/01_calls/` e nel git log. Se questo file contraddice l'ultima call in `docs/01_calls/`, **vince la call** — e va corretto qui.
 >
-> **Ultimo aggiornamento: 2026-07-19 (sera).**
+> **Ultimo aggiornamento: 2026-07-21 (sera).**
 
 ## Stato in breve
 
@@ -33,7 +33,7 @@ Pivot del 17/7: da material classification MS a **binary landfill detection sate
 
 ## TODO aperti
 
-1. **Bloccanti infra**: (a) VPN PoliMi — **già attiva secondo Thomas (19/7)**, da testare: configurare client (guida ICT, portale DEIB `gp-deib-saml.vpn.polimi.it`); (b) chiave SSH — ✅ generata su "Jimmy" e ✅ **inviata a Thomas (19/7)**; attesa abilitazione, poi test `ssh multispectralwaste.eagle` a VPN accesa. Secondo PC: script `docs/00_context/setup_eagle_ssh.sh` + abilitazione self-service via `authorized_keys` (v. howto §2); (c) ~~username GitLab a Enrico~~ → **msg a Enrico inviato (19/7)**, attesa risposta per call mar/mer.
+1. **Bloccanti infra**: (a) VPN PoliMi — su Jimmy (Linux) login SAML riuscito il 19/7 via `gp-saml-gui`; serve la variante `--gateway` (verificata, in howto §1) — **esito connessione finale da confermare**; su Jhonny (secondo PC) client ancora da installare (`sudo apt install openconnect gp-saml-gui`); (b) chiave SSH — ✅ Jimmy generata e **inviata a Thomas (19/7)**, attesa abilitazione; ✅ Jhonny setup fatto 21/7 (chiave in howto §2), da abilitare self-service da Jimmy o via Thomas; poi test `ssh multispectralwaste.eagle` a VPN accesa; (c) ~~username GitLab a Enrico~~ → **msg a Enrico inviato (19/7)**, attesa risposta per call mar/mer.
 2. ~~Msg a Thomas: chiave SSH~~ ✅ inviata 19/7 (VPN già attiva secondo lui). Da chiedergli prima o poi: short "Asha" change detection, se esiste.
 3. **Call Enrico (mar/mer 21–22/7)**: domande in `docs/04_planning/2026-07-19_piano_7_punti.md` §Domande — gating: poligoni per test-set localizzazione.
 4. **Claude, in ordine**: (1) doc-baseline Gibellini congelato; (2) mini-SOTA WSOL/WSSS in RS (parte da Mazzola, `asbestos/reference/Mazzola_2024_Thesis.pdf`); (3) indice tesi v0 (formato article); (4) related work detection (riorienta `docs/02_research/loop_prof_sota/10_related_work_draft.md`); (5) tenere vivi `EXPERIMENTS_LOG.md` + `CLAIMS.md`.

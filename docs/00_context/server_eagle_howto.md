@@ -67,6 +67,11 @@ Fingerprint: `SHA256:XGA3NHeEcZGWY38+ITzi+SzXpDsmPCBOW9usGibPMKQ`
 
 > ⚠️ Da un **altro PC** questa chiave non funziona: la privata sta solo su Jimmy → una chiave per macchina.
 >
+> **✅ Secondo PC "Jhonny"** (setup 2026-07-21, chiave preesistente riusata, blocco eagle aggiunto a `~/.ssh/config`). Pubblica da abilitare (self-service da Jimmy, o via Thomas):
+> ```
+> ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH94OAEvOjEY+6v/t/BCJcGjUyS9cE2e2FH9KPPRc+Q1 alepot55@Jhonny
+> ```
+>
 > **Setup multi-PC (script pronto)**: su ogni PC lancia `bash docs/00_context/setup_eagle_ssh.sh` — idempotente: genera la chiave solo se manca, aggiunge il blocco eagle a `~/.ssh/config`, stampa la `.pub`. Per abilitare la chiave di un PC nuovo **non serve Thomas**: da un PC già abilitato (VPN accesa) basta
 > ```bash
 > ssh multispectralwaste.eagle "echo '<riga ssh-ed25519 del PC nuovo>' >> ~/.ssh/authorized_keys"

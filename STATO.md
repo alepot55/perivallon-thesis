@@ -34,7 +34,7 @@ Pivot del 17/7: da material classification MS a **binary landfill detection sate
 
 ## TODO aperti
 
-1. ~~Bloccanti infra VPN+SSH~~ ✅ **SBLOCCATO 21/7 sera**: VPN ok su Jhonny (`gp-saml-gui --gateway`, howto §1), chiave Jimmy inserita da Thomas, chiave Jhonny abilitata self-service; `ssh multispectralwaste.eagle` **entra**. Setup venv `base` lanciato (tmux `setup`). Resta (c): ~~username GitLab a Enrico~~ → **msg inviato (19/7)**, attesa risposta per call mar/mer.
+1. ~~Bloccanti infra VPN+SSH~~ ✅ **SBLOCCATO 21/7 sera**: VPN ok su Jhonny (`gp-saml-gui --gateway`, howto §1), chiave Jimmy inserita da Thomas, chiave Jhonny abilitata self-service; `ssh multispectralwaste.eagle` **entra**. Setup ambiente ✅ completato 21/7: venv `base` (torch 2.10+cu128, rasterio, geopandas, fiftyone, wandb), test GPU ok — CUDA available, 2× RTX PRO 6000 Blackwell visibili, tensor su cuda:0. Resta (c): ~~username GitLab a Enrico~~ → **msg inviato (19/7)**, attesa risposta per call mar/mer.
 2. ~~Msg a Thomas: chiave SSH~~ ✅ inviata 19/7 (VPN già attiva secondo lui). Da chiedergli prima o poi: short "Asha" change detection, se esiste.
 3. **Call Enrico (mar/mer 21–22/7)**: domande in `docs/04_planning/2026-07-19_piano_7_punti.md` §Domande — gating: poligoni per test-set localizzazione.
 4. **Claude, in ordine**: (1) doc-baseline Gibellini congelato; (2) mini-SOTA WSOL/WSSS in RS (parte da Mazzola, `asbestos/reference/Mazzola_2024_Thesis.pdf`); (3) indice tesi v0 (formato article); (4) related work detection (riorienta `docs/02_research/loop_prof_sota/10_related_work_draft.md`); (5) tenere vivi `EXPERIMENTS_LOG.md` + `CLAIMS.md`.

@@ -31,7 +31,6 @@ Libreria spettrale di riferimento. Già scaricata e verificata (21 MB). Usata ne
 Fonte primaria per i plot delle firme spettrali nel capitolo teoria. Endmember per analisi di confusion pair.
 
 ## Note Claude
-
 **Punti chiave**
 - USGS splib07a e' la libreria spettrale di riferimento mondiale: misure di laboratorio, da campo e convolute alla risposta di sensori reali (AVIRIS, ASTER, Landsat, Sentinel-2, WorldView-3) per uso operativo.
 - Range 350-2500 nm campionato a ~1 nm (2151 canali) con spettro-radiometri ASD FieldSpec. Copre minerali, polimeri (PE, PP, PET, PVC, ABS, PS, nylon), vegetazione, materiali costruttivi (calcestruzzo, mattoni, asfalto), suoli, neve, materiali artificiali.
@@ -57,4 +56,3 @@ Fonte primaria per i plot delle firme spettrali nel capitolo teoria. Endmember p
 - `cilia-2015-ac-weathering`: firme di asbestos cement weathered da ARPA Lombardia, da confrontare con i pochi spettri AC presenti in splib07a.
 - `shepherd-2025-asbestos-enmap`: usa convoluzione di firme di libreria a bande EnMAP per detection AC, esattamente il workflow che possiamo replicare con splib07a per SuperDove.
 - `aguilar-2025-macroplastics-wv3` e `guo-li-2020-ndpi-wv3`: assumono firme tipo splib07a come riferimento per definire indici spettrali su WV-3.
-

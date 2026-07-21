@@ -671,8 +671,9 @@ da 100×100 m (500×500 pixel) è ottimale. Perché:
   Cross-region (generalizzazione) \~87% (-5%)         \~90%
   ------------------------------- ------------------- -------------------
 
-Il delta RSP vs ImageNet (+2.3% F1) conferma il valore del RS
-pretraining per immagini aeree, anche su RGB. Il calo di \~5% F1 su
+Il delta RSP vs ImageNet (+1.62 pp F1 sulla best config, Tab. 2 del
+preprint) conferma il valore del RS pretraining per immagini aeree,
+anche su RGB. Il calo di \~5% F1 su
 regioni non viste è un risultato solido per un modello di detection
 senza alcun dato dalla regione target.
 

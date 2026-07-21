@@ -31,7 +31,6 @@ Risultato chiave: il NIR da solo cattura quasi tutta l'informazione discriminant
 Motivazione forte per l'approccio multispettrale (poche bande > RGB). Guida nella selezione delle bande prioritarie.
 
 ## Note Claude
-
 **Punti chiave**
 - Vitek, Zbiral, Nezerka (CTU Praga, Resources Conservation & Recycling 2025, DOI 10.1016/j.resconrec.2025.108123): identificano via iperspettrale (SPECIM PFD4K-65-V10E, 768 bande 400-1000 nm) le lunghezze d'onda critiche per classificare 10 materiali C&D (AAC, EPS, asfalto, mattone, calcestruzzo, malta, tegola, piastrelle top/bottom, legno).
 - Pipeline a due stadi: Stage 1 seleziona quante e quali lunghezze d'onda aggiungere a RGB; Stage 2 ottimizza filtri narrowband (lambda centrale 425-975 nm a step 25 nm; FWHM 5/20/35/50 nm). MLP a 2 hidden layers da 20 neuroni come classificatore.
@@ -59,4 +58,3 @@ Motivazione forte per l'approccio multispettrale (poche bande > RGB). Guida nell
 - `plastics-uv-swir-2020` e `kokaly-2017-splib07a`: spiegano fisicamente perche' NIR ~800 nm discrimina (transizioni elettroniche + C-H overtones).
 - `bonifazi-2026-ac-python`: stessa logica per asbestos cement nella nostra pipeline Lombardia - selezionare pochi indici spettrali invece che usare tutto lo spettro.
 - `corley-2024-resizing`: complementare sul lato preprocessing - quando confronti "pochi canali ben fatti vs molti", il preprocessing deve essere coerente per non inquinare il confronto.
-

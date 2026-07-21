@@ -4,7 +4,7 @@ title: "A deep learning pipeline for solid waste detection in remote sensing ima
 authors: ["Gibellini", "Torres", "Fraternali"]
 year: 2025
 venue: "Waste Management Bulletin"
-doi: "10.1016/j.wmb.2025.02.003"
+doi: "10.1016/j.wmb.2025.100246"
 arxiv: "2502.06607"
 link: "arXiv:2502.06607"
 tags: ["waste", "baseline", "swin-t", "rsp", "aerialwaste"]

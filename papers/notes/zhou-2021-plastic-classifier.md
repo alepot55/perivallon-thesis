@@ -31,7 +31,6 @@ Paper chiave per il trade-off tra bande SWIR strette (WV-3) e bande larghe (S2 B
 Riferimento per la sezione band coverage. Motiva la scelta di usare bande specifiche S2 (B11, B12) pur sapendo che sono meno selettive di WV-3 SWIR.
 
 ## Note Claude
-
 **Punti chiave**
 - Classificatore decision-tree **knowledge-based** (no training data, no statistical fitting) basato su feature spettrali diagnostiche delle 8 bande SWIR WV-3 (1195/1570/1660/1730/2165/2205/2260/2330 nm).
 - Identifica **3 cluster** di plastica: (1) alifatici PE/PVC/EVAC/PP/POM/PMMA/PA, (2) aromatici PET/PS/PC/SAN, (3) aromatici PBAT/ABS/PU. Più cluster non-plastica.

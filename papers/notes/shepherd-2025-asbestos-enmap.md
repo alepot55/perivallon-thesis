@@ -31,7 +31,6 @@ Paper Sci Rep (Nature OA) sul rilevamento asbestos da satellite iperspettrale En
 Metodologia di field-spectra calibration; cascade di 8 classificatori come comparator; struttura della validazione 86% match; argomento per VPN/SWIR satellite vs RGB.
 
 ## Note Claude
-
 **Punti chiave**
 - Pipeline end-to-end EnMAP iperspettrale (230 bande, 30 m) per tetti AC in zona conflitto (Western Negev, post-7 ottobre 2023). Campagna field 4 mesi con ASD FieldSpec 4 + SoilPro® per libreria spettrale disturbance-free di 2714 spettri (1213 in situ + 1501 EnMAP).
 - Cascata di 8 classificatori supervisionati (LSU, SVM, SAM, ACE, Mahalanobis, MLC, SID, MF) con consensus rule "6-of-8" + human-in-the-loop verification. ACE singolo arriva a 91.4% accuracy, k=0.87.

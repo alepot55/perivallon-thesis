@@ -31,7 +31,6 @@ Bonifazi et al. 2026 (CNR-ISP + ENEA + Sapienza). Geomatics 6(3):41 MDPI OA. Wor
 Stack tecnico Python (Py6S, MLC, rasterio); idea di multi-temporal monitoring; building-level aggregation con threshold; come strutturare repository reproducibile.
 
 ## Note Claude
-
 **Punti chiave**
 - Workflow Python end-to-end completamente open-source per AC roof mapping + multi-temporal monitoring da WV-3 (VNIR 8 bande @1.24 m + SWIR 8 bande @3.70 m → resampled @1 m, totale 16 bande). Stack: Py6S, rasterio 1.4.3, NumPy 2.2.6, GeoPandas 1.1.0, SciPy 1.15.3, scikit-learn 1.6.1, scikit-image 0.25.2. Test su Mantova (Italia), 2 acquisizioni (Agosto 2023, Luglio 2024).
 - Classificazione pixel-based con Maximum Likelihood Classifier (MLC) su 9 classi empiriche (water, asbestos-cement, industrial, beige, white, brown1, brown2, dark, water), train 15 AC + 35 non-AC, validation 66+66. Aggregazione building-level via adaptive threshold (testati 0–50%) — sweet-spot a 20–30%.

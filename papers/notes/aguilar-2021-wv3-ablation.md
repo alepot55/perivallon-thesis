@@ -31,7 +31,6 @@ Aguilar, Jiménez-Lao, Aguilar (Univ. Almería). Remote Sensing 13(11):2133 MDPI
 Schema ablation 3-via VNIR/SWIR/All come benchmark metodologico; numeri concreti 90.85/96.79/97.38 da citare nelle slide come 'spectral added value'; argomento OBIA vs pixel-based.
 
 ## Note Claude
-
 **Punti chiave**
 - Riferimento canonico per ablation VNIR vs SWIR vs All-Features su WV-3 (PAN 0.31 m + 8 VNIR 1.24 m + 8 SWIR 3.70 m). Studio caso Almería (Spagna), serre plastic-covered (PCG) su area 20.65 km² con >70% PCG coverage. Approccio OBIA + Decision Tree con segmentazione MRS (eCognition) + AssesSeg ED2=0.313 sui 3188 segmenti.
 - 3 strategie testate con 1175 GH + 1175 Non-GH balanced sample, 10-fold CV: (i) solo VNIR (20 features), (ii) solo SWIR (19 features), (iii) All Features (39 features). Pixel-based accuracy su 14.3 M pixel di GT.

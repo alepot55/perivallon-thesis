@@ -31,7 +31,6 @@ Riferimento fondamentale per firme spettrali di plastiche. Utilizzato per calibr
 Firme spettrali per sezione background/teoria della tesi. Endmember per eventuali esperimenti di spectral matching o simulazione di mixing.
 
 ## Note Claude
-
 **Punti chiave**
 - Libreria iperspettrale Lambertian-equivalent di plastiche misurate outdoor con ASD FieldSpec 4 in range 350-2500 nm (UV-VIS-NIR-SWIR), pubblicata open-access su EcoSIS.
 - Tre famiglie campionate: macroplastiche washed-ashore (USA coast), microplastiche marine-harvested (Atlantico e Pacifico, Neuston net 335 um) sia secche sia bagnate, e 11 polimeri vergini (PVC, PA6, PA6.6, LDPE, PET, PP, PS, FEP, ABS, Merlon, PMMA).
@@ -59,4 +58,3 @@ Firme spettrali per sezione background/teoria della tesi. Endmember per eventual
 - `aguilar-2025-macroplastics-wv3`: traduce feature 1200/1700 nm in indici WV-3 (band 7/8 SWIR), il bridge naturale dalla libreria al sensore.
 - `marida-2022-marine-debris`: dataset Sentinel-2 di marine debris dove queste firme spiegano la separabilita' (o la mancanza, per via della GSD a 10-20 m).
 - `zhou-2021-plastic-classifier`: classifier su firme di plastica simili, complementare per la parte ML.
-

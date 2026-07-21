@@ -31,7 +31,6 @@ Smonta alcune claim sul RS pretraining mostrando che il preprocessing conta più
 Procedura di preprocessing (resize, normalizzazione per-banda). Evidenza che random init extra channels è viable con ViT. Best practice per confronti equi.
 
 ## Note Claude
-
 **Punti chiave**
 - Corley, Robinson, Dodhia, Lavista-Ferres, Najafirad (UTSA + Microsoft AI for Good, arXiv 2305.13456, maggio 2023): mostrano che il preprocessing (resize + normalizzazione) ha effetti enormi sui benchmark di pretrained models in remote sensing, spesso piu' grandi della scelta del pretraining stesso.
 - Setup sistematico: 7 dataset RS (EuroSAT, SAT-6, So2Sat, BigEarthNet, TreeSatAI, UC Merced, RESISC45) x 6 metodi di feature extraction (ResNet-50 con pesi ImageNet/MoCo/SeCo/Random + RCF + Image Statistics) valutati con KNN su embeddings.
@@ -59,4 +58,3 @@ Procedura di preprocessing (resize, normalizzazione per-banda). Evidenza che ran
 - `xiong-2024-dofa` e `anysat-2024`: i FM "any-sensor" devono essere valutati con questo stesso rigore - se non lo sono, l'apparente vantaggio puo' sparire.
 - `szwarcman-2024-prithvi-eo2` e `spectralgpt-2024`: stesso caveat - vanno benchmarkati con linear probe + resize+normalize controllati.
 - `cong-2022-satmae`: SatMAE risulta superato da semplice ImageNet+resize in piu' setup, motivazione forte per non assumere a priori che FM RS = migliore.
-

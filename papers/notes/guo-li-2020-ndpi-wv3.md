@@ -31,7 +31,6 @@ Dimostra che indici spettrali semplici basati su SWIR possono quantificare la pl
 Concetto di spectral index per plastica. Se si usano bande SWIR, l'NDPI è un feature engineering utile.
 
 ## Note Claude
-
 **Status: PDF non disponibile** (Elsevier closed access, da scaricare via VPN PoliMi → https://doi.org/10.1016/j.isprsjprs.2020.09.009).
 
 Da letteratura secondaria (citato in `aguilar-2021-wv3-ablation`, `aguilar-2025-macroplastics-wv3`, `zhou-2021-plastic-classifier`):

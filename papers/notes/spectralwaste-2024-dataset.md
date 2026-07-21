@@ -31,7 +31,6 @@ La fusione di RGB con dati spettrali supera costantemente entrambe le modalità 
 Evidenza che la fusione multimodale è superiore. Supporta l'approccio late fusion nella tesi.
 
 ## Note Claude
-
 **Punti chiave**
 - Casao, Pena, Sabater et al. (Universidad de Zaragoza + ATRIA Innovation, arXiv 2403.18033, marzo 2024): SpectralWaste e' il primo dataset multimodale RGB + iperspettrale raccolto da un impianto reale di sorting di rifiuti plastici (no setup di laboratorio).
 - Acquisizione su nastro trasportatore con due telecamere line-scan sincronizzate: RGB Teledyne DALSA Linea (1200x1184, 8-bit) + HSI Specim FX17 (224 bande 900-1700 nm, 600x640, 16-bit). 6 classi target che causano problemi operativi: film, basket, cardboard, video tape, filament, trash bag.
@@ -60,4 +59,3 @@ Evidenza che la fusione multimodale è superiore. Supporta l'approccio late fusi
 - `torres-2023-aerialwaste`: dataset di waste detection RGB aereo - confronto naturale "RGB-only ad alta risoluzione" vs "RGB+HSI a media risoluzione" per il framing del valore aggiunto MS.
 - `fraternali-2024-survey`: survey waste detection che inquadra il gap tra setting industriale (SpectralWaste) e setting Earth Observation.
 - `xiong-2024-dofa` / `anysat-2024`: FM "any-sensor" candidati per gestire la differenza di numero di bande tra RGB-only e RGB+HSI con architettura unica.
-

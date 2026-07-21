@@ -31,7 +31,6 @@ Cilia, Panigada, Rossini, Candiani, Pepe, Colombo (Università Milano-Bicocca + 
 Workflow SAM + endmembers; idea dell'Indice di Deterioramento (ISD) per priorità rimozione; integrazione con catasto = utilità ARPA; baseline metodologico storico.
 
 ## Note Claude
-
 **Punti chiave**
 - Riferimento canonico italiano per mappatura asbestos-cemento via SAM iperspettrale aereo MIVIS (102 bande VIS–TIR, 3 m GSD, 5 strisciate sorvolo 5/7/2013) su 5 municipalità Brianza (Monza, Muggiò, Lissone, Seregno, Biassono, 65 km², 248 mila abitanti).
 - Workflow 2-step: (1) SAM su MNF components con endmember-set di 5 materiali (AC, concrete, tiles, alluminio, PVC); (2) seconda SAM ristretta a pixel AC con solo 2 endmember (AC+concrete) per ripulire commissione.

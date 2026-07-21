@@ -28,7 +28,7 @@ EXCEL_MAP = {
         "id": "gibellini-2025-pipeline",
         "authors": ["Gibellini", "Torres", "Fraternali"],
         "venue": "Waste Management Bulletin",
-        "doi": "10.1016/j.wmb.2025.02.003",
+        "doi": "10.1016/j.wmb.2025.100246",
         "arxiv": "2502.06607",
         "tags": ["waste", "baseline", "swin-t", "rsp", "aerialwaste"],
         "relevance": "critical",

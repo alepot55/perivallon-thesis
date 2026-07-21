@@ -31,7 +31,6 @@ Survey del gruppo PoliMi. Mappa il campo e identifica esplicitamente il limite R
 Motivazione della tesi (gap RGB), tassonomia delle tecniche, bibliography strutturata come punto di partenza.
 
 ## Note Claude
-
 **Punti chiave**
 - Survey sistematica PRISMA su 50 lavori (1987–2023) di waste detection da RS, classificati in 3 obiettivi (Detection, Monitoring, Mapping) e 6 task. Identifica esplicitamente i gap che la tesi attacca.
 - Tassonomia tecniche: visual interpretation, descriptive indices, multi-factor, feature extraction+ML, traditional CV, Deep Learning CV, other. Solo 11/50 lavori usano DL e quasi tutti su immagini RGB/pansharpened.

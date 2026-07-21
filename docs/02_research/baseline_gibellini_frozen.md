@@ -34,7 +34,20 @@ Binary scene classification (waste / no waste) su tile RGB da immagini VHR: in i
 
 Nota: il claim "RSP batte ImageNet di ~2.3 pp" che gira negli appunti non è nel paper; sulla best config il delta è 1.62 pp (Tab. 2). Usare quello.
 
+![Numeri chiave Gibellini 2025](figs/gibellini_key_numbers.png)
+
 ## La pipeline in 5 passi (Fig. 1, p. 8; Sez. 3.1, p. 7)
+
+```mermaid
+flowchart LR
+    A["Immagine VHR<br>dell'area"] --> B["Tiling<br>(tile georeferenziate,<br>GSD + context fissati)"]
+    B --> C["Classificatore binario<br>Swin-T + RSP"]
+    C --> D["Score di confidenza<br>per tile"]
+    C --> E["Saliency map<br>Grad-CAM"]
+    D --> F["Overlay GIS<br>(tile colorate per confidenza)"]
+    E --> F
+    F --> G["Fotointerprete ARPA:<br>ispeziona solo tile sopra soglia"]
+```
 
 1. L'immagine VHR dell'area di interesse viene divisa in tile quadrate georeferenziate, con GSD e context size fissati.
 2. Ogni tile passa nel classificatore binario, che restituisce uno score di confidenza per la classe waste.

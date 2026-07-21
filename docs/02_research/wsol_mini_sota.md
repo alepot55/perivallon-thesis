@@ -24,6 +24,20 @@ PxAP se esistono maschere. In remote sensing il WSOL è attivo (survey del grupp
 Fraternali 2022; benchmark dedicati C45V2 e PN2 dal 2023) ma la valutazione resta
 per lo più a GSD fisso; l'asse risoluzione non è un asse di studio. [fatto]
 
+Come funziona, in un diagramma (il percorso della tesi in blu = valutazione quantitativa):
+
+```mermaid
+flowchart LR
+    A["Immagine + label<br>image-level<br>(waste si/no)"] --> B["Classificatore<br>CNN / Swin"]
+    B --> C["CAM / Grad-CAM<br>heatmap"]
+    C --> D["Soglia sulla heatmap"]
+    D --> E["Box o maschera<br>predetta"]
+    E --> F["Confronto con GT bbox:<br>MaxBoxAcc, pointing game, IoU"]
+    G["2827 bbox esistenti<br>(286 img satellite-only)"] --> F
+    style F fill:#dbeafe
+    style G fill:#dbeafe
+```
+
 ## 3. Lavori chiave (verificati)
 
 | Paper | Anno | Task | Dominio | Metodo | Eval localizzazione |
@@ -54,6 +68,28 @@ Cosa non fa [fatto, assenza verificata nel PDF]:
 - Il confronto 0.3 vs 1.2 m è pansharpened-vs-nativo (2 soli punti, con il confound del pansharpening), non una degradazione controllata di GSD sulla stessa immagine; e l'asse risoluzione è letto soprattutto sulle metriche di classificazione.
 - Task diverso: tetti in asbestos (oggetto compatto, GT poligonale regionale), non discariche (oggetto diffuso, multi-materiale).
 - Nessun metodo oltre vanilla Grad-CAM (nessun refinement, nessuna pseudo-mask, nessuna consistency cross-risoluzione).
+
+Il delta rispetto a Mazzola, a colpo d'occhio:
+
+```mermaid
+flowchart TB
+    subgraph M["Mazzola 2024 (già fatto)"]
+        M1["Grad-CAM su MS satellitare"]
+        M2["IoU quantitativa (una colonna)"]
+        M3["0.3 vs 1.2 m (2 punti,<br>confound pansharpening)"]
+        M4["Task: asbestos"]
+    end
+    subgraph T["Questa tesi (delta obbligatori)"]
+        T1["Protocollo WSOL standard:<br>MaxBoxAcc / pointing game / curve per soglia"]
+        T2["Degradazione GSD controllata<br>multi-punto, stessa immagine"]
+        T3["Task: waste (oggetto diffuso)"]
+        T4["Metodo oltre vanilla CAM<br>(pseudo-mask / consistency)"]
+    end
+    M2 -->|"da colonna singola a protocollo"| T1
+    M3 -->|"da 2 punti a asse controllato"| T2
+    M4 -->|"da tetti a discariche"| T3
+    M1 -->|"da vanilla a refinement"| T4
+```
 
 ## 5. Verdetto
 

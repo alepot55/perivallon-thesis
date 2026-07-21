@@ -3,6 +3,20 @@
 Prima esplorazione di `/data` e `/archive` sul container `multispectralwaste`, fatta in sola lettura la sera del 21/7.
 Serve per arrivare preparati alla call con Enrico. Tutto verificato aprendo i file; le voci [inferenza] vanno confermate in call.
 
+Il flusso dei dati, in un diagramma:
+
+```mermaid
+flowchart LR
+    A["5 strip PNEO Lombardia 2023<br>/archive/satellite/processed/<br>MS 6 bande, uint16, EPSG:32632"] --> B["MS_pansharpened.tif<br>(0.3 m)"]
+    A --> C["MS_mosaic.tif<br>(1.2 m nativo)"]
+    B --> D["Ritaglio tile al volo<br>(geometry negli split)"]
+    C --> D
+    D --> E["Split di Thomas<br>train 1020 / val 135 / test 139<br>identici alle 2 risoluzioni"]
+    F["aw36_od_bin_sat_only.json<br>2827 bbox su 286 positive"] -.->|"test-set localizzazione"| E
+    style E fill:#dbeafe
+    style F fill:#dcfce7
+```
+
 ## La scoperta principale
 
 Il dataset per la tesi esiste già, ed è già impostato per l'asse risoluzione:

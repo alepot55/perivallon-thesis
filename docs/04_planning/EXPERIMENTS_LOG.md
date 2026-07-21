@@ -42,6 +42,8 @@
 | 0.3m (pansharpened) | **0.7294** |
 | 1.2m (MS nativo) | **0.6875** |
 
+![EXP-001 risultato](figs/exp001_sanity.png)
+
 - **Conclusione**: pipeline funzionante, il modello impara (loss 0.66→0.10); primo indizio del gap di risoluzione (~4 pp F1), NON confrontabile con Gibellini 92.02 (modello, dati, epoche, protocollo diversi). Tag: UNCERTAIN (sanity, no seed, val 120 img).
 - **Claims toccati**: nessuno (sanity). Prepara il terreno per C sulla griglia risoluzioni.
 - **Next**: (a) chiedere a Enrico perché ~6% delle tile cade fuori dai 5 mosaici processed e quale sia la normalizzazione/ordine bande ufficiale; (b) EXP-002 = baseline vera (Swin-T+RSP, protocollo Gibellini, più epoche, seed); (c) integrare le 6 bande.

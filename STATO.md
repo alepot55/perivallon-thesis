@@ -10,6 +10,17 @@ Pivot del 17/7: da material classification MS a **binary landfill detection sate
 
 ## 🗺️ La rotta (concordata con Thomas, non perderla di vista)
 
+```mermaid
+timeline
+    title Verso dicembre 2026
+    Luglio : infra + dati visti (fatto 21/7) : call Enrico : baseline satellite-only
+    1-15 ago : Thomas in ferie : baseline + prime CAM (serale)
+    10-23 ago : SPRINT (ferie Ale) : griglia GSD completa : WSOL v1 quantitativo
+    Metà set : CHECKPOINT : pitch +2 punti con numeri in mano
+    Ott-Nov : esperimenti finali : scrittura : deposito 23/10-12/11
+    16 dic : appello di laurea Milano
+```
+
 1. **Luglio**: comprimere la base — infra ✅, dati ✅, call Enrico, replica baseline satellite-only, griglia risoluzioni v1.
 2. **1–15/8**: Thomas in ferie; lavoro serale/weekend su baseline + prime CAM.
 3. **10–23/8 (ferie Ale = full-time)**: LO SPRINT che vale il piano — griglia completa, WSOL v1 con valutazione quantitativa, indice + introduction draft.

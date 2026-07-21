@@ -17,6 +17,34 @@ Working title: *Binary illegal-landfill detection in very-high-resolution satell
 
 Executive summary (~6 pp): problem, data, method sketch, the two headline results (detection-vs-GSD curve; localization-vs-GSD curve), operational implications.
 
+Structure at a glance — experiments feed chapters as they close:
+
+```mermaid
+flowchart LR
+    subgraph EXP["Experiments (eagle)"]
+        E1["E1: baseline across GSD<br>0.3 / 0.7 / 1.2 m"]
+        E2["E2: localization vs GSD<br>(the +2 claim)"]
+        E3["E3: ablations"]
+    end
+    subgraph TESI["Thesis (~30 pp)"]
+        C1["1. Introduction (3)"]
+        C2["2. Related work (5)"]
+        C3["3. Data (4)"]
+        C4["4. Method (5)"]
+        C5["5. Experiments & results (8)"]
+        C6["6. Discussion (3)"]
+        C7["7. Conclusion (2)"]
+    end
+    E1 --> C5
+    E2 --> C5
+    E3 --> C5
+    D1["baseline_gibellini_frozen.md"] --> C2
+    D2["wsol_mini_sota.md"] --> C2
+    D3["EDA dati eagle"] --> C3
+    E2 -.->|"if it does not mature:<br>fallback = quantitative eval<br>of vanilla CAM only"| C5
+    style E2 fill:#dbeafe
+```
+
 ## Fallback (if the +2 innovation track does not mature by mid-September)
 
 Chapter 5 keeps E1 + a *qualitative* CAM section plus the quantitative evaluation of vanilla Grad-CAM only (still a first for the group's satellite data); chapter 4 drops the refinement method. The rest of the structure is unchanged — this is the ~5-point base thesis, packaged.

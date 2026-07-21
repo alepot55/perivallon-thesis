@@ -40,10 +40,14 @@ Senza 1+2 non entri. Il resto è self-service.
 
 ## Setup passo-passo
 
-### 1. VPN (una tantum)
+### 1. VPN (una tantum, su ciascun PC)
 
-1. Attivazione concessa dall'IT (via Thomas).
-2. Configura il client seguendo la [guida ICT PoliMi](https://www.ict.polimi.it/configurazioni/vpn/): allo step 1/3 seleziona il **portale DEIB**: `gp-deib-saml.vpn.polimi.it`.
+Portale DEIB: **`gp-deib-saml.vpn.polimi.it`** ([guida ICT PoliMi](https://www.ict.polimi.it/configurazioni/vpn/)). Account già abilitato (conferma Thomas 19/7). Due autenticazioni in sequenza (portal + gateway) sono normali.
+
+- **Windows / WSL**: da browser Windows apri `https://gp-deib-saml.vpn.polimi.it` → login PoliMi → scarica e installa il client GlobalProtect 64-bit → apri il client, portal `gp-deib-saml.vpn.polimi.it`, Connect. La VPN di Windows copre anche WSL.
+- **Linux nativo**: (a) prova il portale da browser: dopo il login la pagina Palo Alto a volte offre il pacchetto Linux del client ufficiale; (b) altrimenti open-source: `sudo apt install openconnect gp-saml-gui` (su Ubuntu 24.04 è pacchettizzato; NON è su PyPI), poi **`gp-saml-gui --gateway gp-deib-saml.vpn.polimi.it`** — apre la finestra di login SAML PoliMi (funziona anche via SPID). **Attenzione**: NON attacca la VPN da sola — a login riuscito **stampa** il comando `echo <cookie> | sudo openconnect --protocol=gp ... --usergroup=gateway:prelogin-cookie ...` da incollare subito (cookie monouso, scade in fretta). Il flag `--gateway` è necessario: senza, openconnect consuma il cookie sul portal e poi si blocca su `prelogin-cookie: fgets (stdin)` quando il gateway ne chiede un secondo (verificato 19/7). La VPN resta su finché il terminale con openconnect è aperto (Ctrl+C per staccare) → ssh da un secondo terminale.
+- Per capire se sei in WSL: `grep -qi microsoft /proc/version && echo WSL || echo nativo`.
+- Se il login SAML risponde "non autorizzato" → account non abilitato al portale DEIB: solo in quel caso serve Thomas→IT.
 
 ### 2. Chiave SSH (una tantum)
 

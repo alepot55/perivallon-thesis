@@ -31,6 +31,24 @@
 
 ## Log
 
+### EXP-002 — Baseline Swin-T+RSP, protocollo Gibellini, 0.3m vs 1.2m (2026-07-22)
+- **Domanda**: prima baseline "seria" sugli split di Thomas con setup corretto (bande RGB ufficiali, normalizzazione del gruppo, copertura 100% archive+scratch). Primo segnale sull'asse risoluzione con split geografico.
+- **Setup**: Swin-T + RSP (pesi `rsp_swin_t_e300.pth`), two-step Gibellini: TL 10 ep (backbone frozen, LR 1e-3) → FT 20 ep (ultimo stage, LR 1e-4, cosine), batch 120, AdamW wd 0.05, seed 42, tile 224px, RGB = bande 4,3,2 (ordine DB,B,G,R,RE,NIR), normalizzazione ufficiale clip p1-p99 + standardize. Split completi: train 1020 / val 135 / test 139 (test = comuni diversi dal train). GPU 1 eagle, slot prenotato 10-12.
+- **Dove**: `eagle:~/experiments/baseline_swin_rsp_pneo.py` + `baseline_03.log` / `baseline_12.log` + ckpt `baseline_swin_rsp_{res}_valf1_*.pt`. Mirror script in `eagle/` (repo).
+- **Risultati**:
+
+| Risoluzione | best val F1 | test F1 (comuni nuovi) |
+|---|---|---|
+| 0.3m (pansharpened) | **0.7963** | 0.6833 |
+| 1.2m (MS nativo) | 0.7290 | **0.6906** |
+
+![EXP-002 risultato](figs/exp002_baseline.png)
+
+- **Conclusione**: a 0.3m val migliore ma calo netto sui comuni nuovi (−11 pp); a 1.2m val≈test. Sul test le due risoluzioni sono **quasi pari** — coerente con l'effetto-GSD debole di Gibellini (20-50cm aereo), ma qui 1 seed e 139 img: nessuna conclusione forte. Tag: MEDIUM (setup corretto e riproducibile; numeri preliminari).
+- **Caveat metodologico da risolvere**: input fisso 224px → le tile 0.3m (~670px) vengono ridimensionate, comprimendo il GSD effettivo verso ~0.9m; l'asse risoluzione va disegnato controllando context size e input size separatamente (come il factorial di Gibellini). Punto da discutere in call.
+- **Claims toccati**: prepara C sull'asse risoluzione (nessun claim ancora).
+- **Next**: (a) multi-seed (≥3) per stimare la varianza; (b) griglia con ~0.7m; (c) 6 bande vs RGB; (d) chiarire con Enrico input size / context nel loro protocollo.
+
 ### EXP-001 — Sanity run binario PNEO, 0.3m vs 1.2m (2026-07-21)
 - **Domanda**: la pipeline dati end-to-end (split Thomas → ritaglio dai mosaici → training) funziona? Primo segnale sull'effetto risoluzione.
 - **Setup**: ResNet-50 ImageNet (torchvision), 3 bande RGB dalle 6 PNEO, tile 224px, AdamW lr 1e-4 wd 0.05, batch 32, 5 epoche, no seed control. Split `SatRaw/PNEO/Thomas/{0.3m,1.2m}/binary` (train 963, val 120 dopo scarto di 57+15 tile fuori dai 5 mosaici Lombardia). Normalizzazione per-tile max (provvisoria). GPU 1 eagle, slot prenotato.

@@ -106,9 +106,10 @@ def main():
     ap.add_argument("--res", default="0.3m", choices=["0.3m", "1.2m"])
     ap.add_argument("--batch", type=int, default=120)
     ap.add_argument("--workers", type=int, default=12)
+    ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
-    torch.manual_seed(SEED)
-    np.random.seed(SEED)
+    torch.manual_seed(args.seed)
+    np.random.seed(args.seed)
 
     d = SPLIT_DIR.format(res=args.res)
     mosaics = load_mosaics(args.res)
@@ -141,9 +142,9 @@ def main():
     if ft_state:
         model.load_state_dict(ft_state)
     test_f1 = evaluate(model, test_dl, device)
-    out = os.path.expanduser(f"~/experiments/baseline_swin_rsp_{args.res}_valf1_{ft_best:.4f}.pt")
+    out = os.path.expanduser(f"~/experiments/baseline_swin_rsp_{args.res}_seed{args.seed}_valf1_{ft_best:.4f}.pt")
     torch.save(model.state_dict(), out)
-    print(f"RISULTATO {args.res}: best val F1 TL {tl_best:.4f} | best val F1 FT {ft_best:.4f} | test F1 {test_f1:.4f}")
+    print(f"RISULTATO {args.res} seed {args.seed}: best val F1 TL {tl_best:.4f} | best val F1 FT {ft_best:.4f} | test F1 {test_f1:.4f}")
     print(f"checkpoint: {out}")
 
 

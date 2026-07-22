@@ -16,8 +16,8 @@ Da dire in breve, senza dilungarsi:
 
 1. **Le 2827 bbox sulle 286 positive satellite-only**: chi le ha fatte, sono complete e affidabili? Si possono usare come test-set di localizzazione? ← LA domanda: decide l'angolo dei +2 punti.
 2. **Gli split `Thomas/0.3m` e `1.2m`**: sono la configurazione ufficiale? Esistono già run del gruppo con numeri su questi split (per confronto)?
-3. **~6% delle tile** (57 train + 15 val) cade fuori dai 5 mosaici in `processed/PNEO_LOMBARDIA_2023_ALL_30cm_16bit_THOMAS`: esistono altre strip processed, o quelle tile vanno scartate?
-4. **Bande e preprocessing**: ordine esatto delle 6 bande PNEO nei mosaici? Gli esperimenti del gruppo usano RGB o tutte le bande? Come è fatto il pansharpening a 0.3m?
+3. ~~Tile fuori dai mosaici~~ → **risolta da soli il 22/7**: le strip mancanti sono in `/scratch/satellite/PNEO_LOMBARDIA_2023_thomas/` (con esse copertura 100%). Resta da chiedere: (a) **consolidarle fuori da `/scratch`** (che è cancellabile) — dove?; (b) a 0.3m il pansharpened esiste solo per parte delle strip: arriva per le altre?
+4. **Bande e preprocessing**: ~~ordine bande e normalizzazione~~ → trovati (README Thomas + `normalization_config.yaml`: DB,B,G,R,RE,NIR; clip p1-p99 + standardize). Resta: gli esperimenti del gruppo usano RGB o tutte le 6 bande? Metodo di pansharpening?
 5. **Negative sampling**: come sono state scelte le negative del train?
 
 ### Blocco B — esperimenti e codice

@@ -112,14 +112,11 @@ def main():
 
     d = SPLIT_DIR.format(res=args.res)
     mosaics = load_mosaics(args.res)
-    raw_train = PneoTiles(f"{d}/train.json", mosaics)  # solo per stats
-    mean, std = compute_stats(raw_train, os.path.expanduser(f"~/experiments/stats_{args.res}.json"))
-    print(f"stats {args.res}: mean {[round(m, 1) for m in mean]}, std {[round(s, 1) for s in std]}")
-
-    stats = (mean, std)
-    train_ds = PneoTiles(f"{d}/train.json", mosaics, stats=stats)
-    val_ds = PneoTiles(f"{d}/val.json", mosaics, stats=stats)
-    test_ds = PneoTiles(f"{d}/test.json", mosaics, stats=stats)
+    print(f"mosaici disponibili a {args.res}: {len(mosaics)}")
+    # normalizzazione ufficiale del gruppo (clip p1-p99 + standardize, config in /scratch)
+    train_ds = PneoTiles(f"{d}/train.json", mosaics, stats="official")
+    val_ds = PneoTiles(f"{d}/val.json", mosaics, stats="official")
+    test_ds = PneoTiles(f"{d}/test.json", mosaics, stats="official")
     print(f"train {len(train_ds)}, val {len(val_ds)}, test {len(test_ds)}")
 
     device = "cuda"

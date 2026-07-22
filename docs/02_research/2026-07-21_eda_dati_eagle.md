@@ -64,6 +64,13 @@ Le 15 categorie: Rubble, Scrap, Sludge-Zootechnical-Manure, Foundry waste-Asphal
 - `/data/waste/` ha anche: `satellite-pipeline/` (GIS, inference, poc — [inferenza] la pipeline di produzione), `change_detection/`, `multimodal/`, `object_detection/`, `volume-estimation/`, `synthetic/`.
 - `/data/waste/multilabel/`: il lavoro material classification — `alari/` (code + data), `fede_faspas_replic/`, esperimenti 100/210.
 
+## Aggiornamento 22/7 (mattina) — scoperte dal primo run
+
+- **Ordine bande ufficiale**: DB, B, G, R, RE, NIR (README di Thomas del 07/07/26 in `/scratch/satellite/PNEO_LOMBARDIA_2023_thomas/`). Quindi RGB = indici rasterio 4,3,2. Unità: reflectance ×10000, 12 bit nativi.
+- **Normalizzazione ufficiale del gruppo**: `stats_normalization/normalization_config.yaml` (stessa cartella) — pipeline `mask_nodata → clip_p1_p99 → standardize`, percentili e mean/std globali per banda. Adottata nei nostri script.
+- **Copertura completa trovata**: i 5 mosaici in `/archive/.../processed` coprono solo parte del dataset — il test set (split geografico per comune) cade per il 94% fuori. Le strip mancanti stanno in **`/scratch/satellite/PNEO_LOMBARDIA_2023_thomas/`** (9 strip: tutte con MS 1.2m, solo 2/3/9 con pansharpened 0.3m). Con archive+scratch: **0 tile scartate** su tutti gli split, a entrambe le risoluzioni.
+- ⚠️ **Rischio operativo**: `/scratch` è cancellabile dagli admin — le strip necessarie alla copertura del test set vanno consolidate in `/data` o `/archive` (da chiedere in call).
+
 ## Domande per Enrico, aggiornate dopo l'EDA
 
 1. Le 2.827 bbox sulle 286 positive satellite-only: chi le ha fatte, sono complete, si può usarle come test-set di localizzazione?

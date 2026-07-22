@@ -20,27 +20,37 @@ import rasterio.mask
 import torch
 import torch.nn as nn
 from pyproj import Transformer
+from shapely.geometry import box as shp_box
 from shapely.geometry import shape
 from shapely.ops import transform as shp_transform
 from torch.utils.data import Dataset, DataLoader
 from torchvision.models import resnet50, ResNet50_Weights
 
 SPLIT_DIR = "/data/waste/datasets/SatRaw/PNEO/Thomas/{res}/binary"
-MOSAIC_DIR = "/archive/satellite/processed/PNEO_LOMBARDIA_2023_ALL_30cm_16bit_THOMAS"
-# PNEO: B G R NIR (+ altre); nel prodotto 6 bande l'ordine tipico e' B,G,R,RE,NIR,DeepBlue.
-# Per il sanity uso le prime 3 riportate a RGB; l'ordine esatto si verifica con Enrico.
-RGB_BANDS = (3, 2, 1)
+# due sorgenti di mosaici: archive (processed) + scratch (strip aggiuntive, README Thomas 07/07/26)
+MOSAIC_DIRS = [
+    "/archive/satellite/processed/PNEO_LOMBARDIA_2023_ALL_30cm_16bit_THOMAS",
+    "/scratch/satellite/PNEO_LOMBARDIA_2023_thomas",
+]
+# ordine bande ufficiale (README + normalization_config.yaml): DB, B, G, R, RE, NIR
+RGB_BANDS = (4, 3, 2)  # -> R, G, B
+# normalizzazione ufficiale del gruppo (stats_normalization/normalization_config.yaml,
+# valori globali, unita' reflectance x10000): clip p1-p99 poi standardize
+NORM_P1 = np.array([164.01, 233.52, 219.90], dtype=np.float32)[:, None, None]
+NORM_P99 = np.array([3848.00, 3585.73, 3240.39], dtype=np.float32)[:, None, None]
+NORM_MEAN = np.array([947.73, 933.61, 758.37], dtype=np.float32)[:, None, None]
+NORM_STD = np.array([708.98, 554.01, 505.40], dtype=np.float32)[:, None, None]
 TILE_PX = 224
 
 
 def load_mosaics(res):
-    """Footprint e path dei mosaici delle 5 strip. Ritorna [(footprint, path_tif)]."""
+    """Footprint (dai bounds del raster) e path dei mosaici disponibili. Ritorna [(footprint, path_tif)]."""
     fname = "MS_pansharpened.tif" if res == "0.3m" else "MS_mosaic.tif"
     out = []
-    for strip in sorted(glob.glob(f"{MOSAIC_DIR}/*/")):
-        with open(strip + "Mosaic_footprint.geojson") as f:
-            gj = json.load(f)
-        out.append((shape(gj["features"][0]["geometry"]), strip + fname))
+    for root in MOSAIC_DIRS:
+        for tif in sorted(glob.glob(f"{root}/*/{fname}")):
+            with rasterio.open(tif) as ds:
+                out.append((shp_box(*ds.bounds), tif))
     return out
 
 
@@ -83,7 +93,11 @@ class PneoTiles(Dataset):
         label = 1.0 if rec.get("categories") else 0.0
         img, _ = rasterio.mask.mask(self._dataset(idx), [geom], crop=True, indexes=list(RGB_BANDS))
         img = img.astype(np.float32)
-        if self.stats is None:
+        if self.stats == "official":
+            # pipeline del gruppo: clip_p1_p99 poi standardize (normalization_config.yaml)
+            img = np.clip(img, NORM_P1, NORM_P99)
+            img = (img - NORM_MEAN) / NORM_STD
+        elif self.stats is None:
             img = img / max(img.max(), 1.0)  # uint16 -> [0,1] per-tile (sanity only)
         else:
             mean, std = self.stats

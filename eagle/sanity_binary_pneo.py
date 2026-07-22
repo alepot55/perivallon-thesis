@@ -33,13 +33,25 @@ MOSAIC_DIRS = [
     "/scratch/satellite/PNEO_LOMBARDIA_2023_thomas",
 ]
 # ordine bande ufficiale (README + normalization_config.yaml): DB, B, G, R, RE, NIR
-RGB_BANDS = (4, 3, 2)  # -> R, G, B
-# normalizzazione ufficiale del gruppo (stats_normalization/normalization_config.yaml,
-# valori globali, unita' reflectance x10000): clip p1-p99 poi standardize
-NORM_P1 = np.array([164.01, 233.52, 219.90], dtype=np.float32)[:, None, None]
-NORM_P99 = np.array([3848.00, 3585.73, 3240.39], dtype=np.float32)[:, None, None]
-NORM_MEAN = np.array([947.73, 933.61, 758.37], dtype=np.float32)[:, None, None]
-NORM_STD = np.array([708.98, 554.01, 505.40], dtype=np.float32)[:, None, None]
+# normalizzazione ufficiale del gruppo (valori globali, reflectance x10000): clip p1-p99 poi standardize
+_P1_6 = [315.97, 219.90, 233.52, 164.01, 423.21, 496.79]
+_P99_6 = [2868.52, 3240.39, 3585.73, 3848.00, 4338.81, 5786.78]
+_MEAN_6 = [783.25, 758.37, 933.61, 947.73, 1990.59, 2874.95]
+_STD_6 = [424.09, 505.40, 554.01, 708.98, 702.79, 1203.64]
+
+BAND_SETS = {
+    # nome: (indici rasterio 1-based, posizioni 0-based nel config per la normalizzazione)
+    "rgb": ((4, 3, 2), [3, 2, 1]),   # R, G, B
+    "all6": ((1, 2, 3, 4, 5, 6), [0, 1, 2, 3, 4, 5]),  # DB, B, G, R, RE, NIR
+}
+
+
+def norm_arrays(bands):
+    _, pos = BAND_SETS[bands]
+    pick = lambda vals: np.array([vals[p] for p in pos], dtype=np.float32)[:, None, None]
+    return pick(_P1_6), pick(_P99_6), pick(_MEAN_6), pick(_STD_6)
+
+
 TILE_PX = 224
 
 
@@ -58,11 +70,14 @@ class PneoTiles(Dataset):
     # le geometrie degli split sono in EPSG:4326, i mosaici in EPSG:32632
     _to_utm = Transformer.from_crs("EPSG:4326", "EPSG:32632", always_xy=True).transform
 
-    def __init__(self, split_json, mosaics, stats=None):
-        """stats: None = normalizzazione per-tile max (sanity); oppure (mean, std) per banda."""
+    def __init__(self, split_json, mosaics, stats=None, bands="rgb"):
+        """stats: None = per-tile max (sanity); "official" = pipeline del gruppo; (mean,std) = custom.
+        bands: "rgb" o "all6" (v. BAND_SETS)."""
         with open(split_json) as f:
             records = json.load(f)["images"]
         self.stats = stats
+        self.band_indexes = BAND_SETS[bands][0]
+        self.norm = norm_arrays(bands)
         self.paths = [p for _, p in mosaics]
         self._open = {}  # cache per-worker: i dataset rasterio non passano il fork
         # assegna il mosaico a ogni record (centroide, fallback intersezione); scarta i non risolvibili
@@ -91,12 +106,13 @@ class PneoTiles(Dataset):
     def __getitem__(self, i):
         rec, geom, idx = self.records[i]
         label = 1.0 if rec.get("categories") else 0.0
-        img, _ = rasterio.mask.mask(self._dataset(idx), [geom], crop=True, indexes=list(RGB_BANDS))
+        img, _ = rasterio.mask.mask(self._dataset(idx), [geom], crop=True, indexes=list(self.band_indexes))
         img = img.astype(np.float32)
         if self.stats == "official":
             # pipeline del gruppo: clip_p1_p99 poi standardize (normalization_config.yaml)
-            img = np.clip(img, NORM_P1, NORM_P99)
-            img = (img - NORM_MEAN) / NORM_STD
+            p1, p99, mean, std = self.norm
+            img = np.clip(img, p1, p99)
+            img = (img - mean) / std
         elif self.stats is None:
             img = img / max(img.max(), 1.0)  # uint16 -> [0,1] per-tile (sanity only)
         else:

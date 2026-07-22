@@ -27,11 +27,19 @@ SEED = 42
 
 
 class SwinBinary(nn.Module):
-    """Swin-T timm senza head + pesi RSP + head binaria (come la replica in waste/)."""
+    """Swin-T timm senza head + pesi RSP + head binaria (come la replica in waste/).
 
-    def __init__(self, rsp_ckpt):
+    Con in_chans=6 il patch embedding viene "gonfiato" (weight inflation): i kernel RGB
+    del checkpoint finiscono nelle posizioni R,G,B dell'ordine bande DB,B,G,R,RE,NIR,
+    le bande extra ricevono la media dei kernel RGB, e tutto e' riscalato di 3/6 per
+    conservare l'ordine di grandezza delle attivazioni.
+    """
+
+    def __init__(self, rsp_ckpt, in_chans=3):
         super().__init__()
-        self.backbone = timm.create_model("swin_tiny_patch4_window7_224", pretrained=False, num_classes=0)
+        self.backbone = timm.create_model(
+            "swin_tiny_patch4_window7_224", pretrained=False, num_classes=0, in_chans=in_chans
+        )
         ckpt = torch.load(rsp_ckpt, map_location="cpu", weights_only=False)
         state = ckpt.get("model", ckpt.get("state_dict", ckpt))
         remapped = {}
@@ -43,9 +51,14 @@ class SwinBinary(nn.Module):
                 parts = k.split(".")
                 parts[1] = str(int(parts[1]) + 1)
                 k = ".".join(parts)
+            if k == "patch_embed.proj.weight" and in_chans == 6:
+                w = v  # (96, 3, 4, 4), ordine canali RGB
+                mean_k = w.mean(dim=1, keepdim=True)
+                # ordine bande dei mosaici: DB, B, G, R, RE, NIR
+                v = torch.cat([mean_k, w[:, 2:3], w[:, 1:2], w[:, 0:1], mean_k, mean_k], dim=1) * (3 / 6)
             remapped[k] = v
         missing, unexpected = self.backbone.load_state_dict(remapped, strict=False)
-        print(f"pesi RSP caricati: {len(remapped)} tensori (missing {len(missing)}, unexpected {len(unexpected)})")
+        print(f"pesi RSP caricati (in_chans={in_chans}): {len(remapped)} tensori (missing {len(missing)}, unexpected {len(unexpected)})")
         self.head = nn.Sequential(nn.Dropout(0.1), nn.Linear(self.backbone.num_features, 1))
 
     def forward(self, x):
@@ -107,6 +120,7 @@ def main():
     ap.add_argument("--batch", type=int, default=120)
     ap.add_argument("--workers", type=int, default=12)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--bands", default="rgb", choices=["rgb", "all6"])
     args = ap.parse_args()
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -115,13 +129,13 @@ def main():
     mosaics = load_mosaics(args.res)
     print(f"mosaici disponibili a {args.res}: {len(mosaics)}")
     # normalizzazione ufficiale del gruppo (clip p1-p99 + standardize, config in /scratch)
-    train_ds = PneoTiles(f"{d}/train.json", mosaics, stats="official")
-    val_ds = PneoTiles(f"{d}/val.json", mosaics, stats="official")
-    test_ds = PneoTiles(f"{d}/test.json", mosaics, stats="official")
-    print(f"train {len(train_ds)}, val {len(val_ds)}, test {len(test_ds)}")
+    train_ds = PneoTiles(f"{d}/train.json", mosaics, stats="official", bands=args.bands)
+    val_ds = PneoTiles(f"{d}/val.json", mosaics, stats="official", bands=args.bands)
+    test_ds = PneoTiles(f"{d}/test.json", mosaics, stats="official", bands=args.bands)
+    print(f"train {len(train_ds)}, val {len(val_ds)}, test {len(test_ds)} | bande: {args.bands}")
 
     device = "cuda"
-    model = SwinBinary(RSP_CKPT).to(device)
+    model = SwinBinary(RSP_CKPT, in_chans=6 if args.bands == "all6" else 3).to(device)
     train_dl = DataLoader(train_ds, batch_size=args.batch, shuffle=True, num_workers=args.workers)
     val_dl = DataLoader(val_ds, batch_size=args.batch, num_workers=args.workers)
     test_dl = DataLoader(test_ds, batch_size=args.batch, num_workers=args.workers)
@@ -142,9 +156,9 @@ def main():
     if ft_state:
         model.load_state_dict(ft_state)
     test_f1 = evaluate(model, test_dl, device)
-    out = os.path.expanduser(f"~/experiments/baseline_swin_rsp_{args.res}_seed{args.seed}_valf1_{ft_best:.4f}.pt")
+    out = os.path.expanduser(f"~/experiments/baseline_swin_rsp_{args.res}_{args.bands}_seed{args.seed}_valf1_{ft_best:.4f}.pt")
     torch.save(model.state_dict(), out)
-    print(f"RISULTATO {args.res} seed {args.seed}: best val F1 TL {tl_best:.4f} | best val F1 FT {ft_best:.4f} | test F1 {test_f1:.4f}")
+    print(f"RISULTATO {args.res} {args.bands} seed {args.seed}: best val F1 TL {tl_best:.4f} | best val F1 FT {ft_best:.4f} | test F1 {test_f1:.4f}")
     print(f"checkpoint: {out}")
 
 

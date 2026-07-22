@@ -29,8 +29,8 @@ Base = replica del protocollo Gibellini sul dataset satellite-only del gruppo. I
 | Dataset satellite-only | **1.775 img** (1.294 PNEO + 481 WV3) | aw36 sat_only |
 | Positive con bbox | **286 img, 2.827 bbox, 15 categorie** | idem |
 | Split Thomas (per risoluzione) | train 1.020 / val 135 / test 139 | SatRaw/PNEO/Thomas |
-| Nostra baseline (EXP-002, RGB, seed 42) | val F1 **0.796** @0.3m / 0.729 @1.2m; **test 0.683 / 0.691** | EXPERIMENTS_LOG |
-| Multi-seed e 6 bande (EXP-003/004) | *in aggiornamento stanotte — v. sezione 7* | idem |
+| Nostra baseline RGB (3 seed, EXP-003) | val **0.780±0.015** @0.3m / 0.732±0.008 @1.2m; **test 0.692±0.011 / 0.680±0.010** | EXPERIMENTS_LOG |
+| 6 bande (EXP-004) | *v. sezione 7 (girate stanotte)* | idem |
 | Timeline | sprint 10–23/8 → checkpoint +2 ~metà set → deposito 23/10–12/11 → **laurea 16/12** | STATO |
 
 Attenzione al confronto trappola: il nostro 0.68-0.69 di test **non è paragonabile** al 92 di Gibellini — dataset ~10 volte più piccolo, satellite vs aereo, test su comuni mai visti, protocollo leggero. Se qualcuno lo accosta, dillo subito tu.

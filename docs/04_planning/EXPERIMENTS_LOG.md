@@ -31,6 +31,23 @@
 
 ## Log
 
+### EXP-003 — Multi-seed della baseline RGB (2026-07-23, notte)
+- **Domanda**: il gap 0.3m vs 1.2m di EXP-002 sopravvive alla varianza dei seed?
+- **Setup**: identico a EXP-002, seed 42/43/44 (42 = EXP-002 stesso run). Slot notturni prenotati (mer 22-24, gio 0-8, GPU 1).
+- **Dove**: `eagle:~/experiments/baseline_{res}_seed{43,44}.log`
+- **Risultati** (media ± std su 3 seed):
+
+| Risoluzione | val F1 | test F1 (comuni nuovi) |
+|---|---|---|
+| 0.3m | **0.780 ± 0.015** | 0.692 ± 0.011 |
+| 1.2m | 0.732 ± 0.008 | 0.680 ± 0.010 |
+
+![EXP-003 risultato](figs/exp003_multiseed.png)
+
+- **Conclusione**: in-domain lo 0.3m vale ~+4.8 pp (oltre il rumore); sui comuni nuovi il gap scende a ~1.2 pp, dentro ~1 std → a queste dimensioni di test (139 img) la risoluzione non mostra un vantaggio robusto in generalizzazione. Coerente con l'effetto-GSD debole di Gibellini, ora con barre d'errore. Resta il caveat input-size 224 di EXP-002. Tag: MEDIUM.
+- **Claims toccati**: semina C/B (asse risoluzione): il claim "cosa si perde davvero scendendo di risoluzione" ha ora la prima base quantitativa.
+- **Next**: EXP-004 (6 bande vs RGB, stessa griglia, in corso stanotte); livello 0.7m; protocollo input-size da chiarire in call.
+
 ### EXP-002 — Baseline Swin-T+RSP, protocollo Gibellini, 0.3m vs 1.2m (2026-07-22)
 - **Domanda**: prima baseline "seria" sugli split di Thomas con setup corretto (bande RGB ufficiali, normalizzazione del gruppo, copertura 100% archive+scratch). Primo segnale sull'asse risoluzione con split geografico.
 - **Setup**: Swin-T + RSP (pesi `rsp_swin_t_e300.pth`), two-step Gibellini: TL 10 ep (backbone frozen, LR 1e-3) → FT 20 ep (ultimo stage, LR 1e-4, cosine), batch 120, AdamW wd 0.05, seed 42, tile 224px, RGB = bande 4,3,2 (ordine DB,B,G,R,RE,NIR), normalizzazione ufficiale clip p1-p99 + standardize. Split completi: train 1020 / val 135 / test 139 (test = comuni diversi dal train). GPU 1 eagle, slot prenotato 10-12.

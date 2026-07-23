@@ -1,4 +1,4 @@
-# Scaletta call con Enrico — giovedì 23/7 pomeriggio (confermato da Thomas 22/7)
+# Scaletta call con Enrico — venerdì 24/7 (spostata da giovedì)
 
 Thomas, 22/7: "giovedì nel pomeriggio va bene" + "ci aggiorniamo domani in tarda mattinata" (punto veloce con lui prima della call). Preparata 2026-07-22. Obiettivo della call: uscirne con (1) conferma che stiamo usando i dati giusti, (2) le risposte che decidono l'angolo di innovazione, (3) accesso GitLab e regole del gruppo. Durata stimata 30-45 min.
 

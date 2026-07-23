@@ -1,4 +1,4 @@
-# Dossier per giovedì 23/7 — tutto quello che serve, in un doc solo
+# Dossier per venerdì 24/7 (call spostata da giovedì) — tutto quello che serve, in un doc solo
 
 > Da studiare domattina (~35 min). Ordine: leggi i diagrammi, poi le tabelle, poi il Q&A.
 > La scaletta operativa della call è in `call_enrico_brief.md` (stampala o tienila aperta).

@@ -90,7 +90,13 @@ Stamattina ho misurato per la prima volta la localizzazione della vanilla Grad-C
 
 La frase per la call: "Ho fatto la prima valutazione quantitativa della Grad-CAM sul satellite-only usando le vostre bbox: è vicina al caso. È la misura che in letteratura nessuno riporta, e giustifica il pezzo di metodo della tesi: localizzazione oltre la vanilla CAM, valutata lungo l'asse di risoluzione."
 
-Aggiornamento di giovedì sera (EXP-006): provata tutta la scala delle CAM "gratis" — la migliore è Grad-CAM dallo stage 14×14, che raddoppia la IoU (fino a 0.14 con le 6 bande) ma resta bassa; LayerCAM non aiuta. Quindi: non basta cambiare CAM, serve un metodo nel training — ed è quello in prova stanotte (consistency cross-risoluzione, risultati venerdì mattina in questa sezione).
+Aggiornamento di giovedì sera (EXP-006): provata tutta la scala delle CAM "gratis" — la migliore è Grad-CAM dallo stage 14×14, che raddoppia la IoU (fino a 0.14 con le 6 bande) ma resta bassa; LayerCAM non aiuta.
+
+**E il perché è dimostrato (EXP-008, il numero più bello da raccontare)**: gli oggetti annotati hanno lato mediano **27 px ≈ 8 metri** — il 99% è più piccolo di una cella della griglia 7×7. Ho costruito l'oracolo: una CAM **perfetta** a 7×7 farebbe pointing game 0.06 — esattamente il nostro numero reale. Non è un difetto di training: è un tetto geometrico. I tetti: 14×14 → 0.46, **28×28 → 0.86**.
+
+La frase per la call: "Ho quantificato anche il tetto teorico: a 7×7 nemmeno una CAM perfetta localizzerebbe questi oggetti (mediana 8 metri). Il requisito del metodo esce dai dati: mappe ad alta risoluzione, almeno 28×28. E ne nasce una domanda per voi: le bbox annotano oggetti — per la valutazione ha senso anche una nozione di sito aggregato?"
+
+Stanotte in forno: consistency cross-risoluzione (risultati venerdì mattina qui sotto).
 
 ## 8. Glossario minimo (una riga l'uno)
 

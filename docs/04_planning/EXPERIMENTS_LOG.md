@@ -31,6 +31,26 @@
 
 ## Log
 
+### EXP-008 — Il tetto teorico: gli oggetti sono più piccoli della griglia CAM (2026-07-23, sera)
+- **Domanda**: il fallimento della CAM vanilla è un problema di training o strutturale? Qual è il massimo raggiungibile a ogni risoluzione di mappa?
+- **Setup**: analisi CPU-only. (1) statistiche delle GT bbox (351 test + 2827 totali); (2) "oracolo": CAM perfetta = maschera GT ridotta alla griglia (7×7/14×14/28×28), poi stessa pipeline metrica di EXP-005. Script `exp008_bbox_analysis.py`.
+- **Risultati**:
+
+| Fatto | Valore |
+|---|---|
+| Lato mediano oggetto @0.3m | **27 px ≈ 8 m** (area mediana ~70 m²; mediana 5-8 box/img) |
+| Box più piccole di 1 cella 7×7 (100 px) | **99%** (test) / 97% (tutte) |
+| Box più piccole di 1 cella 14×14 (50 px) | 91% / 83% |
+| Oracolo 7×7 | pointing game **0.060**, IoU max 0.232 |
+| Oracolo 14×14 | pointing game 0.460, IoU 0.454 |
+| Oracolo 28×28 | pointing game **0.860**, IoU 0.611 |
+
+![EXP-008 oracolo](figs/exp008_oracle.png)
+
+- **Conclusione**: il nostro Grad-CAM reale a 7×7 (PG 0.06) **satura esattamente il tetto teorico della sua griglia** — il fallimento è strutturale, non di training. Le annotazioni sono a livello di OGGETTO (~8 m), non di sito: a 1.2 m un oggetto mediano è ~7 px. **Requisito di metodo derivato dai dati: mappe di localizzazione ad alta risoluzione (≥28×28)**, non varianti CAM. A stage-3 il reale (0.10) è ancora sotto il tetto (0.46) → lì c'è anche margine di training. Tag: HIGH (analisi deterministica).
+- **Claims toccati**: fonda il requisito del metodo C2 e la lettura di EXP-005/006; apre la distinzione oggetto-vs-sito per la valutazione (aggregare le box in siti?).
+- **Next**: (a) in call: le bbox annotano oggetti — esiste/serve una nozione di "sito" aggregato per la valutazione? (b) metodo con output ad alta risoluzione (decoder leggero / pseudo-mask a 28×28+); (c) EXP-007 in corso letto con questa lente (a 7×7 la consistency non può alzare i numeri assoluti).
+
 ### EXP-006 — Scala delle varianti CAM: il meglio "gratis" resta debole (2026-07-23, sera)
 - **Domanda**: quanto si recupera cambiando variante CAM (stage intermedi, LayerCAM) senza toccare il training?
 - **Setup**: come EXP-005 (50 img test con bbox, ckpt seed 42, 4 config) × 4 varianti: gradcam_s4 (7×7), gradcam_s3 (14×14), layercam_s3, layercam_s2 (28×28). Script `exp006_cam_ladder.py`.

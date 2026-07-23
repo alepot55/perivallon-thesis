@@ -88,7 +88,9 @@ E la domanda che ne nasce per Enrico: come gestite voi l'input multispettrale (i
 
 Stamattina ho misurato per la prima volta la localizzazione della vanilla Grad-CAM sulle 50 immagini di test con bbox: **pointing game 6-12% contro un caso del 2%, IoU ~0.05-0.08**. Verificato che non è un bug (coordinate controllate, overlay visivi corretti): le mappe sono diffuse, il modello guarda il contesto.
 
-La frase per la call: "Ho fatto la prima valutazione quantitativa della Grad-CAM sul satellite-only usando le vostre bbox: è vicina al caso. È la misura che in letteratura nessuno riporta, e giustifica il pezzo di metodo della tesi: localizzazione oltre la vanilla CAM, valutata lungo l'asse di risoluzione." Se chiedono come migliorarla: CAM da stage precedenti (14×14), LayerCAM, pseudo-mask refinement, consistency cross-risoluzione (abbiamo le stesse tile a 0.3 e 1.2 m).
+La frase per la call: "Ho fatto la prima valutazione quantitativa della Grad-CAM sul satellite-only usando le vostre bbox: è vicina al caso. È la misura che in letteratura nessuno riporta, e giustifica il pezzo di metodo della tesi: localizzazione oltre la vanilla CAM, valutata lungo l'asse di risoluzione."
+
+Aggiornamento di giovedì sera (EXP-006): provata tutta la scala delle CAM "gratis" — la migliore è Grad-CAM dallo stage 14×14, che raddoppia la IoU (fino a 0.14 con le 6 bande) ma resta bassa; LayerCAM non aiuta. Quindi: non basta cambiare CAM, serve un metodo nel training — ed è quello in prova stanotte (consistency cross-risoluzione, risultati venerdì mattina in questa sezione).
 
 ## 8. Glossario minimo (una riga l'uno)
 

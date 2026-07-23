@@ -31,6 +31,22 @@
 
 ## Log
 
+### EXP-006 — Scala delle varianti CAM: il meglio "gratis" resta debole (2026-07-23, sera)
+- **Domanda**: quanto si recupera cambiando variante CAM (stage intermedi, LayerCAM) senza toccare il training?
+- **Setup**: come EXP-005 (50 img test con bbox, ckpt seed 42, 4 config) × 4 varianti: gradcam_s4 (7×7), gradcam_s3 (14×14), layercam_s3, layercam_s2 (28×28). Script `exp006_cam_ladder.py`.
+- **Risultati** (metrica principale mean best IoU; pg = pointing game):
+
+| Config | gradcam_s4 | **gradcam_s3** | layercam_s3 | layercam_s2 |
+|---|---|---|---|---|
+| 0.3m RGB | 0.049 (pg .06) | **0.106 (pg .10)** | 0.065 | 0.060 |
+| 0.3m 6 bande | 0.078 (pg .12) | **0.143 (pg .12)** | 0.088 | 0.061 |
+| 1.2m RGB | 0.056 (pg .10) | **0.095 (pg .14)** | 0.074 | 0.057 |
+| 1.2m 6 bande | 0.072 (pg .06) | **0.084 (pg .08)** | 0.037 | 0.041 |
+
+- **Conclusione**: gradcam_s3 (14×14) è la variante migliore ovunque e **raddoppia la IoU**, ma il livello assoluto resta basso (max 0.14); LayerCAM non aiuta su questo task. L'intera famiglia CAM vanilla è debole: il classificatore usa il contesto. Rafforza sia il valore del protocollo di misura (C1) sia la necessità di un metodo training-time (C2 = EXP-007). La combinazione 6 bande + s3 a 0.3m è la migliore in assoluto (0.143). Tag: MEDIUM (1 seed).
+- **Claims toccati**: C1 (protocollo) rafforzato; motivazione quantitativa per C2.
+- **Next**: EXP-007 stanotte (consistency); poi valutare pseudo-mask refinement e attention maps di Swin.
+
 ### EXP-005 — Prima misura WSOL: vanilla Grad-CAM vicina al caso (2026-07-23, mattina)
 - **Domanda**: quanto localizza davvero la vanilla Grad-CAM sul nostro task? (la misura che nessuno riporta: Gibellini/AerialWaste mostrano CAM solo in figura)
 - **Setup**: Grad-CAM sull'ultimo stage Swin (7×7 → upsample nello spazio annotazioni), checkpoint seed 42 delle 4 config; 50 immagini positive di test con 351 GT bbox; metriche: pointing game, MaxBoxAcc@0.5 (protocollo Choe), mean best IoU. Script `exp005_wsol_eval.py` (mirror in `eagle/`).

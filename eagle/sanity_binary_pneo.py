@@ -70,13 +70,14 @@ class PneoTiles(Dataset):
     # le geometrie degli split sono in EPSG:4326, i mosaici in EPSG:32632
     _to_utm = Transformer.from_crs("EPSG:4326", "EPSG:32632", always_xy=True).transform
 
-    def __init__(self, split_json, mosaics, stats=None, bands="rgb"):
+    def __init__(self, split_json, mosaics, stats=None, bands="rgb", tile_px=None):
         """stats: None = per-tile max (sanity); "official" = pipeline del gruppo; (mean,std) = custom.
         bands: "rgb" o "all6" (v. BAND_SETS)."""
         with open(split_json) as f:
             records = json.load(f)["images"]
         self.stats = stats
         self.band_indexes = BAND_SETS[bands][0]
+        self.tile_px = tile_px or TILE_PX
         self.norm = norm_arrays(bands)
         self.paths = [p for _, p in mosaics]
         self._open = {}  # cache per-worker: i dataset rasterio non passano il fork
@@ -119,7 +120,7 @@ class PneoTiles(Dataset):
             mean, std = self.stats
             img = (img - np.array(mean, dtype=np.float32)[:, None, None]) / np.array(std, dtype=np.float32)[:, None, None]
         t = torch.from_numpy(img)
-        t = nn.functional.interpolate(t.unsqueeze(0), size=(TILE_PX, TILE_PX), mode="bilinear").squeeze(0)
+        t = nn.functional.interpolate(t.unsqueeze(0), size=(self.tile_px, self.tile_px), mode="bilinear").squeeze(0)
         return t, torch.tensor(label)
 
 

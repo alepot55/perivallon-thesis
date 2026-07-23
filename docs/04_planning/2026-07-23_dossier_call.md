@@ -66,6 +66,7 @@ Regola d'oro in call: **prima ascoltare come lavorano loro, poi proporre**. I no
 - **"SWIR?"** → Fuori scope: non è nelle acquisizioni disponibili, e il limite di Sentinel-2 è la risoluzione (10 m), non le bande. (Trappola classica: banda vs risoluzione.)
 - **"Perché non un foundation model?"** → A 0.3 m non ci sono FM pretrained sensati (10-30 m di pretraining); a 1.2 m tornano discutibili e infatti sono nel piano come bonus, inclusi gli eventuali pesi in-house del gruppo.
 - **"Quanto è grande il modello?"** → Swin-T, ~27M parametri, pesi RSP (Million-AID) come Gibellini.
+- **"La consistency tra risoluzioni non esiste già?"** (se esce parlando di metodo) → Sì, l'equivarianza di scala esiste (SEAM CVPR 2020, SSENet; in RS una rete siamese del 2025): il nostro delta non è il vincolo in sé ma **l'asse GSD reale** — 0.3 e 1.2 m da acquisizione vera, non resize sintetico — e la misura di robustezza della localizzazione lungo quel degrado. Detto onestamente: il claim forte resta il protocollo + tetto geometrico + alta risoluzione, la consistency è un ingrediente.
 
 ## 7. Numeri finali della notte (EXP-003 + EXP-004, 3 seed ciascuno)
 

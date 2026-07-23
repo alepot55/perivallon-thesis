@@ -134,6 +134,9 @@ flowchart TB
   weakly-supervised su questo dominio; noi sì, con protocollo standard, e abbiamo scoperto
   il tetto geometrico. Già difendibile.
 - **C2 — il metodo**: localizzazione con mappe ad alta risoluzione robuste al GSD.
+  Nota onesta dalla ricerca del 23/7: il vincolo di consistenza tra scale esiste in letteratura
+  (SEAM 2020); il nostro delta è applicarlo all'asse GSD reale (0.3/1.2 da acquisizione) e
+  misurare la robustezza — v. docs/02_research/metodo_prossimi_passi.md.
   Primo tentativo: consistency cross-risoluzione (stesse tile a 0.3 e 1.2 m, vincolo che
   le mappe coincidano — possibile solo col dataset doppia-risoluzione del gruppo). Poi:
   pseudo-mask e refinement a risoluzione piena.
@@ -214,3 +217,4 @@ Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training 
 
 - **2026-07-23**: prima versione completa — fondamenta (sez. 1-4), racconto EXP-001→008, contributo a 3 livelli.
 - **2026-07-23 (sera)**: aggiunta sez. 7 "Il codice e i comandi" — struttura degli script, anatomia di un training, cheat sheet comandi, cosa aspettarsi dal codice del gruppo.
+- **2026-07-23 (notte)**: ricerca metodi (docs/02_research/metodo_prossimi_passi.md) — 3 raccomandazioni (input ad alta risoluzione, SAM come refiner, consistency riposizionata su stage-3); nota onesta sul prior art SEAM; preparato EXP-009 (input 448/672).

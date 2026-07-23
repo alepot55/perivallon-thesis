@@ -31,6 +31,24 @@
 
 ## Log
 
+### EXP-010 — Retrain a 448: localizzazione ×7 con detection intatta; la risoluzione colpisce il "dove" (2026-07-24, notte)
+- **Domanda**: riallenando a input 448 (griglia s3 28×28) si tengono insieme detection e localizzazione? E cosa fa l'asse risoluzione sulla localizzazione?
+- **Setup**: `baseline_swin_rsp_pneo.py --tile-px 448 --bands all6 --batch 48`, protocollo solito, seed 42, 0.3m e 1.2m. Eval WSOL con gradcam_s3 (28×28) a input 448 (`exp010_wsol.log`).
+- **Risultati (test)**:
+
+| | 0.3m | 1.2m |
+|---|---|---|
+| Detection F1 | 0.696 | **0.706** |
+| Pointing game | **0.420** | 0.180 |
+| MaxBoxAcc@0.5 | 0.120 | 0.060 |
+| mean best IoU | **0.311** | 0.176 |
+
+![EXP-010](figs/exp010_journey.png)
+
+- **Conclusione**: (1) il trade-off di EXP-009 si risolve col retrain: pg 0.42 CON detection 0.70 — dal punto di partenza (0.06) è **×7 in una settimana**, IoU 0.049→0.311. (2) **Il risultato di tesi**: da 0.3m a 1.2m la detection non si muove (0.696→0.706) ma la localizzazione si dimezza (pg 0.42→0.18, IoU 0.31→0.18) — la degradazione di risoluzione colpisce il "dove", non il "se". È il fenomeno che nessuno ha misurato e che motiva l'intero angolo C. Tag: MEDIUM (1 seed; da confermare multi-seed).
+- **Claims toccati**: C2 avviato con numeri; nasce il claim candidato "resolution degrades localization before detection" (da verificare con seed e col livello 0.7m).
+- **Next**: multi-seed 448; consistency a 448; livello 0.7m per la curva completa; SAM refinement sui picchi.
+
 ### EXP-009 — Il tetto si sfonda: input ad alta risoluzione (2026-07-24, notte)
 - **Domanda**: la previsione di EXP-008 regge? Con mappe più fitte (input 448→stage-3 28×28; 672→42×42) la localizzazione sale?
 - **Setup**: inference-only sui checkpoint allenati a 224 (finestre Swin invariate, cambia la griglia; buffer dipendenti dalla griglia rigenerati). Script `exp009_highres_input.py`.

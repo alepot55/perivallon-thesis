@@ -84,6 +84,12 @@ Le tre frasi da portare in call (calibrate, senza strafare):
 
 E la domanda che ne nasce per Enrico: come gestite voi l'input multispettrale (inflation? late fusion? solo RGB?) e l'input size sulle tile 0.3m?
 
+### Aggiunta del mattino — EXP-005, il pezzo forte
+
+Stamattina ho misurato per la prima volta la localizzazione della vanilla Grad-CAM sulle 50 immagini di test con bbox: **pointing game 6-12% contro un caso del 2%, IoU ~0.05-0.08**. Verificato che non è un bug (coordinate controllate, overlay visivi corretti): le mappe sono diffuse, il modello guarda il contesto.
+
+La frase per la call: "Ho fatto la prima valutazione quantitativa della Grad-CAM sul satellite-only usando le vostre bbox: è vicina al caso. È la misura che in letteratura nessuno riporta, e giustifica il pezzo di metodo della tesi: localizzazione oltre la vanilla CAM, valutata lungo l'asse di risoluzione." Se chiedono come migliorarla: CAM da stage precedenti (14×14), LayerCAM, pseudo-mask refinement, consistency cross-risoluzione (abbiamo le stesse tile a 0.3 e 1.2 m).
+
 ## 8. Glossario minimo (una riga l'uno)
 
 - **GSD**: dimensione al suolo di un pixel (0.3 m = un pixel copre 30 cm).

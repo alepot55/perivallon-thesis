@@ -31,6 +31,26 @@
 
 ## Log
 
+### EXP-005 — Prima misura WSOL: vanilla Grad-CAM vicina al caso (2026-07-23, mattina)
+- **Domanda**: quanto localizza davvero la vanilla Grad-CAM sul nostro task? (la misura che nessuno riporta: Gibellini/AerialWaste mostrano CAM solo in figura)
+- **Setup**: Grad-CAM sull'ultimo stage Swin (7×7 → upsample nello spazio annotazioni), checkpoint seed 42 delle 4 config; 50 immagini positive di test con 351 GT bbox; metriche: pointing game, MaxBoxAcc@0.5 (protocollo Choe), mean best IoU. Script `exp005_wsol_eval.py` (mirror in `eagle/`).
+- **Risultati**:
+
+| Config | pointing game | MaxBoxAcc@0.5 | mean best IoU |
+|---|---|---|---|
+| 0.3m RGB | 0.060 | 0.020 | 0.049 |
+| 0.3m 6 bande | 0.120 | 0.020 | 0.078 |
+| 1.2m RGB | 0.100 | 0.000 | 0.056 |
+| 1.2m 6 bande | 0.060 | 0.000 | 0.072 |
+
+Baseline del caso (area GT / area immagine): pointing game ≈ 0.019. Verifica anti-bug: swap x/y peggiora (0.02), overlay visivi corretti.
+
+![EXP-005 diagnostica](figs/exp005_wsol_diag.png)
+
+- **Conclusione**: la vanilla Grad-CAM da stage-4 (7×7) è poco sopra il caso: mappe diffuse, il classificatore usa il contesto. È la **prima quantificazione** di ciò che in letteratura si mostra solo qualitativamente, e **motiva il contributo**: serve un metodo di localizzazione oltre la vanilla CAM (stage precedenti a risoluzione più alta, LayerCAM, pseudo-mask refinement, consistency cross-GSD). Nota: le 6 bande raddoppiano il pointing game a 0.3m (0.12 vs 0.06) — segnale debole ma coerente con EXP-004. Tag: MEDIUM (1 seed, 50 img).
+- **Claims toccati**: fonda C ("valutazione quantitativa mai fatta") e la necessità del metodo (delta 4 del mini-SOTA).
+- **Next**: (a) CAM da stage-3 (14×14) e LayerCAM — probabile grande salto; (b) più seed; (c) proporre il protocollo in call.
+
 ### EXP-004 — 6 bande VNIR vs RGB (2026-07-23, notte)
 - **Domanda**: le 6 bande PNEO (DB,B,G,R,RE,NIR) aggiungono qualcosa rispetto a RGB, a parità di tutto il resto?
 - **Setup**: come EXP-003 ma input a 6 canali: weight inflation del patch embedding (kernel RGB nelle posizioni R,G,B dell'ordine bande, media dei kernel nelle bande extra, riscala 3/6), normalizzazione ufficiale a 6 bande. Seed 42/43/44 × {0.3m, 1.2m}. Slot notturno 0-8 GPU 1.

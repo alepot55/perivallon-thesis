@@ -31,6 +31,23 @@
 
 ## Log
 
+### EXP-004 — 6 bande VNIR vs RGB (2026-07-23, notte)
+- **Domanda**: le 6 bande PNEO (DB,B,G,R,RE,NIR) aggiungono qualcosa rispetto a RGB, a parità di tutto il resto?
+- **Setup**: come EXP-003 ma input a 6 canali: weight inflation del patch embedding (kernel RGB nelle posizioni R,G,B dell'ordine bande, media dei kernel nelle bande extra, riscala 3/6), normalizzazione ufficiale a 6 bande. Seed 42/43/44 × {0.3m, 1.2m}. Slot notturno 0-8 GPU 1.
+- **Dove**: `eagle:~/experiments/baseline_{res}_all6_seed{42,43,44}.log` + script `baseline_swin_rsp_pneo.py --bands all6` (mirror in `eagle/`).
+- **Risultati** (test = comuni nuovi; media ± std, 3 seed):
+
+| Input | test F1 @0.3m | test F1 @1.2m | val F1 @0.3m | val F1 @1.2m |
+|---|---|---|---|---|
+| RGB | 0.692 ± 0.011 | 0.680 ± 0.010 | 0.780 ± 0.015 | 0.732 ± 0.008 |
+| 6 bande | **0.711 ± 0.013** | 0.684 ± 0.003 | 0.769 ± 0.008 | 0.685 ± 0.020 |
+
+![EXP-004 risultato](figs/exp004_bands.png)
+
+- **Conclusione**: a 0.3m le 6 bande guadagnano **+1.9 pp di test F1** (tutti e tre i seed sopra 0.70) pur con val leggermente inferiore → primo indizio che il multispettrale aiuta la **generalizzazione ai comuni nuovi** più che il fit in-domain. A 1.2m nessun effetto sul test e val peggiore (inflation forse subottimale a bassa risoluzione). Con 3 seed e 139 img di test è un segnale, non un claim. Tag: MEDIUM.
+- **Claims toccati**: semina B (risoluzione×spettro) — "MS aiuta la generalizzazione" è un'ipotesi ora testabile seriamente.
+- **Next**: (a) chiedere in call come il gruppo gestisce l'input MS; (b) più seed + livello 0.7m per la griglia completa; (c) provare late fusion in alternativa all'inflation.
+
 ### EXP-003 — Multi-seed della baseline RGB (2026-07-23, notte)
 - **Domanda**: il gap 0.3m vs 1.2m di EXP-002 sopravvive alla varianza dei seed?
 - **Setup**: identico a EXP-002, seed 42/43/44 (42 = EXP-002 stesso run). Slot notturni prenotati (mer 22-24, gio 0-8, GPU 1).

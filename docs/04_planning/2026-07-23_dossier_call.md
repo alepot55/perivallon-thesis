@@ -67,9 +67,22 @@ Regola d'oro in call: **prima ascoltare come lavorano loro, poi proporre**. I no
 - **"Perché non un foundation model?"** → A 0.3 m non ci sono FM pretrained sensati (10-30 m di pretraining); a 1.2 m tornano discutibili e infatti sono nel piano come bonus, inclusi gli eventuali pesi in-house del gruppo.
 - **"Quanto è grande il modello?"** → Swin-T, ~27M parametri, pesi RSP (Million-AID) come Gibellini.
 
-## 7. Numeri finali della notte (aggiornati automaticamente)
+## 7. Numeri finali della notte (EXP-003 + EXP-004, 3 seed ciascuno)
 
-*Sezione compilata da Claude entro l'alba: EXP-003 (multi-seed RGB) ed EXP-004 (6 bande, 3 seed). Se leggi questo testo, gli esperimenti non sono ancora stati integrati: guarda `EXPERIMENTS_LOG.md`.*
+| Input | test F1 @0.3m | test F1 @1.2m |
+|---|---|---|
+| RGB | 0.692 ± 0.011 | 0.680 ± 0.010 |
+| **6 bande VNIR** | **0.711 ± 0.013** | 0.684 ± 0.003 |
+
+![RGB vs 6 bande](figs/exp004_bands.png)
+
+Le tre frasi da portare in call (calibrate, senza strafare):
+
+1. "Sul test a comuni nuovi, **la risoluzione da sola sposta poco** (0.69 vs 0.68 tra 0.3m e 1.2m, dentro il rumore su 3 seed); in-domain invece lo 0.3m vale quasi 5 punti."
+2. "Le **6 bande guadagnano circa 2 punti di test a 0.3m** rispetto a RGB, a parità di tutto: primo indizio che il multispettrale aiuta la generalizzazione. Da confermare con più seed."
+3. "Sono run leggere con protocollo Gibellini e input 224 fisso: prima di trarre conclusioni vorrei allinearmi al vostro protocollo (input size, context)."
+
+E la domanda che ne nasce per Enrico: come gestite voi l'input multispettrale (inflation? late fusion? solo RGB?) e l'input size sulle tile 0.3m?
 
 ## 8. Glossario minimo (una riga l'uno)
 

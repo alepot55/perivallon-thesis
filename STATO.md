@@ -57,7 +57,7 @@ Regola: scrittura in parallelo agli esperimenti, mai alla fine; ogni esperimento
 
 ## ✅ TODO aperti
 
-1. **Ale**: (a) ~~msg a Thomas~~ ✅ **call confermata: giovedì 23/7 pomeriggio** (Thomas 22/7: "giovedì nel pomeriggio va bene"), con punto veloce Thomas giovedì in tarda mattinata; (b) studiare i doc pronti (~40 min): EDA + baseline frozen + mini-SOTA + scaletta call.
+1. **Ale**: (a) **call spostata a venerdì 24/7** (era giovedì); (b) studiare il dossier (`docs/04_planning/2026-07-23_dossier_call.md`, ~35 min) — si aggiorna coi risultati della notte di giovedì (scala CAM + consistency).
 2. **Call Enrico/Thomas (gio 23/7 pom)**: scaletta completa in `docs/04_planning/call_enrico_brief.md` (11 domande in 3 blocchi; le decisioni da portare a casa in checklist).
 3. **Claude**: (1) ~~doc-baseline Gibellini~~ ✅ 21/7; (2) ~~mini-SOTA WSOL~~ ✅ 21/7 (verdetto sopra); (3) ~~indice tesi v0~~ ✅ 21/7 (`docs/04_planning/indice_tesi_v0.md`); (4) ~~related work detection~~ ✅ 22/7 (`docs/02_research/related_work_detection_draft.md`, cap.2 in inglese ~5pp); (5) tenere vivi `EXPERIMENTS_LOG.md` + `CLAIMS.md`. Preparata anche la scaletta call (`docs/04_planning/call_enrico_brief.md`).
 4. ~~Sanity + baseline + multi-seed + 6 bande~~ ✅ EXP-001→004 completati (21-23/7, slot notturni GPU 1). Quadro a 3 seed sul test (comuni nuovi): **RGB 0.692 @0.3m / 0.680 @1.2m — risoluzione da sola sposta poco; 6 bande VNIR 0.711 @0.3m (+1.9 pp) — primo indizio che il MS aiuta la generalizzazione**. In-domain 0.3m vale +4.8 pp. Caveat input-size 224. Dettagli e figure: `EXPERIMENTS_LOG.md`; frasi per la call: dossier §7.

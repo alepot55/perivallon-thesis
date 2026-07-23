@@ -31,6 +31,20 @@
 
 ## Log
 
+### EXP-007 — Consistency cross-risoluzione, parte detection (2026-07-23, notte)
+- **Domanda**: allenare con le stesse tile a 0.3m e 1.2m e un vincolo di coerenza tra le CAM (λ=1) cambia la detection rispetto allo stesso training senza vincolo (λ=0)?
+- **Setup**: un solo Swin-T+RSP che vede entrambe le versioni di ogni tile; loss = BCE(0.3)+BCE(1.2)+λ·L2 tra CAM lineari normalizzate (solo positive); two-step come al solito; λ∈{0,1}, seed 42/43/44. Script `exp007_consistency.py` (mirror in `eagle/`). Nota prior art (ricerca 23/7): l'equivarianza di scala esiste (SEAM 2020) — qui l'asse è il GSD reale.
+- **Risultati detection (test, media±std 3 seed)**:
+
+| Training | test F1 @0.3m | test F1 @1.2m |
+|---|---|---|
+| dual-res λ=0 (controllo) | 0.690 ± 0.011 | 0.676 ± 0.008 |
+| dual-res λ=1 (consistency) | 0.697 ± 0.022 | 0.682 ± 0.009 |
+| (rif.: single-res, EXP-003) | 0.692 ± 0.011 | 0.680 ± 0.010 |
+
+- **Conclusione (parte 1)**: sulla detection la consistency dà +0.6/0.7 pp, dentro il rumore; il dual-res training da solo non cambia nulla. Atteso dopo EXP-008 (a 7×7 il vincolo lavora sotto il tetto geometrico). La parte informativa è la localizzazione → EXP-007b in corso (WSOL su questi checkpoint). Tag: MEDIUM.
+- **Next**: se anche EXP-007b è piatta, la consistency va riprovata dove ha spazio (stage-3 / input 448) come da `metodo_prossimi_passi.md`.
+
 ### EXP-008 — Il tetto teorico: gli oggetti sono più piccoli della griglia CAM (2026-07-23, sera)
 - **Domanda**: il fallimento della CAM vanilla è un problema di training o strutturale? Qual è il massimo raggiungibile a ogni risoluzione di mappa?
 - **Setup**: analisi CPU-only. (1) statistiche delle GT bbox (351 test + 2827 totali); (2) "oracolo": CAM perfetta = maschera GT ridotta alla griglia (7×7/14×14/28×28), poi stessa pipeline metrica di EXP-005. Script `exp008_bbox_analysis.py`.

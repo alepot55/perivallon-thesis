@@ -97,7 +97,12 @@ Aggiornamento di giovedì sera (EXP-006): provata tutta la scala delle CAM "grat
 
 La frase per la call: "Ho quantificato anche il tetto teorico: a 7×7 nemmeno una CAM perfetta localizzerebbe questi oggetti (mediana 8 metri). Il requisito del metodo esce dai dati: mappe ad alta risoluzione, almeno 28×28. E ne nasce una domanda per voi: le bbox annotano oggetti — per la valutazione ha senso anche una nozione di sito aggregato?"
 
-Stanotte in forno: consistency cross-risoluzione (risultati venerdì mattina qui sotto).
+### I risultati della notte di giovedì (il cerchio completo)
+
+1. **Il tetto si sfonda (EXP-009)**: alzando solo la risoluzione della mappa (input 448→28×28, 672→42×42), il pointing game **triplica**: 0.12 → 0.36 → 0.38 (6 bande, 0.3m). La previsione dell'oracolo è confermata sperimentalmente. Prezzo: la detection cala (modello allenato a 224) → in corso il **retrain a 448** (risultati venerdì all'alba).
+2. **La consistency funziona dove deve (EXP-007b)**: sulla detection è neutra (+0.7pp, rumore), ma sulla localizzazione **a 1.2m** — il bersaglio del metodo — il pointing game sale da 0.100 a 0.153, con tutti e 3 i seed sopra il controllo. Primo segnale che il vincolo cross-GSD rende la localizzazione più robusta al degrado.
+
+La frase-sintesi per la call: "In una settimana: misurato che la CAM vanilla è al tetto geometrico (oggetti da 8 metri vs celle da 30), verificato sperimentalmente che alzando la risoluzione della mappa la localizzazione triplica, e visto il primo segnale che il vincolo di coerenza tra 0.3 e 1.2 metri la rende più robusta al degrado. Il metodo della tesi nasce da qui: mappe ad alta risoluzione + consistency sull'asse GSD reale + eventuale refinement con SAM."
 
 ## 8. Glossario minimo (una riga l'uno)
 

@@ -110,7 +110,8 @@ Dettagli completi con figure: `docs/04_planning/EXPERIMENTS_LOG.md`.
 | 005 | La Grad-CAM localizza? | PG 6-12% ≈ caso (2%) | Vanilla CAM ≈ inutile qui; verificato che non è un bug |
 | 006 | E le CAM migliori? | stage-3 raddoppia (IoU max 0.143), resta debole | Cambiare CAM non basta |
 | 008 | PERCHÉ non basta? | oggetti 8 m; oracolo 7×7 = 0.06 = nostro reale | **Tetto geometrico**: serve un metodo con mappe ≥28×28 |
-| 007 | Il vincolo cross-risoluzione aiuta? | *in corso stanotte* | (lettura: robustezza 0.3↔1.2, non numeri assoluti) |
+| 007 | Il vincolo cross-risoluzione aiuta? | detection: neutro; **localizzazione a 1.2m: pg 0.10→0.15**, 3/3 seed | Il metodo aiuta dove deve (alla risoluzione degradata) |
+| 009 | Mappe più fitte sfondano il tetto? | input 448/672: **pg 0.12→0.36/0.38** | Previsione dell'oracolo confermata; costo: detection ↓ → serve retrain a 448 (EXP-010) |
 
 La logica dell'intera settimana in un diagramma:
 
@@ -217,4 +218,5 @@ Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training 
 
 - **2026-07-23**: prima versione completa — fondamenta (sez. 1-4), racconto EXP-001→008, contributo a 3 livelli.
 - **2026-07-23 (sera)**: aggiunta sez. 7 "Il codice e i comandi" — struttura degli script, anatomia di un training, cheat sheet comandi, cosa aspettarsi dal codice del gruppo.
+- **2026-07-24 (alba)**: risultati notte — EXP-007b (consistency aiuta la localizzazione a 1.2m), EXP-009 (tetto sfondato: pg triplicato con input 448/672); racconto aggiornato; EXP-010 (retrain 448) in corso.
 - **2026-07-23 (notte)**: ricerca metodi (docs/02_research/metodo_prossimi_passi.md) — 3 raccomandazioni (input ad alta risoluzione, SAM come refiner, consistency riposizionata su stage-3); nota onesta sul prior art SEAM; preparato EXP-009 (input 448/672).

@@ -35,10 +35,10 @@ class SwinBinary(nn.Module):
     conservare l'ordine di grandezza delle attivazioni.
     """
 
-    def __init__(self, rsp_ckpt, in_chans=3):
+    def __init__(self, rsp_ckpt, in_chans=3, img_size=224):
         super().__init__()
         self.backbone = timm.create_model(
-            "swin_tiny_patch4_window7_224", pretrained=False, num_classes=0, in_chans=in_chans
+            "swin_tiny_patch4_window7_224", pretrained=False, num_classes=0, in_chans=in_chans, img_size=img_size
         )
         ckpt = torch.load(rsp_ckpt, map_location="cpu", weights_only=False)
         state = ckpt.get("model", ckpt.get("state_dict", ckpt))
@@ -121,6 +121,7 @@ def main():
     ap.add_argument("--workers", type=int, default=12)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--bands", default="rgb", choices=["rgb", "all6"])
+    ap.add_argument("--tile-px", type=int, default=224)
     args = ap.parse_args()
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -129,13 +130,13 @@ def main():
     mosaics = load_mosaics(args.res)
     print(f"mosaici disponibili a {args.res}: {len(mosaics)}")
     # normalizzazione ufficiale del gruppo (clip p1-p99 + standardize, config in /scratch)
-    train_ds = PneoTiles(f"{d}/train.json", mosaics, stats="official", bands=args.bands)
-    val_ds = PneoTiles(f"{d}/val.json", mosaics, stats="official", bands=args.bands)
-    test_ds = PneoTiles(f"{d}/test.json", mosaics, stats="official", bands=args.bands)
+    train_ds = PneoTiles(f"{d}/train.json", mosaics, stats="official", bands=args.bands, tile_px=args.tile_px)
+    val_ds = PneoTiles(f"{d}/val.json", mosaics, stats="official", bands=args.bands, tile_px=args.tile_px)
+    test_ds = PneoTiles(f"{d}/test.json", mosaics, stats="official", bands=args.bands, tile_px=args.tile_px)
     print(f"train {len(train_ds)}, val {len(val_ds)}, test {len(test_ds)} | bande: {args.bands}")
 
     device = "cuda"
-    model = SwinBinary(RSP_CKPT, in_chans=6 if args.bands == "all6" else 3).to(device)
+    model = SwinBinary(RSP_CKPT, in_chans=6 if args.bands == "all6" else 3, img_size=args.tile_px).to(device)
     train_dl = DataLoader(train_ds, batch_size=args.batch, shuffle=True, num_workers=args.workers)
     val_dl = DataLoader(val_ds, batch_size=args.batch, num_workers=args.workers)
     test_dl = DataLoader(test_ds, batch_size=args.batch, num_workers=args.workers)
@@ -156,9 +157,9 @@ def main():
     if ft_state:
         model.load_state_dict(ft_state)
     test_f1 = evaluate(model, test_dl, device)
-    out = os.path.expanduser(f"~/experiments/baseline_swin_rsp_{args.res}_{args.bands}_seed{args.seed}_valf1_{ft_best:.4f}.pt")
+    out = os.path.expanduser(f"~/experiments/baseline_swin_rsp_{args.res}_{args.bands}_px{args.tile_px}_seed{args.seed}_valf1_{ft_best:.4f}.pt")
     torch.save(model.state_dict(), out)
-    print(f"RISULTATO {args.res} {args.bands} seed {args.seed}: best val F1 TL {tl_best:.4f} | best val F1 FT {ft_best:.4f} | test F1 {test_f1:.4f}")
+    print(f"RISULTATO {args.res} {args.bands} px{args.tile_px} seed {args.seed}: best val F1 TL {tl_best:.4f} | best val F1 FT {ft_best:.4f} | test F1 {test_f1:.4f}")
     print(f"checkpoint: {out}")
 
 

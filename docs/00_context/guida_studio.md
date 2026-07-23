@@ -143,7 +143,64 @@ flowchart TB
 Fallback sempre pronto: anche solo C1 + la caratterizzazione della base vale la tesi da ~5;
 C2/C3 sono i +2.
 
-## 7. Autoverifica (se sai rispondere, sei pronto)
+## 7. Il codice e i comandi (il minimo per non perdersi)
+
+### 7.1 Dove sta cosa
+
+```
+eagle (server) ~/experiments/          ← il NOSTRO codice (mirror di consultazione: eagle/ nella repo)
+├── sanity_binary_pneo.py              ← il "motore dati": dataset + ritaglio tile + normalizzazione
+├── baseline_swin_rsp_pneo.py          ← modello Swin+RSP + training two-step (usa il motore dati)
+├── exp005/006/008_*.py                ← valutazioni WSOL e analisi (usano modello e dati degli altri due)
+├── exp007_consistency.py              ← il metodo: training doppia-risoluzione con vincolo
+├── weights/rsp_swin_t_e300.pth        ← pesi pretrained RSP
+├── *.log                              ← output di ogni run (uno per esperimento)
+└── *.pt                               ← checkpoint dei modelli allenati
+```
+
+Principio: **un file = un lavoro**. Il motore dati sta in un posto solo e tutti lo importano —
+se ti mostrano il loro codice, cerca le stesse tre cose: dov'è il *dataset*, dov'è il *modello*,
+dov'è il *loop di training*. Ogni codebase PyTorch ha questa tripletta.
+
+### 7.2 L'anatomia di uno script di training (leggilo così)
+
+1. **Dataset** (`PneoTiles`): legge il json dello split → per ogni record ritaglia la tile dal
+   mosaico giusto (georeferenziazione) → normalizza (pipeline ufficiale del gruppo) → restituisce
+   tensore + label. Il DataLoader ne fa batch in parallelo.
+2. **Modello** (`SwinBinary`): crea lo Swin-T con `timm` (libreria di modelli pronti) → carica
+   i pesi RSP → aggiunge la testa binaria (un neurone).
+3. **Loop**: per ogni epoca → per ogni batch → forward, loss (BCE), backward, step dell'ottimizzatore →
+   a fine epoca valuta su val → tiene il checkpoint migliore. Il two-step sono due loop di fila
+   (prima congelato, poi sbloccato).
+
+### 7.3 I comandi che uso davvero (cheat sheet da 10 righe)
+
+```bash
+bash docs/00_context/vpn_eagle.sh up    # VPN (da questo PC)
+ssh multispectralwaste.eagle            # entra nel container del gruppo
+venv base                               # attiva l'ambiente Python (alias del gruppo)
+tmux new -s nome                        # sessione che sopravvive alla disconnessione
+  Ctrl+b poi d                          #   ...stacca (il job continua)
+tmux a -t nome                          #   ...riattacca
+CUDA_VISIBLE_DEVICES=1 python script.py --res 0.3m --seed 42   # run su GPU 1
+tail -f nome.log                        # guarda il log mentre gira
+check-gpu                               # chi sta usando le GPU (alias di watch nvidia-smi)
+htop                                    # carico CPU/RAM
+```
+
+Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training solo da script
+(mai notebook, la GPU resta occupata); sempre dentro tmux; niente sudo nel container.
+
+### 7.4 Cosa vedrai probabilmente nel LORO codice
+
+- Repo **GitLab** clonata in `/home/dev` sul server (te la assegna Enrico).
+- Probabile stack tipo Gibellini: PyTorch (+ magari Lightning = loop di training impacchettato,
+  e Hydra = configurazioni in file yaml invece che argomenti a riga di comando).
+- **TensorBoard/FiftyOne** sulla porta 6006 → visibili dal browser su `https://multispectralwaste.eagle.rslab.cc`.
+- Domande intelligenti da fare guardando il codice: dov'è la definizione degli split? che
+  normalizzazione usate? come lanciate una run e dove finiscono log e checkpoint?
+
+## 8. Autoverifica (se sai rispondere, sei pronto)
 
 1. Perché il confronto "0.3 pansharpened vs 1.2 nativo" non isola l'effetto risoluzione?
 2. Perché il nostro test F1 è più basso della val, e perché va bene così?
@@ -156,3 +213,4 @@ C2/C3 sono i +2.
 ## 📜 Changelog della guida
 
 - **2026-07-23**: prima versione completa — fondamenta (sez. 1-4), racconto EXP-001→008, contributo a 3 livelli.
+- **2026-07-23 (sera)**: aggiunta sez. 7 "Il codice e i comandi" — struttura degli script, anatomia di un training, cheat sheet comandi, cosa aspettarsi dal codice del gruppo.

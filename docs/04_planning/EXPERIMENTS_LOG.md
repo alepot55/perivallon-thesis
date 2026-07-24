@@ -33,6 +33,32 @@
 
 ## Log
 
+### EXP-016 WSOL nella pipeline del gruppo — il fenomeno "dove, non se" si replica (2026-07-24, sera)
+- **Domanda**: la valutazione WSOL portata nel loro flusso (CAM loro + eval nostra) conferma il collasso della localizzazione a GSD degradato?
+- **Setup**: `commands/eval_wsol.py` (nuovo, branch `ale`): pointing game + MaxBoxAcc@0.5 + mean best IoU contro le bbox GT (`aw36_od_bin_sat_only.json`, 50 positivi annotati del test, coordinate 700px riscalate). CAM: layer_cam del loro `infer_tiff` sui 4 modelli seed-0 (input nativo 176/700).
+- **Dove**: eagle `.../b{120,30}_{rgb,vnir}_swint_rsp_aug1_s0/ft/cams/layer_cam` + log `~/experiments/night_chain.log`.
+- **Risultati** (50 immagini):
+
+| Modello | PG | MaxBoxAcc@0.5 | mean best IoU |
+|---|---|---|---|
+| b120 RGB | 0.04 | 0.02 | 0.096 |
+| b120 6-bande | 0.06 | 0.02 | 0.075 |
+| b30 RGB | 0.38 | 0.06 | 0.217 |
+| b30 6-bande | **0.40** | **0.08** | **0.233** |
+
+- **Conclusione**: replica indipendente del nostro risultato centrale (EXP-005→010): a 120 cm la CAM è ≈ caso, a 30 cm nativo la localizzazione sale ~10× mentre la detection resta comparabile → **la risoluzione colpisce il "dove", non il "se" — ora anche nella pipeline ufficiale del gruppo**. Le 6 bande aiutano leggermente anche la localizzazione a 30 cm. PG 0.38-0.40 @700px coerente col nostro 0.42 @448 (EXP-010). [HIGH sulla direzione; seed singolo per le CAM]
+- **Claims toccati**: C-5 ora operativo anche nel flusso di gruppo; C-7 (novelty) rafforzato: la misura WSOL sotto GSD non esiste nel loro flusso, l'abbiamo portata noi.
+- **Next**: CAM multi-seed se serve; consistency loss come metodo per alzare il "dove" a 120 cm (nostro EXP-007 lo suggerisce); SAM refinement.
+
+### EXP-015 `b30_{rgb,vnir}_swint_rsp_aug1_s0` — a 30 cm le 6 bande guadagnano (seed 0) (2026-07-24, sera)
+- **Domanda**: il test decisivo di C-4 — a 30 cm (700px nativi, 8-bit) le 6 bande tornano a rendere?
+- **Setup**: come EXP-012/013 ma a 30 cm: `patches_MS_8bit_30cm` (le patch esistono GIÀ su scratch, 1294/1294 match con gli split 0.3m), resize 700 nativo, batch 50 (12 GB VRAM). TL+FT early stop (~40 ep/run, ~25 min/run). Runner: `commands/b30_{rgb,vnir}_swint_rsp_aug1_s0.sh`.
+- **Dove**: eagle `.../b30_{rgb,vnir}_swint_rsp_aug1_s0/{tl,ft}` + `~/experiments/b30_evening.log`.
+- **Risultati** (test 139): RGB F1 **0.709** @0.5 (Acc 0.770, AUROC 0.871; best-th 0.22 → 0.769) · 6-bande F1 **0.761** @0.5 (Acc 0.806, AUROC 0.890; best-th 0.19 → 0.766).
+- **Conclusione**: a 30 cm il 6-bande guadagna **+5.2 pp @0.5** (e AUROC +1.9), mentre a 120 cm perdeva ~3 → l'interazione bande×GSD c'è anche nella loro pipeline. Caveat onesto: a best-threshold i due convergono (0.769 vs 0.766) — parte del guadagno @0.5 è calibrazione; AUROC (threshold-free) resta a favore del 6-bande. Seed singolo. [MEDIUM — multi-seed notturna in corso]
+- **Claims toccati**: **C-4** — il quadro si completa: lo spettro rende ad alta risoluzione, non compensa a bassa (v. anche EXP-014, EXP-004).
+- **Next**: multi-seed 30 cm (s42/s43, in coda stanotte); poi curva completa con 60 cm derivato.
+
 ### EXP-014 multi-seed `b120_{rgb,vnir}_swint_rsp_aug1_s{0,42,43}` — a 120 cm lo spettro non compensa: confermato su 3 seed (2026-07-24, sera)
 - **Domanda**: il gap RGB > 6-bande di EXP-013 regge su più seed?
 - **Setup**: EXP-012/013 ripetuti con seed 42 e 43 (runner generati da sed, catena sequenziale in `commands/multi_seed_evening.sh`); ~4 min a run sulla RTX PRO 6000.

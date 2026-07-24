@@ -2,6 +2,15 @@
 
 > Ale: copia questi valori nella riga giusta della matrice su Drive. Una sezione = un run concluso, in ordine cronologico inverso. Le colonne seguono l'ordine dell'Excel; se una colonna non c'è o ha altro nome, adatta a vista. Metriche sul **test** (139 img, comuni mai visti), threshold 0.5 salvo dove indicato.
 
+## EXP-015 — coppia 30 cm, seed 0 (2026-07-24)
+
+| Run | Bands | Seed | Accuracy | Precision | Recall | F1 | Best th → F1 | AUROC |
+|---|---|---|---|---|---|---|---|---|
+| b30_rgb_swint_rsp_aug1_s0 | RGB | 0 | 0.770 | 0.709 | 0.709 | 0.709 | 0.22 → 0.769 | 0.871 |
+| b30_vnir_swint_rsp_aug1_s0 | VNIR (6) | 0 | 0.806 | 0.741 | 0.782 | 0.761 | 0.19 → 0.766 | 0.890 |
+
+GSD 30 cm · image size 700 nativa · SwinT v1_t · pretraining 2 (RSP) · Aug_1 senza Brightness · batch 50 · LR 1e-3/1e-4 · run in `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/`.
+
 ## EXP-014 — multi-seed SwinT, seed 42 e 43 (2026-07-24)
 
 Config identiche a EXP-012 (RGB) e EXP-013 (VNIR = 6 bande), cambia solo il seed. Una riga Excel per run:

@@ -33,6 +33,21 @@
 
 ## Log
 
+### EXP-018 `b120_vnir_swint_distill_lam1_s0` — prima distillazione cross-risoluzione: IoU raddoppia, detection intatta (2026-07-24, notte)
+- **Domanda**: le CAM del modello a 30 cm, usate come teacher, insegnano al modello a 120 cm *dove* guardare?
+- **Setup** (metodo nuovo, `commands/train_distill.py` + `distill_chain.sh`): (1) CAM layer_cam del modello `b30_vnir_swint_rsp_aug1_s0` (congelato) su tutte le 1020 tile di train a 30 cm; (2) fine-tuning dello studente `b120_vnir_swint_rsp_aug1_s0` per 15 epoche, `loss = BCE + λ·MSE(CAM_studente, CAM_teacher)` sulle sole positive, CAM min-max normalizzate e teacher avg-pooled alla griglia dello studente (6×6); λ=1, lr 1e-4, seed 0, **augmentation geometrica disattivata** (altrimenti la CAM salvata non è allineata all'input). Checkpoint scelto su val F1.
+- **Dove**: eagle `.../b120_vnir_swint_distill_lam1_s0/ft` + `~/experiments/distill_chain.log`.
+- **Risultati** (test 139; WSOL su 50 immagini con bbox):
+
+| | detection F1 @0.5 | best-th | PG | MaxBoxAcc@0.5 | mean best IoU |
+|---|---|---|---|---|---|
+| studente baseline | 0.667 | 0.686 | 0.06 | 0.02 | 0.075 |
+| **distillato λ=1** | 0.657 | 0.680 | 0.04 | **0.08** | **0.155** |
+
+- **Conclusione**: primo segnale positivo ma **non conclusivo**. La metrica statisticamente più stabile (mean best IoU, media su 50 immagini) **raddoppia** e MaxBoxAcc passa da 1 a 4 immagini, con detection invariata entro il rumore (−1 pp). Il pointing game invece scende (3→2 immagini): su 50 campioni è conteggio di eventi rari, non un segnale. λ non tunato, un solo seed. [UNCERTAIN]
+- **Claims toccati**: **C-6** — prima evidenza a favore, ancora insufficiente per dichiararlo.
+- **Next**: (a) sweep λ ∈ {0.3, 1, 3, 10} con **selezione su val** (41 immagini con bbox) e test riportato una volta sola — protocollo Choe, in coda; (b) ablation SSENet-style (consistenza simmetrica senza teacher) per isolare l'effetto dell'asimmetria — in coda; (c) multi-seed del λ migliore.
+
 ### EXP-017 multi-seed 30 cm — il guadagno spettrale si ridimensiona, ma l'INTERAZIONE bande×GSD tiene (2026-07-24, notte)
 - **Domanda**: il +5.2 pp di EXP-015 regge su 3 seed?
 - **Setup**: EXP-015 ripetuto con seed 42 e 43 (catena `night_chain.sh`). Stesso protocollo, ~25 min/run.

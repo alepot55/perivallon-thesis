@@ -206,14 +206,20 @@ htop                                    # carico CPU/RAM
 Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training solo da script
 (mai notebook, la GPU resta occupata); sempre dentro tmux; niente sudo nel container.
 
-### 7.4 Cosa vedrai probabilmente nel LORO codice
+### 7.4 Il LORO codice (esplorato il 24/7 — doc completo: `docs/02_research/2026-07-24_mappa_codice_enrico.md`)
 
-- Repo **GitLab** clonata in `/home/dev` sul server (te la assegna Enrico).
-- Probabile stack tipo Gibellini: PyTorch (+ magari Lightning = loop di training impacchettato,
-  e Hydra = configurazioni in file yaml invece che argomenti a riga di comando).
-- **TensorBoard/FiftyOne** sulla porta 6006 → visibili dal browser su `https://multispectralwaste.eagle.rslab.cc`.
-- Domande intelligenti da fare guardando il codice: dov'è la definizione degli split? che
-  normalizzazione usate? come lanciate una run e dove finiscono log e checkpoint?
+- Repo **`gitlab.com/wds-co/multispectralpotenza`**, progetto dedicato a te (non una branch:
+  puoi pushare tutto). Clone sul server: `/home/dev/multispectralpotenza`.
+- Stack: PyTorch puro con **argparse** (niente Hydra/Lightning). Flusso:
+  `command_creator_enrico.ipynb` compone il comando → `python run.py <parametri>` → `steps/train_tiff.py`
+  (training) o `steps/infer_tiff.py` (predizioni + CAM) → `evaluation_tiff.ipynb` (metriche e curve).
+- Le tue 3 frasi per fare bella figura: (1) "le tile sono pre-tagliate in 8 bit su /scratch,
+  1295 per GSD, stesse geometrie degli split di Thomas"; (2) "il training è due fasi tl→ft come
+  Gibellini: prima solo la testa a lr 1e-3, poi tutta la rete a lr 1e-4, Adam ed early stopping";
+  (3) "la normalizzazione è ImageNet per RGB e mean/std per banda dal metadata.json per il multispettrale".
+- Cosa manca a loro che portiamo noi: SwinT multibanda (la loro è solo RGB), input 448,
+  valutazione WSOL quantitativa (loro generano CAM ma non le misurano contro le bbox), 60 cm.
+- **TensorBoard** sulla porta 6006 → `https://multispectralwaste.eagle.rslab.cc`.
 
 ## 8. Autoverifica (se sai rispondere, sei pronto)
 
@@ -227,6 +233,7 @@ Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training 
 
 ## 📜 Changelog della guida
 
+- **2026-07-24 (sera)**: accesso GitLab sbloccato — sez. 7.4 riscritta coi fatti veri del codice di Enrico (tile 8-bit pre-tagliate, tl→ft, normalizzazione, cosa portiamo noi); doc di mappatura completo in 02_research.
 - **2026-07-24 (pomeriggio)**: post-call — box "simulare un GSD più grosso" in sez. 1 (derivazione 60 cm: media 2×2, nota Wald/MTF, script testato).
 - **2026-07-23**: prima versione completa — fondamenta (sez. 1-4), racconto EXP-001→008, contributo a 3 livelli.
 - **2026-07-23 (sera)**: aggiunta sez. 7 "Il codice e i comandi" — struttura degli script, anatomia di un training, cheat sheet comandi, cosa aspettarsi dal codice del gruppo.

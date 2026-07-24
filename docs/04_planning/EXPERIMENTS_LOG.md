@@ -1,6 +1,8 @@
 # EXPERIMENTS_LOG — registro esperimenti
 
-> Un esperimento = una entry, appesa in cima alla sezione **Log** (ordine cronologico inverso). ID progressivo `EXP-NNN`. Compilato da Ale o da Claude (`/experiment`). Ogni entry che supporta/uccide un claim aggiorna anche `CLAIMS.md`. Niente numeri senza fonte riproducibile (path del run su eagle o del notebook).
+> Un esperimento = una entry, appesa in cima alla sezione **Log** (ordine cronologico inverso). Ogni entry che supporta/uccide un claim aggiorna anche `CLAIMS.md`. Niente numeri senza fonte riproducibile (path del run su eagle o del notebook).
+>
+> **Naming (dalla call 24/7 — Thomas: nomi descrittivi, mai "esperimento 1,2,3"):** id = `bGSD_bande_arch_pretrain_aug_sSEED`, es. `b120_vnir_swint_rsp_aug1_s42` — le stesse dimensioni delle colonne dell'Excel "Binary Experiments Results" su Drive, che va compilato a ogni run. Le entry EXP-001…010 (21-24/7) restano come fase esplorativa pre-allineamento; dal 24/7 si usa il nuovo schema, con numerazione progressiva mantenuta nel titolo per l'ordine (es. "EXP-011 `b120_rgb_swint_rsp_aug1_s42`").
 
 ## Template
 

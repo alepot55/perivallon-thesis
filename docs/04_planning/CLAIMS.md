@@ -10,10 +10,12 @@
 | C-4 | L'informazione spettrale extra compensa parte della perdita di risoluzione spaziale (interazione bande×GSD) | **RIFORMULATO/SUPPORTED**: lo spettro rende ad ALTA risoluzione, non compensa a bassa | EXP-004 (+1.9 @0.3m, piatto @1.2m, 16-bit) · EXP-014 (@120cm: −2.9, 3/3 seed) · EXP-015 (@30cm pipeline gruppo: +5.2 @0.5, AUROC +1.9; a best-th convergono — caveat calibrazione) — multi-seed 30cm in corso | Cap. risultati, fig. chiave |
 | C-5 | La localizzazione weakly-supervised da label image-level è valutabile quantitativamente sul dominio satellite waste | **SUPPORTED** | Protocollo WSOL (PG, MaxBoxAcc@0.5, best IoU vs bbox `aw36_od_bin_sat_only`, 50 positivi test) operativo in ENTRAMBE le pipeline: EXP-005→010 (nostra) + EXP-016 (`eval_wsol.py` nel flusso gruppo) | Cap. metodo |
 | C-6 | Un metodo oltre vanilla Grad-CAM (pseudo-mask/refinement e/o consistency cross-GSD) migliora la localizzazione in modo misurabile | OPEN | — (→ EXP #7-8) | Contributo principale (+2 punti) |
-| C-7 | *To our knowledge*, nessun lavoro valuta quantitativamente WSOL per waste detection satellitare sotto degradazione di GSD | OPEN — da verificare con mini-SOTA (attenti a: Mazzola 2024 in-group, WSSS remote sensing) | mini-SOTA WSOL | Related work / novelty statement |
+| C-7 | *To our knowledge*, nessun lavoro (a) valuta quantitativamente WSOL per waste detection satellitare sotto degradazione di GSD, né (b) usa le CAM di un classificatore ad alto GSD come teacher spaziale per uno studente a basso GSD | **VERIFICATO 24/7** — regge, ma con delta stretto | `docs/02_research/2026-07-24_novelty_distillazione.md`: nessun match diretto; prior art più vicino **SSENet 2019** (consistenza CAM cross-scala simmetrica, augmentation non GSD reale) da citare esplicitamente; rischio aperto SPScaleNet 2024 (stesso dominio, articolo in cinese da recuperare). Frase hedged pronta nel doc | Related work / novelty statement |
 | C-8 | Aggiungere le immagini WorldView (~1.2k→2k) migliora la baseline in modo misurabile (curva dataset-size) | OPEN | — (→ EXP #4) | Cap. dataset / contributo annotazione |
 
 ## Storico modifiche
+
+- 2026-07-24 (notte): C-7 verificato con ricerca dedicata — novelty regge ma stretta; il contributo primario si sposta sulla MISURA (disaccoppiamento classificazione/localizzazione lungo il GSD), il metodo diventa applicativo. Ablation SSENet-style implementata come mitigazione.
 
 - 2026-07-24 (notte): C-4 riformulato e supportato (interazione bande×GSD completa: EXP-004/014/015); C-5 → SUPPORTED (eval WSOL portata nella pipeline gruppo, EXP-016: PG 0.04→0.40 tra 120 e 30 cm).
 

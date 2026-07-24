@@ -123,6 +123,7 @@ Dettagli completi con figure: `docs/04_planning/EXPERIMENTS_LOG.md`.
 | 007 | Il vincolo cross-risoluzione aiuta? | detection: neutro; **localizzazione a 1.2m: pg 0.10→0.15**, 3/3 seed | Il metodo aiuta dove deve (alla risoluzione degradata) |
 | 009 | Mappe più fitte sfondano il tetto? | input 448/672: **pg 0.12→0.36/0.38** | Previsione dell'oracolo confermata; costo: detection ↓ → serve retrain a 448 |
 | 010 | Retrain a 448: si tiene tutto insieme? | **pg 0.42 con F1 0.70**; a 1.2m pg si dimezza (0.18) ma F1 tiene | ×7 in una settimana; **la risoluzione colpisce il "dove", non il "se"** — il risultato di tesi |
+| 011 | La pipeline di Enrico gira? Che baseline dà? | `b120_rgb_resnet50_rsp_aug1_s0`: test F1 0.635 @0.5 (0.645 best-th) | Pipeline validata end-to-end (4 fix sulla branch `ale`); la loro resnet50-RGB sta sotto la nostra Swin equivalente → il porting del nostro stack ha senso |
 
 La logica dell'intera settimana in un diagramma:
 
@@ -233,6 +234,7 @@ Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training 
 
 ## 📜 Changelog della guida
 
+- **2026-07-24 (sera, 2)**: EXP-011 — prima run nella pipeline del gruppo completata (`b120_rgb_resnet50_rsp_aug1_s0`, test F1 0.635); riga in sez. 5.
 - **2026-07-24 (sera)**: accesso GitLab sbloccato — sez. 7.4 riscritta coi fatti veri del codice di Enrico (tile 8-bit pre-tagliate, tl→ft, normalizzazione, cosa portiamo noi); doc di mappatura completo in 02_research.
 - **2026-07-24 (pomeriggio)**: post-call — box "simulare un GSD più grosso" in sez. 1 (derivazione 60 cm: media 2×2, nota Wald/MTF, script testato).
 - **2026-07-23**: prima versione completa — fondamenta (sez. 1-4), racconto EXP-001→008, contributo a 3 livelli.

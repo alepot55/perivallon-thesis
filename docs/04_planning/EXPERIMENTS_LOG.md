@@ -33,6 +33,15 @@
 
 ## Log
 
+### EXP-011 `b120_rgb_resnet50_rsp_aug1_s0` — prima run nella pipeline del gruppo (2026-07-24, sera)
+- **Domanda**: la pipeline di Enrico gira end-to-end con la config di default del command creator a 120 cm? Che baseline dà?
+- **Setup**: pipeline gruppo (`multispectralpotenza`, branch `ale`), ResNet50 + RSP, RGB, patch 8-bit 176px native (`patches_MS_8bit_120cm`), split Thomas 1020/135/139, Aug fliph/flipv/rot90 (brightness OFF come da notebook), TL (head, lr 1e-3, early stop → 26 ep) → FT (full, lr 1e-4 → 17 ep), Adam, batch 50, seed 0. Runner: `network/commands/b120_rgb_resnet50_rsp_aug1_s0.sh`.
+- **Dove**: eagle `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/b120_rgb_resnet50_rsp_aug1_s0/{tl,ft}` + log `~/experiments/b120_rgb_resnet50_rsp_aug1_s0.log`.
+- **Risultati** (test 139 img / 55 pos, comuni mai visti): **F1 0.635** @0.5 · Acc 0.669 · P 0.563 · R 0.727 · AUROC 0.770 · best-threshold su test 0.26 → F1 0.645. Val FT ~0.73.
+- **Conclusione**: pipeline validata end-to-end (con 4 fix minimi committati sulla branch); la baseline resnet50-RSP-RGB del gruppo a 120 cm sta ~4.5 pp sotto la nostra Swin-T-RSP-RGB equivalente (0.680, EXP-003, ma su 16-bit + norm ufficiale: confronto indicativo, non controllato). [HIGH sul funzionamento; MEDIUM sul confronto cross-pipeline]
+- **Claims toccati**: nessuno direttamente; abilita il porting di C1-C3 nella pipeline ufficiale.
+- **Next**: `b120_rgb_swint_rsp` (loro SwinT RGB) e poi SwinT multibanda (nostra inflation) per il confronto pulito dentro la stessa pipeline; chiarire con Enrico threshold su val vs test per la colonna Best Thresholds.
+
 ### EXP-010 — Retrain a 448: localizzazione ×7 con detection intatta; la risoluzione colpisce il "dove" (2026-07-24, notte)
 - **Domanda**: riallenando a input 448 (griglia s3 28×28) si tengono insieme detection e localizzazione? E cosa fa l'asse risoluzione sulla localizzazione?
 - **Setup**: `baseline_swin_rsp_pneo.py --tile-px 448 --bands all6 --batch 48`, protocollo solito, seed 42, 0.3m e 1.2m. Eval WSOL con gradcam_s3 (28×28) a input 448 (`exp010_wsol.log`).

@@ -24,12 +24,13 @@ Esplorazione del 24/7 sera, subito dopo lo sblocco dell'accesso (ruolo Developer
 ## 3. Dataset (verificato sul server, 24/7)
 
 - **Tile pre-tagliate** (non ritaglio al volo come i nostri script):
-  - `/scratch/satellite/PNEO_LOMBARDIA_2023_thomas/Mosaico_PNEO_2_3_9/patches_MS_8bit_30cm` — 1295 tif, 700×700 px
-  - `/scratch/satellite/PNEO_LOMBARDIA_2023_thomas/Mosaico_PNEO_2_3_9/patches_MS_8bit_120cm` — 1295 tif, 176×176 px
-  - Nomi file: `Comune_idx_offset.tif` (es. `Agrate-Brianza_0_6825.tif`).
-- **1295 tile = i nostri split Thomas** (1020 train + 135 val + 139 test = 1294 + extra): stesse geometrie, già materializzate.
+  - `/scratch/satellite/PNEO_LOMBARDIA_2023_thomas/Mosaico_PNEO_2_3_9/patches_MS_8bit_30cm` — 1294 tif, 700×700 px (+ `metadata.json`)
+  - `/scratch/satellite/PNEO_LOMBARDIA_2023_thomas/Mosaico_PNEO_2_3_9/patches_MS_8bit_120cm` — 1294 tif, 176×176 px (+ `metadata.json`)
+  - Nomi file: `Comune_offsetX_offsetY.tif` — verificato: **tutti i 1294 file_name degli split matchano 1:1** le tile.
+- **1294 tile = esattamente i nostri split Thomas** (1020 train + 135 val + 139 test): stesse geometrie, già materializzate.
 - **`metadata.json`** nella cartella tile: `dtype uint8, scale 255`, `band_order [DB,B,G,R,RE,NIR]`, mean/std per banda (normalizzati e raw).
-- **Split json**: `/data/waste/datasets/SatRaw/PNEO/{0.3m,1.2m}/binary/{train,val,test}.json` (+ varianti `only_pos/`). Stile AerialWaste: `images[].file_name` + `categories`.
+- **Split json** (path REALE sul server): `/data/waste/datasets/SatRaw/PNEO/Thomas/{0.3m,1.2m}/binary/{train,val,test}.json` — il notebook di Enrico punta a `PNEO/{GSD}/binary` senza `Thomas/`, che sul server non esiste: corretto nel nostro runner. Stile AerialWaste: `images[].file_name` + `categories` (una sola categoria: `waste`).
+- ⚠️ Il check `"MultiSpectral" in path` di `run.py` coi path /scratch non matcha: risolto con symlink `/home/dev/MultiSpectral_links/patches_MS_8bit_{30,120}cm` → cartelle patch (senza toccare storage condiviso né codice).
 - ⚠️ **8 bit, non 16**: le tile sono uint8 (scala 255), mentre i mosaici sorgente sono uint16 riflettanza. Perdita di profondità radiometrica — perché? (domanda per Enrico; per il MS potrebbe contare).
 
 ## 4. Protocollo di training (dal command creator)
@@ -74,11 +75,19 @@ Esplorazione del 24/7 sera, subito dopo lo sblocco dell'accesso (ruolo Developer
 5. **Consistency loss** come step successivo (metodo, dopo che le baseline girano).
 6. **60 cm**: `derive_60cm.py` sulle tile 30 cm → cartella `patches_MS_8bit_60cm` + metadata ricalcolato (350 px).
 
-## 9. Domande aperte per Enrico/Thomas
+## 9. Primo run nella loro pipeline (24/7 sera)
+
+`b120_rgb_resnet50_rsp_aug1_s0` — riproduzione esatta dei default del command creator a 120 cm (resnet50+RSP, RGB, fliph/flipv/rot90, seed 0), TL→FT→inferenza test. Runner: `network/commands/b120_rgb_resnet50_rsp_aug1_s0.sh` (branch `ale`). Fix minimi necessari per farla partire (committati sulla branch, da raccontare a Enrico):
+- `misc/datasets/nets/__init__.py`: import di moduli assenti dallo snapshot (cam_visualizers, fpn, mobile, dataset Contrastive/Grid) → ridotti a ciò che esiste.
+- venv `base`: aggiunti `torcheval torchmetrics tensorboard ipywidgets grad-cam`.
+- Pesi RSP: symlink da `/data/waste/synthetic/lain/code/new_network/nets/weights/` (stessi filename attesi dal codice).
+- Output: `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/b120_rgb_resnet50_rsp_aug1_s0/{tl,ft}`.
+
+## 10. Domande aperte per Enrico/Thomas
 
 1. **VNIR vs FS** nell'Excel: quali bande esattamente?
 2. **8 bit**: perché le patch MS sono uint8 e non 16 bit? (per il MS la profondità radiometrica può contare)
 3. **Brightness** nell'Aug_1: il notebook la spegne ("Inefficient") — cosa scrivo nell'Excel?
 4. Seed: quanti per riga (notebook usa 0; noi proporremmo 3 seed)?
-5. Il check `"MultiSpectral" in path` di run.py coi path attuali non matcha — c'è una convenzione sui nomi cartella che ci sfugge? (verifichiamo col primo run)
-6. RSP/SSL checkpoint (`nets/weights/`): dove li prendete? (rsp swin-t ce l'abbiamo già dai nostri esperimenti)
+5. Split json: il notebook punta a `PNEO/{GSD}/binary` ma sul server stanno in `PNEO/Thomas/{GSD}/binary` — li spostate voi o adeguiamo il notebook?
+6. RSP/SSL checkpoint (`nets/weights/`): confermate quelli in `/data/waste/synthetic/lain/...`? (usati via symlink)

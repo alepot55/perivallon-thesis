@@ -124,6 +124,7 @@ Dettagli completi con figure: `docs/04_planning/EXPERIMENTS_LOG.md`.
 | 009 | Mappe più fitte sfondano il tetto? | input 448/672: **pg 0.12→0.36/0.38** | Previsione dell'oracolo confermata; costo: detection ↓ → serve retrain a 448 |
 | 010 | Retrain a 448: si tiene tutto insieme? | **pg 0.42 con F1 0.70**; a 1.2m pg si dimezza (0.18) ma F1 tiene | ×7 in una settimana; **la risoluzione colpisce il "dove", non il "se"** — il risultato di tesi |
 | 011 | La pipeline di Enrico gira? Che baseline dà? | `b120_rgb_resnet50_rsp_aug1_s0`: test F1 0.635 @0.5 (0.645 best-th) | Pipeline validata end-to-end (4 fix sulla branch `ale`); la loro resnet50-RGB sta sotto la nostra Swin equivalente → il porting del nostro stack ha senso |
+| 012 | SwinT vs ResNet50, stessa pipeline? | `b120_rgb_swint_rsp_aug1_s0`: test F1 **0.706** (+7.1 pp) | La scelta SwinT+RSP regge anche su dati 8-bit nella pipeline ufficiale |
 
 La logica dell'intera settimana in un diagramma:
 

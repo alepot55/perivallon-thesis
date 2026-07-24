@@ -33,6 +33,15 @@
 
 ## Log
 
+### EXP-012 `b120_rgb_swint_rsp_aug1_s0` — SwinT batte ResNet50 anche nella loro pipeline (2026-07-24, sera)
+- **Domanda**: a parità di tutto (dati 8-bit, protocollo tl→ft, seed 0), quanto vale il passaggio ResNet50→SwinT nella pipeline del gruppo?
+- **Setup**: identico a EXP-011 tranne l'architettura: SwinT v1_t + RSP (loro implementazione torchvision, RGB). TL 19 ep + FT 17 ep (early stop). Runner: `network/commands/b120_rgb_swint_rsp_aug1_s0.sh`.
+- **Dove**: eagle `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/b120_rgb_swint_rsp_aug1_s0/{tl,ft}`.
+- **Risultati** (test 139): **F1 0.706** @0.5 · Acc 0.712 · P 0.593 · R 0.873 · AUROC 0.809 · best-th 0.34 → F1 0.707. Vs EXP-011 (resnet50): **+7.1 pp F1**.
+- **Conclusione**: la scelta SwinT+RSP (nostra e di Gibellini) è confermata anche su dati 8-bit nella pipeline ufficiale; il numero è coerente col nostro 0.68 (pipeline nostra, 16-bit). [HIGH]
+- **Claims toccati**: rafforza indirettamente C1 (baseline forte trasferita nella pipeline di gruppo).
+- **Next**: EXP-013 `b120_vnir_swint_rsp_aug1_s0` (6 bande con la nostra inflation portata nel loro codice) — in corso.
+
 ### EXP-011 `b120_rgb_resnet50_rsp_aug1_s0` — prima run nella pipeline del gruppo (2026-07-24, sera)
 - **Domanda**: la pipeline di Enrico gira end-to-end con la config di default del command creator a 120 cm? Che baseline dà?
 - **Setup**: pipeline gruppo (`multispectralpotenza`, branch `ale`), ResNet50 + RSP, RGB, patch 8-bit 176px native (`patches_MS_8bit_120cm`), split Thomas 1020/135/139, Aug fliph/flipv/rot90 (brightness OFF come da notebook), TL (head, lr 1e-3, early stop → 26 ep) → FT (full, lr 1e-4 → 17 ep), Adam, batch 50, seed 0. Runner: `network/commands/b120_rgb_resnet50_rsp_aug1_s0.sh`.

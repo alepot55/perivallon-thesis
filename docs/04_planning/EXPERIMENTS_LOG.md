@@ -33,6 +33,15 @@
 
 ## Log
 
+### EXP-013 `b120_vnir_swint_rsp_aug1_s0` — 6 bande a 120 cm/8-bit: nessun guadagno (seed 0) (2026-07-24, sera)
+- **Domanda**: la nostra inflation multibanda, portata nel loro SwinT, replica il guadagno delle 6 bande visto nella nostra pipeline (EXP-004, +1.9 pp @0.3m/16-bit)?
+- **Setup**: identico a EXP-012 tranne le bande: tutte e 6 (DB,B,G,R,RE,NIR), normalizzazione per banda dal metadata (loro protocollo), patch-embed inflato (nostro contributo, committato in `nets/swint.py`). TL 19 + FT 16 ep. Fix collaterale: `inferutils.py` non passava le bande alla SwinT (committato).
+- **Dove**: eagle `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/b120_vnir_swint_rsp_aug1_s0/{tl,ft}`.
+- **Risultati** (test 139): F1 0.667 @0.5 · Acc 0.719 · P 0.629 · R 0.709 · AUROC 0.782 · best-th 0.34 → 0.686. Vs EXP-012 RGB (0.706 / 0.707): **−4 pp @0.5, −2 pp a best-th**.
+- **Conclusione**: a 120 cm su patch **8-bit** le 6 bande non aiutano (anzi); ipotesi principale: la quantizzazione a 8 bit comprime proprio l'informazione radiometrica che il MS sfrutta (nella nostra pipeline 16-bit il segno era opposto). Single-seed: non conclusivo. [UNCERTAIN — multi-seed in corso stasera]
+- **Claims toccati**: C-multispettrale: il guadagno MS è **condizionato dalla profondità radiometrica** — se confermato multi-seed, diventa un argomento forte per chiedere patch 16-bit al gruppo.
+- **Next**: multi-seed s42/s43 di EXP-012/013 (in corso); poi la stessa coppia sul 30 cm quando arriva; sollevare la questione 8 vs 16 bit con Enrico/Thomas.
+
 ### EXP-012 `b120_rgb_swint_rsp_aug1_s0` — SwinT batte ResNet50 anche nella loro pipeline (2026-07-24, sera)
 - **Domanda**: a parità di tutto (dati 8-bit, protocollo tl→ft, seed 0), quanto vale il passaggio ResNet50→SwinT nella pipeline del gruppo?
 - **Setup**: identico a EXP-011 tranne l'architettura: SwinT v1_t + RSP (loro implementazione torchvision, RGB). TL 19 ep + FT 17 ep (early stop). Runner: `network/commands/b120_rgb_swint_rsp_aug1_s0.sh`.

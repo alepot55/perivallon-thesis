@@ -86,7 +86,7 @@ Esplorazione del 24/7 sera, subito dopo lo sblocco dell'accesso (ruolo Developer
 ## 10. Domande aperte per Enrico/Thomas
 
 1. **VNIR vs FS** nell'Excel: quali bande esattamente?
-2. **8 bit**: perché le patch MS sono uint8 e non 16 bit? (per il MS la profondità radiometrica può contare)
+2. **8 bit**: perché le patch MS sono uint8 e non 16 bit? — domanda diventata centrale: nella prima coppia di run (EXP-012/013) le 6 bande a 8 bit perdono 4 pp rispetto all'RGB, mentre nella nostra pipeline 16-bit guadagnavano; l'ipotesi è che la quantizzazione comprima proprio l'informazione radiometrica che il MS sfrutta.
 3. **Brightness** nell'Aug_1: il notebook la spegne ("Inefficient") — cosa scrivo nell'Excel?
 4. Seed: quanti per riga (notebook usa 0; noi proporremmo 3 seed)?
 5. Split json: il notebook punta a `PNEO/{GSD}/binary` ma sul server stanno in `PNEO/Thomas/{GSD}/binary` — li spostate voi o adeguiamo il notebook?

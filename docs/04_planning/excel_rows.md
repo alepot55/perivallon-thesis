@@ -2,6 +2,27 @@
 
 > Ale: copia questi valori nella riga giusta della matrice su Drive. Una sezione = un run concluso, in ordine cronologico inverso. Le colonne seguono l'ordine dell'Excel; se una colonna non c'è o ha altro nome, adatta a vista. Metriche sul **test** (139 img, comuni mai visti), threshold 0.5 salvo dove indicato.
 
+## EXP-013 — b120_vnir_swint_rsp_aug1_s0 (2026-07-24)
+
+| Colonna | Valore |
+|---|---|
+| Dataset | PNEO |
+| GSD | 120 cm |
+| Bands | VNIR (tutte e 6: DB,B,G,R,RE,NIR) |
+| Image size | 176 (nativa) |
+| Architecture | SwinT (v1_t, patch-embed multibanda) |
+| Pretraining | 2 (RSP) |
+| Augmentation | Aug_1 senza Brightness (fliph .5, flipv .5, rot90) |
+| Batch | 50 |
+| LR | 1e-3 (TL) → 1e-4 (FT) |
+| Seed | 0 |
+| Accuracy | 0.719 |
+| Precision | 0.629 |
+| Recall | 0.709 |
+| F1 | 0.667 |
+| Best threshold | 0.34 (su test) → F1 0.686 |
+| Note | TL 19 ep + FT 16 ep; AUROC 0.782; norm per banda da metadata; run: `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/b120_vnir_swint_rsp_aug1_s0` |
+
 ## EXP-012 — b120_rgb_swint_rsp_aug1_s0 (2026-07-24)
 
 | Colonna | Valore |

@@ -25,6 +25,16 @@ confronto di sola risoluzione (il confound che rimproveriamo al confronto di Maz
 **Tile** — le immagini enormi (strip) vengono tagliate in quadrati (~200 m di lato) su cui
 lavora il modello. Le nostre tile vengono ritagliate al volo dai mosaici delle strip.
 
+**Simulare un GSD più grosso (il 60 cm)** — il livello 60 cm non esiste come acquisizione:
+lo deriviamo noi dal 30 cm facendo la **media di ogni blocco 2×2 di pixel** → un pixel da 60 cm
+(700×700 px diventano 350×350, stesse 6 bande, stessa area a terra). È quello che Thomas ha
+chiesto ("aggregando i pixel, media o massimo"). Nota fine: in letteratura il modo "rigoroso" di
+simulare un sensore più grosso è sfocare prima con un filtro gaussiano che imita l'ottica del
+sensore (protocollo di Wald, usato nella valutazione del pansharpening) e poi decimare; la media
+2×2 ne è la versione semplice. Se te lo chiedono: "aggreghiamo 2×2 con la media, come da
+protocollo del gruppo; l'alternativa MTF/Wald la conosciamo ed è un check possibile".
+Script: `eagle/derive_60cm.py` (testato: bounds identici, valori esatti).
+
 ```mermaid
 flowchart LR
     A["Strip satellitare<br>(km di territorio)"] --> B["Mosaico per strip<br>0.3m e 1.2m"]
@@ -217,6 +227,7 @@ Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training 
 
 ## 📜 Changelog della guida
 
+- **2026-07-24 (pomeriggio)**: post-call — box "simulare un GSD più grosso" in sez. 1 (derivazione 60 cm: media 2×2, nota Wald/MTF, script testato).
 - **2026-07-23**: prima versione completa — fondamenta (sez. 1-4), racconto EXP-001→008, contributo a 3 livelli.
 - **2026-07-23 (sera)**: aggiunta sez. 7 "Il codice e i comandi" — struttura degli script, anatomia di un training, cheat sheet comandi, cosa aspettarsi dal codice del gruppo.
 - **2026-07-24 (alba, finale)**: EXP-010 — retrain 448: localizzazione ×7 con detection intatta; scoperto il fenomeno centrale (risoluzione colpisce il dove, non il se).

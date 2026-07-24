@@ -33,14 +33,29 @@
 
 ## Log
 
+### EXP-014 multi-seed `b120_{rgb,vnir}_swint_rsp_aug1_s{0,42,43}` — a 120 cm lo spettro non compensa: confermato su 3 seed (2026-07-24, sera)
+- **Domanda**: il gap RGB > 6-bande di EXP-013 regge su più seed?
+- **Setup**: EXP-012/013 ripetuti con seed 42 e 43 (runner generati da sed, catena sequenziale in `commands/multi_seed_evening.sh`); ~4 min a run sulla RTX PRO 6000.
+- **Dove**: eagle `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/b120_{rgb,vnir}_swint_rsp_aug1_s{42,43}` + `~/experiments/multiseed_evening.log`.
+- **Risultati** (test 139, F1):
+
+| Config | s0 | s42 | s43 | media ± std @0.5 | media best-th |
+|---|---|---|---|---|---|
+| RGB SwinT | 0.706 | 0.708 | 0.667 | **0.694 ± 0.019** | 0.701 |
+| 6 bande SwinT | 0.667 | 0.672 | 0.657 | **0.665 ± 0.006** | 0.689 |
+
+- **Conclusione**: RGB sopra le 6 bande su 3/3 seed @0.5 (gap medio −2.9 pp; a best-threshold −1.2 pp, 2/3 seed). Combinato con EXP-004 (nostra pipeline 16-bit: piatto a 1.2m, +1.9 a 0.3m): **a 120 cm l'informazione spettrale extra NON compensa la risoluzione persa; il guadagno MS vive ad alta risoluzione** — prima evidenza sostanziale per C-4, replicata su due pipeline indipendenti. Nota: la config 6-bande è più stabile (std 0.006 vs 0.019). [MEDIUM: 3 seed, 139 img test]
+- **Claims toccati**: **C-4** — evidenza negativa a 120 cm (due pipeline); il test decisivo è il 30 cm nella pipeline del gruppo.
+- **Next**: coppia RGB/6-bande sul 30 cm appena Thomas lo rilascia; poi curva completa 30→60→120 (C-2×C-4); resnet50 multi-seed se serve la riga Excel completa.
+
 ### EXP-013 `b120_vnir_swint_rsp_aug1_s0` — 6 bande a 120 cm/8-bit: nessun guadagno (seed 0) (2026-07-24, sera)
 - **Domanda**: la nostra inflation multibanda, portata nel loro SwinT, replica il guadagno delle 6 bande visto nella nostra pipeline (EXP-004, +1.9 pp @0.3m/16-bit)?
 - **Setup**: identico a EXP-012 tranne le bande: tutte e 6 (DB,B,G,R,RE,NIR), normalizzazione per banda dal metadata (loro protocollo), patch-embed inflato (nostro contributo, committato in `nets/swint.py`). TL 19 + FT 16 ep. Fix collaterale: `inferutils.py` non passava le bande alla SwinT (committato).
 - **Dove**: eagle `/data/waste/multilabel/SatRaw/Mosaico_PNEO_2_3_9/b120_vnir_swint_rsp_aug1_s0/{tl,ft}`.
 - **Risultati** (test 139): F1 0.667 @0.5 · Acc 0.719 · P 0.629 · R 0.709 · AUROC 0.782 · best-th 0.34 → 0.686. Vs EXP-012 RGB (0.706 / 0.707): **−4 pp @0.5, −2 pp a best-th**.
-- **Conclusione**: a 120 cm su patch **8-bit** le 6 bande non aiutano (anzi); ipotesi principale: la quantizzazione a 8 bit comprime proprio l'informazione radiometrica che il MS sfrutta (nella nostra pipeline 16-bit il segno era opposto). Single-seed: non conclusivo. [UNCERTAIN — multi-seed in corso stasera]
-- **Claims toccati**: C-multispettrale: il guadagno MS è **condizionato dalla profondità radiometrica** — se confermato multi-seed, diventa un argomento forte per chiedere patch 16-bit al gruppo.
-- **Next**: multi-seed s42/s43 di EXP-012/013 (in corso); poi la stessa coppia sul 30 cm quando arriva; sollevare la questione 8 vs 16 bit con Enrico/Thomas.
+- **Conclusione** (rivista dopo rilettura EXP-004): a 120 cm le 6 bande non aiutano — coerente con la NOSTRA pipeline 16-bit, dove a 1.2m erano piatte (0.684 vs 0.680) e il +1.9 pp c'era solo a 0.3m. L'8-bit può spiegare il passaggio da "piatto" a "leggera perdita", ma il fatto principale è l'interazione bande×GSD. [MEDIUM dopo multi-seed, v. EXP-014]
+- **Claims toccati**: **C-4** (lo spettro compensa la risoluzione persa): prima evidenza vera, negativa a 120 cm.
+- **Next**: multi-seed (EXP-014); test decisivo = stessa coppia sul 30 cm nella loro pipeline; questione 8 vs 16 bit da sollevare comunque.
 
 ### EXP-012 `b120_rgb_swint_rsp_aug1_s0` — SwinT batte ResNet50 anche nella loro pipeline (2026-07-24, sera)
 - **Domanda**: a parità di tutto (dati 8-bit, protocollo tl→ft, seed 0), quanto vale il passaggio ResNet50→SwinT nella pipeline del gruppo?

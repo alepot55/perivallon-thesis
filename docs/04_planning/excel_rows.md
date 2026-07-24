@@ -2,6 +2,19 @@
 
 > Ale: copia questi valori nella riga giusta della matrice su Drive. Una sezione = un run concluso, in ordine cronologico inverso. Le colonne seguono l'ordine dell'Excel; se una colonna non c'è o ha altro nome, adatta a vista. Metriche sul **test** (139 img, comuni mai visti), threshold 0.5 salvo dove indicato.
 
+## EXP-014 — multi-seed SwinT, seed 42 e 43 (2026-07-24)
+
+Config identiche a EXP-012 (RGB) e EXP-013 (VNIR = 6 bande), cambia solo il seed. Una riga Excel per run:
+
+| Run | Bands | Seed | Accuracy | Precision | Recall | F1 | Best th → F1 | AUROC |
+|---|---|---|---|---|---|---|---|---|
+| b120_rgb_swint_rsp_aug1_s42 | RGB | 42 | 0.698 | 0.573 | 0.927 | 0.708 | 0.52 → 0.723 | 0.826 |
+| b120_rgb_swint_rsp_aug1_s43 | RGB | 43 | 0.676 | 0.563 | 0.818 | 0.667 | 0.51 → 0.672 | 0.764 |
+| b120_vnir_swint_rsp_aug1_s42 | VNIR (6) | 42 | 0.691 | 0.579 | 0.800 | 0.672 | 0.59 → 0.704 | 0.795 |
+| b120_vnir_swint_rsp_aug1_s43 | VNIR (6) | 43 | 0.662 | 0.549 | 0.818 | 0.657 | 0.45 → 0.676 | 0.787 |
+
+Medie a 3 seed (se l'Excel vuole una riga aggregata): RGB **F1 0.694 ± 0.019** · VNIR **F1 0.665 ± 0.006**.
+
 ## EXP-013 — b120_vnir_swint_rsp_aug1_s0 (2026-07-24)
 
 | Colonna | Valore |

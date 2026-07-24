@@ -125,7 +125,8 @@ Dettagli completi con figure: `docs/04_planning/EXPERIMENTS_LOG.md`.
 | 010 | Retrain a 448: si tiene tutto insieme? | **pg 0.42 con F1 0.70**; a 1.2m pg si dimezza (0.18) ma F1 tiene | ×7 in una settimana; **la risoluzione colpisce il "dove", non il "se"** — il risultato di tesi |
 | 011 | La pipeline di Enrico gira? Che baseline dà? | `b120_rgb_resnet50_rsp_aug1_s0`: test F1 0.635 @0.5 (0.645 best-th) | Pipeline validata end-to-end (4 fix sulla branch `ale`); la loro resnet50-RGB sta sotto la nostra Swin equivalente → il porting del nostro stack ha senso |
 | 012 | SwinT vs ResNet50, stessa pipeline? | `b120_rgb_swint_rsp_aug1_s0`: test F1 **0.706** (+7.1 pp) | La scelta SwinT+RSP regge anche su dati 8-bit nella pipeline ufficiale |
-| 013 | Le 6 bande aiutano anche qui? | `b120_vnir_swint_rsp_aug1_s0`: F1 0.667 (−4 pp vs RGB!) | A 120 cm su patch **8-bit** il MS non guadagna: sospetto = la quantizzazione mangia l'informazione radiometrica (da noi, su 16-bit, il segno era opposto). Multi-seed in corso |
+| 013 | Le 6 bande aiutano anche qui? | `b120_vnir_swint_rsp_aug1_s0`: F1 0.667 (−4 pp vs RGB) | A 120 cm il MS non guadagna — coerente con EXP-004 (anche da noi a 1.2m era piatto; il +1.9 c'era solo a 0.3m) |
+| 014 | Regge su 3 seed? | RGB 0.694±0.019 vs 6-bande 0.665±0.006 (RGB sopra 3/3) | **A 120 cm lo spettro non compensa la risoluzione persa** — prima evidenza vera per C-4, replicata su due pipeline; il test decisivo sarà il 30 cm |
 
 La logica dell'intera settimana in un diagramma:
 
@@ -236,7 +237,8 @@ Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training 
 
 ## 📜 Changelog della guida
 
-- **2026-07-24 (sera, 3)**: EXP-012/013 — SwinT +7 pp su ResNet50 (0.706); 6 bande su 8-bit −4 pp (0.667, sospetto quantizzazione); SwinT multibanda implementata nel loro codice; multi-seed lanciato.
+- **2026-07-24 (sera, 4)**: EXP-014 multi-seed — confermato 3/3: a 120 cm lo spettro non compensa (RGB 0.694 vs 6-bande 0.665); lettura corretta insieme a EXP-004 (il guadagno MS vive solo ad alta risoluzione) → prima evidenza per C-4.
+- **2026-07-24 (sera, 3)**: EXP-012/013 — SwinT +7 pp su ResNet50 (0.706); 6 bande a 120 cm −4 pp (0.667); SwinT multibanda implementata nel loro codice; multi-seed lanciato.
 - **2026-07-24 (sera, 2)**: EXP-011 — prima run nella pipeline del gruppo completata (`b120_rgb_resnet50_rsp_aug1_s0`, test F1 0.635); riga in sez. 5.
 - **2026-07-24 (sera)**: accesso GitLab sbloccato — sez. 7.4 riscritta coi fatti veri del codice di Enrico (tile 8-bit pre-tagliate, tl→ft, normalizzazione, cosa portiamo noi); doc di mappatura completo in 02_research.
 - **2026-07-24 (pomeriggio)**: post-call — box "simulare un GSD più grosso" in sez. 1 (derivazione 60 cm: media 2×2, nota Wald/MTF, script testato).

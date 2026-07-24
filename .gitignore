@@ -55,6 +55,7 @@ waste/data/synthetic_ms/
 .claude/*
 !.claude/commands/
 !.claude/agents/
+!.claude/hooks/
 !.claude/settings.json
 .claude/settings.local.json
 

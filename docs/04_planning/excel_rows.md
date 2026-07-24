@@ -2,6 +2,17 @@
 
 > Ale: copia questi valori nella riga giusta della matrice su Drive. Una sezione = un run concluso, in ordine cronologico inverso. Le colonne seguono l'ordine dell'Excel; se una colonna non c'è o ha altro nome, adatta a vista. Metriche sul **test** (139 img, comuni mai visti), threshold 0.5 salvo dove indicato.
 
+## EXP-017 — multi-seed 30 cm, seed 42 e 43 (2026-07-24)
+
+| Run | Bands | Seed | Accuracy | Precision | Recall | F1 | Best th → F1 | AUROC |
+|---|---|---|---|---|---|---|---|---|
+| b30_rgb_swint_rsp_aug1_s42 | RGB | 42 | 0.799 | 0.721 | 0.800 | 0.759 | → 0.790 | 0.901 |
+| b30_rgb_swint_rsp_aug1_s43 | RGB | 43 | 0.727 | 0.639 | 0.709 | 0.672 | → 0.697 | 0.820 |
+| b30_vnir_swint_rsp_aug1_s42 | VNIR (6) | 42 | 0.763 | 0.683 | 0.745 | 0.713 | → 0.759 | 0.881 |
+| b30_vnir_swint_rsp_aug1_s43 | VNIR (6) | 43 | 0.755 | 0.648 | 0.836 | 0.730 | → 0.740 | 0.867 |
+
+Medie a 3 seed @30 cm: RGB **F1 0.713 ± 0.036** (AUROC 0.864) · VNIR **F1 0.735 ± 0.020** (AUROC 0.879).
+
 ## EXP-015 — coppia 30 cm, seed 0 (2026-07-24)
 
 | Run | Bands | Seed | Accuracy | Precision | Recall | F1 | Best th → F1 | AUROC |

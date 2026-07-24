@@ -128,6 +128,7 @@ Dettagli completi con figure: `docs/04_planning/EXPERIMENTS_LOG.md`.
 | 013 | Le 6 bande aiutano anche qui? | `b120_vnir_swint_rsp_aug1_s0`: F1 0.667 (−4 pp vs RGB) | A 120 cm il MS non guadagna — coerente con EXP-004 (anche da noi a 1.2m era piatto; il +1.9 c'era solo a 0.3m) |
 | 014 | Regge su 3 seed? | RGB 0.694±0.019 vs 6-bande 0.665±0.006 (RGB sopra 3/3) | **A 120 cm lo spettro non compensa la risoluzione persa** — prima evidenza vera per C-4, replicata su due pipeline; il test decisivo sarà il 30 cm |
 | 015 | E a 30 cm? (il test decisivo) | RGB 0.709 vs 6-bande **0.761** (+5.2 @0.5; AUROC 0.871 vs 0.890) | **L'interazione bande×GSD è completa**: lo spettro rende a 30 cm, non a 120. Caveat: a best-threshold convergono (calibrazione) — l'AUROC però resta a favore. Multi-seed stanotte |
+| 017 | Il +5.2 a 30 cm regge su 3 seed? | No: scende a **+2.2** (0.735 vs 0.713); a best-th pari (0.755 vs 0.752), ma AUROC +1.5 e **varianza dimezzata** | Il risultato robusto è l'**interazione**: il delta 6bande−RGB passa da −2.9 (120 cm) a +2.2 (30 cm), swing ~5 pp. Non "il MS guadagna" ma "il beneficio dipende dal GSD" |
 | 016 | La WSOL si replica nel loro flusso? | PG: 0.04-0.06 @120 cm vs **0.38-0.40** @30 cm (CAM loro, eval nostra) | "**La risoluzione colpisce il dove, non il se**" replicato nella pipeline ufficiale — detection quasi pari, localizzazione ×10; il 6-bande localizza un filo meglio |
 
 La logica dell'intera settimana in un diagramma:

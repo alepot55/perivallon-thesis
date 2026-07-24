@@ -33,6 +33,21 @@
 
 ## Log
 
+### EXP-017 multi-seed 30 cm — il guadagno spettrale si ridimensiona, ma l'INTERAZIONE bande×GSD tiene (2026-07-24, notte)
+- **Domanda**: il +5.2 pp di EXP-015 regge su 3 seed?
+- **Setup**: EXP-015 ripetuto con seed 42 e 43 (catena `night_chain.sh`). Stesso protocollo, ~25 min/run.
+- **Dove**: eagle `.../b30_{rgb,vnir}_swint_rsp_aug1_s{0,42,43}` + `~/experiments/night_chain.log`.
+- **Risultati** (test 139, F1):
+
+| Config | s0 | s42 | s43 | media ± std @0.5 | media best-th | AUROC medio |
+|---|---|---|---|---|---|---|
+| b30 RGB | 0.709 | 0.759 | 0.672 | 0.713 ± 0.036 | 0.752 ± 0.040 | 0.864 ± 0.033 |
+| b30 6-bande | 0.761 | 0.713 | 0.730 | **0.735 ± 0.020** | 0.755 ± 0.011 | **0.879 ± 0.010** |
+
+- **Conclusione**: il +5.2 del seed 0 era ottimistico — su 3 seed il guadagno scende a **+2.2 pp @0.5** (2/3 seed a favore), e a best-threshold i due sono **pari** (0.755 vs 0.752). Restano a favore delle 6 bande: AUROC (+1.5, 3/3 seed) e soprattutto la **varianza dimezzata** (std 0.020 vs 0.036 @0.5; 0.011 vs 0.040 a best-th). **Il risultato robusto non è "il MS guadagna", è che il DELTA (6-bande − RGB) passa da −2.9 pp a 120 cm a +2.2 pp a 30 cm: swing di ~5 pp lungo l'asse GSD.** [MEDIUM — 3 seed, 139 img test]
+- **Claims toccati**: **C-4** confermato nella forma di interazione (non di guadagno assoluto); da riformulare in tesi come "il beneficio spettrale dipende dal GSD", con il caveat calibrazione esplicito.
+- **Next**: 60 cm per il punto intermedio della curva (in corso); ripetere il confronto a best-threshold selezionato su **val** (protocollo corretto) invece che su test.
+
 ### EXP-016 WSOL nella pipeline del gruppo — il fenomeno "dove, non se" si replica (2026-07-24, sera)
 - **Domanda**: la valutazione WSOL portata nel loro flusso (CAM loro + eval nostra) conferma il collasso della localizzazione a GSD degradato?
 - **Setup**: `commands/eval_wsol.py` (nuovo, branch `ale`): pointing game + MaxBoxAcc@0.5 + mean best IoU contro le bbox GT (`aw36_od_bin_sat_only.json`, 50 positivi annotati del test, coordinate 700px riscalate). CAM: layer_cam del loro `infer_tiff` sui 4 modelli seed-0 (input nativo 176/700).

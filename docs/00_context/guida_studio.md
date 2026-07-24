@@ -151,13 +151,32 @@ flowchart TB
 - **C1 — il protocollo di misura** (già fatto in v1): nessuno misura la localizzazione
   weakly-supervised su questo dominio; noi sì, con protocollo standard, e abbiamo scoperto
   il tetto geometrico. Già difendibile.
-- **C2 — il metodo**: localizzazione con mappe ad alta risoluzione robuste al GSD.
+- **C2 — il metodo**: **distillazione cross-risoluzione del "dove"** (implementata 24/7 sera).
   Nota onesta dalla ricerca del 23/7: il vincolo di consistenza tra scale esiste in letteratura
-  (SEAM 2020); il nostro delta è applicarlo all'asse GSD reale (0.3/1.2 da acquisizione) e
-  misurare la robustezza — v. docs/02_research/metodo_prossimi_passi.md.
-  Primo tentativo: consistency cross-risoluzione (stesse tile a 0.3 e 1.2 m, vincolo che
-  le mappe coincidano — possibile solo col dataset doppia-risoluzione del gruppo). Poi:
-  pseudo-mask e refinement a risoluzione piena.
+  (SEAM 2020); il nostro delta è applicarlo all'asse GSD **reale** (acquisizione, non data
+  augmentation) e misurare la robustezza — v. `docs/02_research/metodo_prossimi_passi.md`.
+
+  **Come funziona, in parole semplici** — abbiamo scoperto che il modello a 30 cm *sa dove*
+  guardare (pointing game 0.40) e quello a 120 cm *no* (0.06), pur classificando quasi uguale.
+  Ma le tile sono **le stesse**, solo a due risoluzioni. Allora: facciamo produrre al modello
+  30 cm le sue mappe di attenzione su tutte le immagini di training (il "maestro"), e
+  ri-addestriamo il modello a 120 cm (lo "studente") con due obiettivi insieme:
+  1. la solita BCE (indovina se c'è o non c'è discarica);
+  2. una penalità se la sua mappa di attenzione è diversa da quella del maestro (solo sulle
+     immagini positive, mappe normalizzate 0-1 e portate alla stessa griglia).
+
+  ```
+  tile 30 cm ──► modello 30 cm (congelato) ──► CAM maestro  ─┐
+                                                             ├─► loss L2 (λ)
+  stessa tile 120 cm ──► modello 120 cm (studente) ──► CAM ──┘
+                                          └──► BCE(label)
+  ```
+
+  **Perché conta**: in deployment avrai IRIDE a ~1 m, non il 30 cm. Il 30 cm però ce l'hai
+  *in archivio* al momento del training. Quindi distilli la capacità di localizzare da dove
+  esiste verso dove servirà: *training-time high resolution, inference-time low resolution*.
+  Codice: `commands/train_distill.py` + `commands/distill_chain.sh` (branch `ale`).
+  Metrica di successo: pointing game del 120 cm sopra 0.06 senza perdere F1.
 - **C3 — lo spettro**: le 6 bande migliorano generalizzazione (e forse localizzazione).
   Se confermato: il triangolo WSOL × GSD × spettro è tutto nostro.
 
@@ -239,6 +258,7 @@ Regole del gruppo da citare se serve: GPU si prenota sul foglio Turni; training 
 
 ## 📜 Changelog della guida
 
+- **2026-07-24 (notte, 2)**: sez. 6 riscritta — il metodo C2 ora è la **distillazione cross-risoluzione** (maestro 30 cm → studente 120 cm), implementata e in esecuzione; dataset 60 cm derivato (1294 tile, deliverable per Thomas).
 - **2026-07-24 (notte)**: EXP-015/016 — a 30 cm le 6 bande guadagnano (+5.2 @0.5, AUROC +1.9); WSOL portata nel loro flusso: PG 0.04→0.40 tra 120 e 30 cm ("dove, non se" replicato). Multi-seed 30 cm in coda notturna.
 - **2026-07-24 (sera, 4)**: EXP-014 multi-seed — confermato 3/3: a 120 cm lo spettro non compensa (RGB 0.694 vs 6-bande 0.665); lettura corretta insieme a EXP-004 (il guadagno MS vive solo ad alta risoluzione) → prima evidenza per C-4.
 - **2026-07-24 (sera, 3)**: EXP-012/013 — SwinT +7 pp su ResNet50 (0.706); 6 bande a 120 cm −4 pp (0.667); SwinT multibanda implementata nel loro codice; multi-seed lanciato.

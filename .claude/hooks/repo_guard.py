@@ -15,7 +15,7 @@ REMINDER = (
     "EXPERIMENTS_LOG.md aggiornato - checklist collegata (regola di progetto): "
     "1) docs/00_context/guida_studio.md sez. 5 + changelog; "
     "2) docs/04_planning/CLAIMS.md se un claim cambia status; "
-    "3) riga nell'Excel 'Binary Experiments Results' su Drive; "
+    "3) riga pronta in docs/04_planning/excel_rows.md (Ale la incolla nell'Excel Drive); "
     "4) id esperimento nel formato bGSD_bande_arch_pretrain_aug_sSEED; "
     "5) se il run e' finito, togliere la prenotazione dal foglio Turni GPU."
 )

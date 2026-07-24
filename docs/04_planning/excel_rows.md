@@ -2,6 +2,17 @@
 
 > Ale: copia questi valori nella riga giusta della matrice su Drive. Una sezione = un run concluso, in ordine cronologico inverso. Le colonne seguono l'ordine dell'Excel; se una colonna non c'è o ha altro nome, adatta a vista. Metriche sul **test** (139 img, comuni mai visti), threshold 0.5 salvo dove indicato.
 
+## EXP-019 — coppia 60 cm, seed 0 (2026-07-24)
+
+Dataset 60 cm **derivato da noi** (media 2×2 dal 30 cm) — la riga "60 cm" dell'Excel passa da "to do" a "ready".
+
+| Run | Bands | Seed | Accuracy | F1 | AUROC |
+|---|---|---|---|---|---|
+| b60_rgb_swint_rsp_aug1_s0 | RGB | 0 | 0.763 | 0.718 | 0.867 |
+| b60_vnir_swint_rsp_aug1_s0 | VNIR (6) | 0 | 0.791 | 0.760 | 0.874 |
+
+GSD 60 cm · image size 350 nativa · SwinT v1_t · pretraining 2 (RSP) · Aug_1 senza Brightness · batch 50 · LR 1e-3/1e-4.
+
 ## EXP-017 — multi-seed 30 cm, seed 42 e 43 (2026-07-24)
 
 | Run | Bands | Seed | Accuracy | Precision | Recall | F1 | Best th → F1 | AUROC |

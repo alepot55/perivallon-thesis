@@ -33,7 +33,7 @@ Regole d'uso: mai "first"; citare **SSENet esplicitamente nello stesso paragrafo
 
 | Rischio | Mitigazione | Stato |
 |---|---|---|
-| SSENet: se la consistenza simmetrica funziona uguale, il delta si assottiglia | **Ablation esplicita**: `--mode symmetric` (SSENet-style, rete singola, due scale, consistenza simmetrica) vs `--mode distill` (teacher HR congelato, asimmetrico) | ✅ implementata 24/7, in coda |
+| SSENet: se la consistenza simmetrica funziona uguale, il delta si assottiglia | **Ablation esplicita**: `--mode symmetric` (SSENet-style) vs `--mode distill` (teacher HR congelato) | ✅ **RISOLTO 24/7 (EXP-020)**: la simmetrica peggiora (mean IoU 0.046 vs 0.075 baseline), il teacher asimmetrico raddoppia (0.155). L'asimmetria è essenziale, con spiegazione meccanicistica: riscalare un input a 120 cm non crea dettaglio. Il delta rispetto a SSENet ora è **dimostrato**, non solo argomentato |
 | SPScaleNet 2024: stesso dominio (waste dump) | Recuperare e leggere l'articolo prima di scrivere il claim | ⬜ aperto |
 | Revankar 2024: se una versione aggiornata aggiunge mappe spaziali | Ricontrollare a ridosso della scrittura | ⬜ aperto |
 | Pointing game senza il protocollo di Choe (model selection su held-out) | Selezionare il checkpoint su val, mai su test; dichiararlo | ⬜ da formalizzare |

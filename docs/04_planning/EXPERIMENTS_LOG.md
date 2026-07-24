@@ -33,6 +33,40 @@
 
 ## Log
 
+### EXP-020 `b120_vnir_swint_symmetric_lam1_s0` — l'ablation SSENet-style fallisce: conta il teacher ad alta risoluzione (2026-07-24, notte)
+- **Domanda** (sollevata dalla novelty check): il guadagno di EXP-018 viene dall'**informazione ad alta risoluzione** del teacher, o basterebbe una consistenza multi-scala auto-supervisata alla SSENet (che non usa affatto il 30 cm)?
+- **Setup**: identico a EXP-018 (stesso studente di partenza, λ=1, 15 epoche, lr 1e-4, seed 0) ma `--mode symmetric`: nessun teacher; la consistenza è fra la CAM dell'input a 120 cm e la CAM dello **stesso input riscalato ×2**, come in SSENet/SEAM. Implementato in `train_distill.py`.
+- **Dove**: eagle `.../b120_vnir_swint_symmetric_lam1_s0/ft` + `~/experiments/ablation_symmetric.log`.
+- **Risultati** (test 139; WSOL su 50 img con bbox):
+
+| variante @120 cm | detection F1 | PG | MaxBoxAcc@0.5 | mean best IoU |
+|---|---|---|---|---|
+| baseline (nessun vincolo) | 0.667 | 0.06 | 0.02 | 0.075 |
+| **distillazione (teacher 30 cm)** | 0.657 | 0.04 | **0.08** | **0.155** |
+| simmetrica SSENet-style | 0.637 | 0.00 | 0.02 | 0.046 |
+
+- **Conclusione**: la consistenza simmetrica **non aiuta, peggiora** (IoU 0.046 < 0.075 della baseline) mentre il teacher asimmetrico raddoppia (0.155). Spiegazione meccanicistica coerente: riscalare un input a 120 cm non crea dettaglio, quindi il vincolo simmetrico è solo un regolarizzatore che appiattisce le CAM; il teacher a 30 cm porta invece **informazione che lo studente non possiede**. È esattamente il controllo che la novelty check indicava come decisivo: l'asimmetria non è un dettaglio implementativo, è il punto. [MEDIUM — un seed, 50 immagini di valutazione, ma il pattern è netto e spiegabile]
+- **Claims toccati**: **C-6** rafforzato; **C-7** (novelty) — il delta rispetto a SSENet/SEAM ora è dimostrato sperimentalmente, non solo argomentato.
+- **Next**: ripetere l'ablation al λ scelto dallo sweep e su più seed prima di metterla in tesi come tabella.
+
+### EXP-019 `b60_{rgb,vnir}_swint_rsp_aug1_s0` — la curva a tre livelli: la detection è piatta, la localizzazione crolla (2026-07-24, notte)
+- **Domanda**: che succede al punto intermedio (60 cm ≈ SkySat), sia in detection sia in localizzazione?
+- **Setup**: dataset 60 cm **derivato da noi** (media 2×2 dalle patch 30 cm, `eagle/make_60cm_dataset.py`, 1294 tile 350×350, statistiche per banda ricalcolate; symlink `MultiSpectral_links/patches_MS_8bit_60cm`). Split riusati dal 30 cm (stessi nomi file). Stesso protocollo delle altre coppie, seed 0, resize 350 nativo. Runner: `commands/b60_chain.sh` (training + CAM + WSOL in un colpo).
+- **Dove**: eagle `.../b60_{rgb,vnir}_swint_rsp_aug1_s0` + `~/experiments/b60_chain.log`.
+- **Risultati** (seed 0; WSOL su 50 img con bbox):
+
+| GSD | detection F1 RGB | detection F1 6-bande | PG RGB | PG 6-bande | IoU RGB | IoU 6-bande |
+|---|---|---|---|---|---|---|
+| 30 cm | 0.709 | 0.761 | 0.38 | 0.40 | 0.217 | 0.233 |
+| **60 cm** | **0.718** | **0.760** | **0.30** | **0.32** | **0.212** | **0.242** |
+| 120 cm | 0.706 | 0.667 | 0.04 | 0.06 | 0.096 | 0.075 |
+
+![curva GSD](figs/gsd_detection_vs_localization.png)
+
+- **Conclusione**: **la detection è sostanzialmente piatta su tutta la scala** (0.71-0.76, nessun trend), mentre la localizzazione **non degrada linearmente**: il primo raddoppio di GSD (30→60) costa ~0.08 di pointing game, il secondo (60→120) ne costa ~0.26 — **tre volte tanto**. A 60 cm la localizzazione è ancora utilizzabile; a 120 cm è persa. Il ginocchio cade **tra 60 e 120 cm**, cioè proprio dove sta IRIDE (~1 m): informazione operativa diretta per il progetto. [MEDIUM — seed singolo al 60 cm; il trend è coerente coi 3 seed disponibili agli estremi]
+- **Claims toccati**: **C-2** (degradazione misurabile) → supportata ma **da riformulare**: la degradazione riguarda la localizzazione, non la detection. **C-3** (utilizzabilità a 1.2 m) → risposta articolata: sì per "c'è o non c'è", no per "dove".
+- **Next**: multi-seed al 60 cm per stringere il ginocchio; se il metodo di distillazione regge, la domanda diventa "quanto del ginocchio si recupera".
+
 ### EXP-018 `b120_vnir_swint_distill_lam1_s0` — prima distillazione cross-risoluzione: IoU raddoppia, detection intatta (2026-07-24, notte)
 - **Domanda**: le CAM del modello a 30 cm, usate come teacher, insegnano al modello a 120 cm *dove* guardare?
 - **Setup** (metodo nuovo, `commands/train_distill.py` + `distill_chain.sh`): (1) CAM layer_cam del modello `b30_vnir_swint_rsp_aug1_s0` (congelato) su tutte le 1020 tile di train a 30 cm; (2) fine-tuning dello studente `b120_vnir_swint_rsp_aug1_s0` per 15 epoche, `loss = BCE + λ·MSE(CAM_studente, CAM_teacher)` sulle sole positive, CAM min-max normalizzate e teacher avg-pooled alla griglia dello studente (6×6); λ=1, lr 1e-4, seed 0, **augmentation geometrica disattivata** (altrimenti la CAM salvata non è allineata all'input). Checkpoint scelto su val F1.
